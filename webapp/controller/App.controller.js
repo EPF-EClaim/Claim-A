@@ -45,12 +45,12 @@ sap.ui.define([
 			var oKey = oItem.getKey();
 		
 			if (oKey == "createreport") {
-				this._onClickExpenseReport();
+				this.onClickExpenseReport();
 			} else {
 				this.byId("pageContainer").to(this.getView().createId(oItem.getKey()));
 			}
 		},
-		_onClickExpenseReport: async function () {
+		onClickExpenseReport: async function () {
 			if (!this.oDialogFragment) {
 				this.oDialogFragment = await Fragment.load({
 					id: "expense",
