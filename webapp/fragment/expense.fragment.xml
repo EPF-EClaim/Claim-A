@@ -1,0 +1,44 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" >
+	<Dialog title="{i18n>createnew}">
+		<List>
+			<InputListItem label="Report Purpose">
+				<Input
+					id="purpose"
+					placeholder=""
+					value="" />
+			</InputListItem>
+			<InputListItem label="Trip/Report Start Date">
+				<Input
+					id="startdate"
+					placeholder=""
+					value="" />
+			</InputListItem>
+			<InputListItem label="Trip/Report End Date">
+				<Input
+					id="enddate"
+					placeholder=""
+					value="" />
+			</InputListItem>
+			<InputListItem label="Associate to Pre-Approval Request">
+				<Select>
+					<core:Item key="direct" text="Direct/Not Applicable" />
+				</Select>
+			</InputListItem>
+			<InputListItem label="Approved Amount(MYR)">
+				<Input
+					id="approvedamount"
+					placeholder=""
+					value="" />
+			</InputListItem>
+			<InputListItem label="Comment">
+				<Input
+					id="comment"
+					placeholder=""
+					value="" />
+			</InputListItem>
+		</List>
+		<HBox id="placeholder">
+		
+		</HBox>
+	</Dialog>
+</core:FragmentDefinition>
