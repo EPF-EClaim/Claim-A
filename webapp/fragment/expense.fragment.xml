@@ -38,7 +38,8 @@
 			</InputListItem>
 		</List>
 		<HBox id="placeholder">
-		
+		<Button id="create" press="onClickCreateReport" text="Create Report" />
+		<Button id="cancel" press="onClickCancel" text="Cancel" />
 		</HBox>
 	</Dialog>
 </core:FragmentDefinition>

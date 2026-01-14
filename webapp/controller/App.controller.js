@@ -44,7 +44,7 @@ sap.ui.define([
 			var oItem = oEvent.getParameter("item");
 			var oKey = oItem.getKey();
 		
-			if (oKey == "createreport") {
+			if (oKey == "createreport" || oKey == "myrequest") {
 				this.onClickExpenseReport();
 			} else {
 				this.byId("pageContainer").to(this.getView().createId(oItem.getKey()));
@@ -58,9 +58,9 @@ sap.ui.define([
 					type: "XML",
 					controller: this,
 				});
-				this.getView().addDependent(this.oDialogFragment);
-				this.oDialogFragment.open();
+				this.getView().addDependent(this.oDialogFragment);			
 			}
+			this.oDialogFragment.open();
 		},
 		onItemPress: function (oEvent) {
 			const oItem = oEvent.getParameter("item"),
@@ -69,7 +69,6 @@ sap.ui.define([
 
 		onMenuButtonPress: function () {
 			var toolPage = this.byId("toolPage");
-
 			toolPage.setSideExpanded(!toolPage.getSideExpanded());
 		},
 
@@ -82,37 +81,6 @@ sap.ui.define([
 			oToolPage.setSideExpanded(!oToolPage.getSideExpanded());
 		},
 
-		onQuickActionPress: function (oEvent) {
-			if (oEvent.oSource.getDesign() !== NavigationListItemDesign.Action) {
-				return;
-			}
-			if (!this.oDefaultDialog) {
-				this.oDefaultDialog = new Dialog({
-					title: "Create Item",
-					type: "Message",
-					content: new Text({ text: "Create New Navigation List Item" }),
-					beginButton: new Button({
-						type: ButtonType.Emphasized,
-						text: "Create",
-						press: function () {
-							this.oDefaultDialog.close();
-						}.bind(this)
-					}),
-					endButton: new Button({
-						text: "Cancel",
-						press: function () {
-							this.oDefaultDialog.close();
-						}.bind(this)
-					})
-				});
-
-				// to get access to the controller's model
-				this.getView().addDependent(this.oDefaultDialog);
-			}
-
-			this.oDefaultDialog.open();
-		},
-
 		_setToggleButtonTooltip: function (bLarge) {
 			var oToggleButton = this.byId('sideNavigationToggleButton');
 			if (bLarge) {
@@ -120,6 +88,10 @@ sap.ui.define([
 			} else {
 				oToggleButton.setTooltip('Small Size Navigation');
 			}
+		},
+
+		onClickCancel: function () {
+			this.oDialogFragment.close();
 		},
 
 	});

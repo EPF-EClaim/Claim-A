@@ -36,7 +36,7 @@
 					</layoutData>
 				</ToolbarSpacer>
 			</tnt:ToolHeader> -->
-			<f:ShellBar title="eClaim"
+			<f:ShellBar 
 				showMenuButton="true"
 				homeIcon="./resources/sap/ui/documentation/sdk/images/logo_sap.png"
 				menuButtonPressed="onMenuButtonPress">
@@ -67,7 +67,7 @@
 						expanded="false">
 					</tnt:NavigationListItem>
                     <tnt:NavigationListItem
-						key="claim"
+						key="myrequest"
 						text="{i18n>myrequest}"
 						icon="sap-icon://activity-items"
 						enabled="true"
