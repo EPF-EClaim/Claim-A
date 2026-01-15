@@ -12,35 +12,35 @@
 						expanded="false">
 					</tnt:NavigationListItem>
                     <tnt:NavigationListItem
-						key="prereq"
+						key="createreport"
 						text="{i18n>createreport}"
 						icon="sap-icon://add"
 						enabled="true"
 						expanded="false">
 					</tnt:NavigationListItem>
                     <tnt:NavigationListItem
-						key="claim"
+						key="myrequest"
 						text="{i18n>myrequest}"
 						icon="sap-icon://activity-items"
 						enabled="true"
 						expanded="false">
 					</tnt:NavigationListItem>
                     <tnt:NavigationListItem
-						key="request"
+						key="approval"
 						text="{i18n>approvals}"
 						icon="sap-icon://sys-enter"
 						enabled="true"
 						expanded="false">
 					</tnt:NavigationListItem>
                     <tnt:NavigationListItem
-						key="approval"
+						key="analytics"
 						text="{i18n>analytics}"
 						icon="sap-icon://business-objects-experience"
 						enabled="true"
 						expanded="false">
 					</tnt:NavigationListItem>
                     <tnt:NavigationListItem
-						key="report"
+						key="configuration"
 						text="{i18n>configuration}"
 						icon="sap-icon://action-settings"
 						enabled="true"
