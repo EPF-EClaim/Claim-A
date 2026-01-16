@@ -95,11 +95,25 @@ sap.ui.define([
 			var view = "createreport";
 			this.oDialogFragment.close();
 			this.byId("pageContainer").to(this.getView().createId(view));
+			this.viewClaimFragment();
 		},
 
 		onPressBack: function (oEvent) {
 			this.byId("pageContainer").to(this.getView().createId("dashboard"));
 		}, 
+
+		viewClaimFragment: async function () {
+			if (!this.oClaimFragment) {
+				this.oClaimFragment = await Fragment.load({
+					id: "expensetype",
+					name: "claima.fragment.type",
+					type: "XML",
+					controller: this,
+				});
+				this.getView().addDependent(this.oClaimFragment);			
+			}
+			this.oClaimFragment.open();
+		},
 
 	});
 });

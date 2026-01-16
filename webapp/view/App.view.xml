@@ -391,6 +391,18 @@
                             <Toolbar>
                                 <ToolbarSpacer />
                                 <Button
+                                    id="cancelbtn"
+                                    text="Cancel"
+                                    press="onPressBack"
+                                    enabled="true"
+                                    visible="false"/>
+                                    <Button
+                                    id="savebtn"
+                                    text="Save"
+                                    press="onPressBack"
+                                    enabled="true"
+                                    visible="false"/>
+                                <Button
                                     id="backbtn"
                                     text="Back"
                                     press="onPressBack"
@@ -412,7 +424,8 @@
                             </Toolbar>
                         </footer>
                     </Page>
-                     <Page
+                    
+                     <!-- <Page
                         id="createreportnext">
                         <content>
                             <core:Fragment
@@ -438,7 +451,7 @@
                                     enabled="false"/>   
                             </Toolbar>
                         </footer>
-                    </Page>
+                    </Page> -->
                     <ScrollContainer
                         id="approval"
                         horizontal="false"
