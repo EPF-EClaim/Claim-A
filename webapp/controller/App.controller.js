@@ -47,7 +47,7 @@ sap.ui.define([
 			if (oKey == "createreport" || oKey == "myrequest") {
 				this.onClickExpenseReport();
 			} else {
-				this.byId("pageContainer").to(this.getView().createId(oItem.getKey()));
+				this.byId("pageContainer").to(this.getView().createId(oKey));
 			}
 		},
 		onClickExpenseReport: async function () {

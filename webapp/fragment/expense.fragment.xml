@@ -1,36 +1,36 @@
 <core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" >
 	<Dialog title="{i18n>createnew}">
 		<List>
-			<InputListItem label="Report Purpose">
+			<InputListItem label="{i18n>exp_purpose}">
 				<Input
 					id="purpose"
 					placeholder=""
 					value="" />
 			</InputListItem>
-			<InputListItem label="Trip/Report Start Date">
+			<InputListItem label="{i18n>exp_startdate}">
 				<Input
 					id="startdate"
 					placeholder=""
 					value="" />
 			</InputListItem>
-			<InputListItem label="Trip/Report End Date">
+			<InputListItem label="{i18n>exp_enddate}">
 				<Input
 					id="enddate"
 					placeholder=""
 					value="" />
 			</InputListItem>
-			<InputListItem label="Associate to Pre-Approval Request">
+			<InputListItem label="{i18n>exp_preappreq}">
 				<Select>
-					<core:Item key="direct" text="Direct/Not Applicable" />
+					<core:Item key="direct" text="{i18n>exp_preappreq_direct}" />
 				</Select>
 			</InputListItem>
-			<InputListItem label="Approved Amount(MYR)">
+			<InputListItem label="{i18n>exp_approvedamount}">
 				<Input
 					id="approvedamount"
 					placeholder=""
 					value="" />
 			</InputListItem>
-			<InputListItem label="Comment">
+			<InputListItem label="{i18n>exp_comment}">
 				<Input
 					id="comment"
 					placeholder=""
@@ -38,8 +38,8 @@
 			</InputListItem>
 		</List>
 		<HBox id="placeholder">
-		<Button id="create" press="onClickCreateReport" text="Create Report" />
-		<Button id="cancel" press="onClickCancel" text="Cancel" />
+		<Button id="create" press="onClickCreateReport" text="{i18n>exp_create}" />
+		<Button id="cancel" press="onClickCancel" text="{i18n>exp_cancel}" />
 		</HBox>
 	</Dialog>
 </core:FragmentDefinition>

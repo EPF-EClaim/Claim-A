@@ -94,6 +94,20 @@
 						enabled="true"
 						expanded="false">
 					</tnt:NavigationListItem>
+                    <tnt:NavigationListItem
+						key="claim"
+						text="{i18n>nav_claim}"
+						icon="sap-icon://wrench"
+						enabled="true"
+						expanded="false">
+					</tnt:NavigationListItem>
+                    <tnt:NavigationListItem
+						key="report_header"
+						text="(Placeholder) Report"
+						icon="sap-icon://wrench"
+						enabled="true"
+						expanded="false">
+					</tnt:NavigationListItem>
 				</tnt:NavigationList>
 			</tnt:SideNavigation>
 		</tnt:sideContent>
@@ -357,7 +371,90 @@
 						vertical="true"
 						height="100%"
 						class="sapUiContentPadding">
-						<Text text="This is the root page of the second element" />
+						<Text text="This is the root page of Approvals" />
+					</ScrollContainer>
+					<ScrollContainer
+						id="analytics"
+						horizontal="false"
+						vertical="true"
+						height="100%"
+						class="sapUiContentPadding">
+						<Text text="This is the root page of Analytics" />
+					</ScrollContainer>
+					<ScrollContainer
+						id="configuration"
+						horizontal="false"
+						vertical="true"
+						height="100%"
+						class="sapUiContentPadding">
+						<Text text="This is the root page of Configuration" />
+					</ScrollContainer>
+
+					<ScrollContainer
+						id="report_header"
+						horizontal="false"
+						vertical="true"
+						height="100%"
+						class="sapUiContentPadding">
+						<VBox>
+							<f:GridContainer >
+							<!-- <Panel headerText="Reverse, horizontal"> -->
+								<f:Card class="sapUiSmallMargin" width="90rem">
+									<f:header>
+										<cards:Header
+											title="Expense Report"
+											iconSrc="sap-icon://document-text" />
+									</f:header>
+									<f:content>
+											<List
+												class="sapUiSmallMarginBottom"
+												showSeparators="None"
+												
+														>
+												<CustomListItem>
+													<HBox alignItems="Center" justifyContent="SpaceBetween">
+														<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
+															<Title level="H3" text="{i18n>exp_purpose}" />
+																<Text text="input" />
+														</VBox>
+													</HBox>
+													<HBox alignItems="Center" justifyContent="SpaceBetween">
+														<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
+															<Title level="H3" text="{i18n>exp_repid}" />
+																<Text text="input" />
+														</VBox>
+													</HBox>
+													<HBox alignItems="Center" justifyContent="SpaceBetween">
+														<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
+															<Title level="H3" text="{i18n>exp_startdate}" />
+																<Text text="input" />
+														</VBox>
+													</HBox>
+													<HBox alignItems="Center" justifyContent="SpaceBetween">
+														<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
+															<Title level="H3" text="{i18n>exp_enddate}" />
+																<Text text="input" />
+														</VBox>
+													</HBox>
+													<HBox alignItems="Center" justifyContent="SpaceBetween">
+														<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
+															<Title level="H3" text="{i18n>exp_preappreq}" />
+																<Text text="input" />
+														</VBox>
+													</HBox>
+													<HBox alignItems="Center" justifyContent="SpaceBetween">
+														<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
+															<Title level="H3" text="{i18n>exp_location}" />
+																<Text text="input" />
+														</VBox>
+													</HBox>
+												</CustomListItem>
+											</List>
+									</f:content>
+								</f:Card>
+							<!-- </Panel> -->
+							</f:GridContainer>
+						</VBox>		
 					</ScrollContainer>
 				</pages>
 			</NavContainer>
