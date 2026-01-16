@@ -109,6 +109,7 @@ sap.ui.define([
 			this.byId("pageContainer").to(this.getView().createId(view));
 			this.getView().byId("expensetypescr").setVisible(true);
 			this.getView().byId("claimscr").setVisible(false);
+			this.createreportButtons("expensetypescr");
 		},
 
 		onPressBack: function (oEvent) {
@@ -116,18 +117,37 @@ sap.ui.define([
 		},
 
 		onPressClaimDetails: function () {
+			this.getView().byId("expensetypescr").setVisible(false);
+			this.getView().byId("claimscr").setVisible(true);
+			this.createreportButtons("claimscr");
+
+		},
+
+		createreportButtons: function (oId) {
 			var button = ["cancelbtn", "savebtn", "backbtn", "draft", "delete", "submit"];
+			var button_exp = ["backbtn", "draft", "delete", "submit"];
+			var button_cd = ["cancelbtn", "savebtn"];
+
+			// select visible buttons based on visible fragment
+			var button_set;
+			switch(oId) {
+				case "expensetypescr":
+					button_set = button_exp;
+					break;
+				case "claimscr":
+					button_set = button_cd;
+					break;
+			}
+
 			var i = 0;
 			for (i; i < button.length; i++) {
 				var btnid = button[i];
-				if (btnid == "cancelbtn" || btnid == "savebtn") {
+				if (button_set.includes(btnid)) {
 					this.getView().byId(btnid).setVisible(true);
 				} else {
 					this.getView().byId(btnid).setVisible(false);
 				}
 			}
-			this.getView().byId("expensetypescr").setVisible(false);
-			this.getView().byId("claimscr").setVisible(true);
 
 		},
 
