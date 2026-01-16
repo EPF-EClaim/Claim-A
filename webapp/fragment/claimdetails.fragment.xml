@@ -1,0 +1,86 @@
+<core:FragmentDefinition
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:card="sap.f.cards"
+    xmlns:u="sap.ui.unified">
+    <VBox class="sapUiSmallMargin" id="claimdetails">
+        <HBox>
+            <VBox
+                class="sapUiSmallMargin"
+                width="100rem"
+            >
+                <f:Form
+                    id="FormDisplay"
+                    editable="true"
+                >
+                    <f:title>
+                        <core:Title text="{i18n>claimdetails}" />
+                    </f:title>
+                    <f:layout>
+                        <f:ResponsiveGridLayout
+                            labelSpanXL="4"
+                            labelSpanL="3"
+                            labelSpanM="4"
+                            labelSpanS="12"
+                            adjustLabelSpan="false"
+                            emptySpanXL="0"
+                            emptySpanL="4"
+                            emptySpanM="0"
+                            emptySpanS="0"
+                            columnsXL="2"
+                            columnsL="1"
+                            columnsM="1"
+                            singleContainerFullSize="false"
+                        />
+                    </f:layout>
+                    <f:formContainers>
+                        <f:FormContainer>
+                            <f:formElements>
+                                <f:FormElement label="Claim Type">
+                                   <Select id="claimtype" selectedKey="{claim1}">
+									<items>
+										<core:Item text="claim-type1" key="claim1"/>
+									</items>
+								</Select>
+                                </f:FormElement>
+                                <f:FormElement label="Category">
+                                    <Select id="category" selectedKey="{claim1}">
+									<items>
+										<core:Item text="category-1" key="claim1"/>
+                                        <core:Item text="category-2" key="claim1"/>
+									</items>
+								</Select>
+                                </f:FormElement> 
+                                <f:FormElement label="Remarks/Justification">
+                                    <f:fields>
+                                        <Input value="{remarks}" type="Text" />
+                                    </f:fields>
+                                </f:FormElement>
+
+                            </f:formElements>
+                        </f:FormContainer>
+                        <f:FormContainer>
+                            <f:formElements>
+                                <f:FormElement label="Claim Item">
+                                    <Select id="claimitem" selectedKey="{claim1}">
+									<items>
+										<core:Item text="claim-item1" key="claim1"/>
+									</items>
+								</Select>
+                                </f:FormElement>
+                                <f:FormElement label="Amount">
+                                    <f:fields>
+                                        <Input value="{amount}" type="Number" />
+                                    </f:fields>
+                                </f:FormElement>
+                            </f:formElements>
+                        </f:FormContainer>
+                    </f:formContainers>
+                </f:Form>
+            </VBox>
+        </HBox>
+    </VBox>
+</core:FragmentDefinition>

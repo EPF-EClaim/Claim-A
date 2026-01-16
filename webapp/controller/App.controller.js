@@ -24,9 +24,6 @@ sap.ui.define([
 	tntLibrary) {
 	"use strict";
 
-	var ButtonType = library.ButtonType,
-		PlacementType = library.PlacementType,
-		NavigationListItemDesign = tntLibrary.NavigationListItemDesign;
 
 	return Controller.extend("claima.controller.App", {
 		onInit: function () {
@@ -93,6 +90,16 @@ sap.ui.define([
 		onClickCancel: function () {
 			this.oDialogFragment.close();
 		},
+
+		onClickCreateReport: function () {
+			var view = "createreport";
+			this.oDialogFragment.close();
+			this.byId("pageContainer").to(this.getView().createId(view));
+		},
+
+		onPressBack: function (oEvent) {
+			this.byId("pageContainer").to(this.getView().createId("dashboard"));
+		}, 
 
 	});
 });

@@ -1,45 +1,86 @@
-<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" >
-	<Dialog title="{i18n>createnew}">
-		<List>
-			<InputListItem label="Report Purpose">
-				<Input
-					id="purpose"
-					placeholder=""
-					value="" />
-			</InputListItem>
-			<InputListItem label="Trip/Report Start Date">
-				<Input
-					id="startdate"
-					placeholder=""
-					value="" />
-			</InputListItem>
-			<InputListItem label="Trip/Report End Date">
-				<Input
-					id="enddate"
-					placeholder=""
-					value="" />
-			</InputListItem>
-			<InputListItem label="Associate to Pre-Approval Request">
-				<Select>
-					<core:Item key="direct" text="Direct/Not Applicable" />
-				</Select>
-			</InputListItem>
-			<InputListItem label="Approved Amount(MYR)">
-				<Input
-					id="approvedamount"
-					placeholder=""
-					value="" />
-			</InputListItem>
-			<InputListItem label="Comment">
-				<Input
-					id="comment"
-					placeholder=""
-					value="" />
-			</InputListItem>
-		</List>
-		<HBox id="placeholder">
-		<Button id="create" press="onClickCreateReport" text="Create Report" />
-		<Button id="cancel" press="onClickCancel" text="Cancel" />
-		</HBox>
-	</Dialog>
+<core:FragmentDefinition
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:u="sap.ui.unified">
+    <Dialog title="{i18n>createnew}" contentWidth="900px">
+        <VBox>
+            <f:SimpleForm
+                id="SimpleFormToolbar"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="4"
+                labelSpanL="3"
+                labelSpanM="4"
+                labelSpanS="12"
+                adjustLabelSpan="false"
+                emptySpanXL="0"
+                emptySpanL="4"
+                emptySpanM="0"
+                emptySpanS="0"
+                columnsXL="2"
+                columnsL="1"
+                columnsM="1"
+                singleContainerFullSize="true"
+                ariaLabelledBy="Title1"
+            >
+                <f:content>
+                    <Label text="{i18n>reportpurpose}" />
+                    <Input value="{reportpurpose}" />
+                    <Label text="{i18n>startdate}" />
+                    <Input
+                        value="{startdate}"
+                        type="Date"
+                    />
+                    <Label text="{i18n>enddate}" />
+                    <Input
+                        value="{enddate}"
+                        type="Date"
+                    />
+                    <Label text="{i18n>prerequest}" />
+                    <Select
+                        id="prereq"
+                        selectedKey="{request}"
+                    >
+                        <items>
+                            <core:Item
+                                text="Auto Approve"
+                                key="auto"
+                            />
+                            <core:Item
+                                text="Direct (No Pre-approve is required)"
+                                key="direct"
+                            />
+                        </items>
+                    </Select>
+                    <Label text="{i18n>approvedamt}" />
+                    <Input
+                        value="{amount}"
+                        type="Number"
+                    />
+                    <Label text="Attachment Email Approval" />
+                    <u:FileUploader
+                        id="fileUploader"
+                        name="myFileUpload"
+                        uploadUrl="upload/"
+                        uploadComplete="handleUploadComplete"
+                    />
+                </f:content>
+            </f:SimpleForm>
+        </VBox>
+		<beginButton>
+		 <Button
+                id="create"
+                press="onClickCreateReport"
+                text="Create Report"
+            /></beginButton>
+			<endButton>
+			<Button
+                id="cancel"
+                press="onClickCancel"
+                text="Cancel"
+            /></endButton>     
+    </Dialog>
 </core:FragmentDefinition>
