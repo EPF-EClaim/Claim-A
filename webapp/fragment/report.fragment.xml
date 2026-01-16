@@ -64,7 +64,7 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>prerequest}">
                                     <f:fields>
-                                        <Text text="{prerequest}" />
+                                        <Text text="{report>/prerequest}" />
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>location}">
@@ -98,7 +98,7 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>approvedamt}">
                                     <f:fields>
-                                        <Text text="{approvedamt}" />
+                                        <Text text="{report>/approvedamt}" />
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>cashadv}">

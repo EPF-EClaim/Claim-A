@@ -44,7 +44,7 @@
                     <Label text="{i18n>prerequest}" />
                     <Select
                         id="prereq"
-                        selectedKey="{request}"
+                        selectedKey="{report>/prerequest}"
 						required="true"
                     >
                         <items>
@@ -60,11 +60,11 @@
                     </Select>
                     <Label text="{i18n>approvedamt}" />
                     <Input
-                        value="{amount}"
+                        value="{report>/approvedamt}"
                         type="Number"
                     />
 					<Label text="Comment" />
-                    <Input value="{comment}" required="true" />
+                    <Input value="{report>/comment}" required="true" />
                     <Label text="Attachment Email Approval" />
                     <u:FileUploader
                         id="fileUploader"

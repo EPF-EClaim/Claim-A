@@ -30,7 +30,10 @@ sap.ui.define([
 			var oReportModel = new JSONModel({
 				reportpurpose: "",
 				startdate: "",
-				enddate: ""
+				enddate: "",
+				prerequest: "",
+				approvedamt: 0,
+				comment: ""
 			});
 			this.getView().setModel(oReportModel, "report");
 		},
