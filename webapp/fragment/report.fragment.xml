@@ -39,7 +39,7 @@
                                 <f:FormElement label="{i18n>reportpurpose}">
                                     <f:fields>
                                         <Text
-                                            text="{reportpurpose}"
+                                            text="{report>/reportpurpose}"
                                             id="nameText"
                                         />
                                     </f:fields>
@@ -51,13 +51,13 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>startdate}">
                                     <f:fields>
-                                        <Text text="{startdate}" />
+                                        <Text text="{report>/startdate}" />
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>enddate}">
                                     <f:fields>
                                         <Text
-                                            text="{enddate}"
+                                            text="{report>/enddate}"
                                             id="countryText"
                                         />
                                     </f:fields>

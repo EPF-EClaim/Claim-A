@@ -30,15 +30,15 @@
             >
                 <f:content>
                     <Label text="{i18n>reportpurpose}" />
-                    <Input value="{report>reportpurpose}" required="true" id="idreportpurpose"/>
+                    <Input value="{report>/reportpurpose}" required="true" id="idreportpurpose"/>
                     <Label text="{i18n>startdate}" />
                     <Input required="true"
-                        value="{report>startdate}"
+                        value="{report>/startdate}"
                         type="Date" id="idstartdate" 
                     />
                     <Label text="{i18n>enddate}" />
                     <Input
-                        value="{report>enddate}"
+                        value="{report>/enddate}"
                         type="Date" required="true" id="idenddate"
                     />
                     <Label text="{i18n>prerequest}" />
