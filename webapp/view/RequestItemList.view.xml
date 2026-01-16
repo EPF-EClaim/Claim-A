@@ -1,5 +1,5 @@
 
-<mvc:View xmlns:table="sap.ui.table" xmlns:m="sap.m"
+<mvc:View xmlns:unified="sap.ui.unified" xmlns:columnmenu="sap.m.table.columnmenu" xmlns:table="sap.ui.table" xmlns:m="sap.m"
     controllerName="claima.controller.RequestItemList"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
@@ -18,49 +18,51 @@
     height="100%"
     width="100%">
 
-    <m:VBox width="100%">
-        <m:HBox alignItems="Center" justifyContent="End" columnGap="0.5rem" class="sapUiContentPadding" >
-            <!-- <m:MenuButton text="Add Claim Type" type="Emphasized" icon="sap-icon://add">
-                <m:Menu >
-                    <m:items>
-                        <m:MenuItem text="Create Request"></m:MenuItem>
-                    </m:items>
-                </m:Menu>
-            </m:MenuButton> -->
-            <m:Button text="Create Item" type="Emphasized" icon="sap-icon://add"></m:Button>
-            <m:Button text="Edit" />
-            <m:Button text="Duplicate" />
-            <m:Button text="Delete" type="Reject"/>
-        </m:HBox>
-        <m:VBox rowGap="1rem"  class="sapUiContentPadding">
-            <m:Title text="My Request (#)" titleStyle="H3" />
-            <m:ScrollContainer  height="24rem" vertical="true">
-                <m:Table >
-                    <m:columns>
-                        <m:Column width="2rem"  id="req_list_checkbox"><m:Text text=""/></m:Column>
-                        <m:Column width="8rem" id="req_list_date"><m:Text text="Date"/></m:Column>
-                        <m:Column width="12rem" id="req_list_claim_type"><m:Text text="Claim Type"/></m:Column>
-                        <m:Column width="12rem" id="req_list_claim_item"><m:Text text="Claim Item"/></m:Column>
-                        <m:Column width="12rem" id="req_list_category"><m:Text text="Category"/></m:Column>
-                        <m:Column width="12rem" id="req_list_amount"><m:Text text="Amount"/></m:Column>
-                        <m:Column width="12rem" id="req_list_cost_center"><m:Text text="Cost Center"/></m:Column>
-                        <m:Column width="5rem"  id="actions"><m:Text text="Actions"/></m:Column>
-                    </m:columns>
-                    <m:ColumnListItem >
-                        <!-- <m:cells>
-                            <m:CheckBox />
-                            <m:Text text="Testing"/>
-                            <m:Text text="Testing"/>
-                            <m:Text text="Testing"/>
-                            <m:Text text="Testing"/>
-                            <m:Text text="Testing"/>
-                            <m:Text text="Testing"/>
-                            <m:Button icon="sap-icon://overflow"/>
-                        </m:cells> -->
-                    </m:ColumnListItem>
-                </m:Table>
-            </m:ScrollContainer>
+    <mvc:content>
+        <m:VBox width="100%">
+            <m:OverflowToolbar style="Clear">
+                <m:ToolbarSpacer />
+                <m:Button text="Create Item" type="Emphasized" icon="sap-icon://add" press="onPressAddItem"></m:Button>
+                <m:Button text="Edit" />
+                <m:Button text="Duplicate" />
+                <m:Button text="Delete" type="Reject"/>
+            </m:OverflowToolbar>
+            <m:VBox rowGap="1rem">
+                <m:Title text="My Request (#)" titleStyle="H3" />
+                <table:Table 
+                    id="req_item_table"
+                    rows="{/rows}"
+                    columnHeaderHeight="3rem"
+                    selectionMode="MultiToggle"
+                    ariaLabelledBy="title"
+                    width="auto">
+                    <table:Column  width="25rem">
+                        <m:Label text="Claim Type"></m:Label>
+                        <table:template>
+                            <m:Text text="{claim_type}" wrapping="false" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column  width="20rem">
+                        <m:Label text="Estimated Amount"></m:Label>
+                        <table:template>
+                            <unified:Currency value="{est_amount}" currency="{curenncy_code}"/>
+                        </table:template>
+                    </table:Column>
+                    <table:Column  width="20rem">
+                        <m:Label text="Estimated No. of Participant"></m:Label>
+                        <table:template>
+                            <m:Text text="{est_no_of_participant}" wrapping="false" />
+                        </table:template>
+                    </table:Column>
+                    <table:rowActionTemplate>
+                        <table:RowAction >
+                            <table:RowActionItem icon="sap-icon://attachment" text="Attachment" press="fnPress()"></table:RowActionItem>
+                        </table:RowAction>
+                    </table:rowActionTemplate>
+                </table:Table>
+            </m:VBox>
         </m:VBox>
-    </m:VBox>
+    </mvc:content>
+    
   	
 </mvc:View>
