@@ -84,14 +84,16 @@
         <tnt:mainContents>
             <NavContainer
                 id="pageContainer"
-                initialPage="dashboard">
+                initialPage="dashboard"
+            >
                 <pages>
                     <ScrollContainer
                         id="dashboard"
                         horizontal="false"
                         vertical="true"
                         height="100%"
-                        class="sapUiContentPadding">
+                        class="sapUiContentPadding"
+                    >
                         <VBox>
                             <HBox>
                                 <VBox
@@ -108,8 +110,8 @@
                                         </f:layout>
                                         <w:Card
                                             manifest="{manifests>/expensereport}"
-                                            action="onAction">
-                                        </w:Card>
+                                            action="onAction"
+                                        />
                                     </f:GridContainer>
                                 </VBox>
                                 <VBox
@@ -132,7 +134,8 @@
                                 </VBox>
                                 <VBox
                                     class="sapUiSmallMargin"
-                                    justifyContent="SpaceBetween">
+                                    justifyContent="SpaceBetween"
+                                >
                                     <f:GridContainer>
                                         <f:layout>
                                             <f:GridContainerSettings
@@ -143,7 +146,8 @@
                                         </f:layout>
                                         <w:Card
                                             manifest="{manifests>/approval}"
-                                            action="onAction"/>
+                                            action="onAction"
+                                        />
                                     </f:GridContainer>
                                 </VBox>
                             </HBox>
@@ -151,17 +155,19 @@
                             <f:GridContainer>
                                 <f:Card
                                     class="sapUiSmallMargin"
-                                    width="90rem">
+                                    width="90rem"
+                                >
                                     <f:header>
                                         <cards:Header
                                             title="{i18n>myexpensesreport}"
-                                            iconSrc="sap-icon://document-text"/>
+                                            iconSrc="sap-icon://document-text"
+                                        />
                                     </f:header>
                                     <f:content>
                                         <List
                                             class="sapUiSmallMarginBottom"
-                                            showSeparators="None">
-                                        </List>
+                                            showSeparators="None"
+                                        />
                                     </f:content>
                                 </f:Card>
                             </f:GridContainer>
@@ -180,8 +186,7 @@
                                         <List
                                             class="sapUiSmallMarginBottom"
                                             showSeparators="None"
-                                        >
-                                        </List>
+                                        />
                                     </f:content>
                                 </f:Card>
                             </f:GridContainer>
@@ -212,7 +217,8 @@
                         id="claim"
                         horizontal="false"
                         vertical="true"
-                        height="100%">
+                        height="100%"
+                    >
                         <VBox class="sapUiResponsiveContentPadding">
                             <HBox class="sapUiResponsiveContentPadding">
                                 <Title
@@ -247,19 +253,25 @@
                                                             width="1"
                                                         >
                                                             <HBox
-                                                                class="sapUiTinyMarginBottom">
+                                                                class="sapUiTinyMarginBottom"
+                                                            >
                                                                 <Label
-                                                                    text="Claim ID:"/>
+                                                                    text="Claim ID:"
+                                                                />
                                                             </HBox>
                                                             <HBox
-                                                                class="sapUiTinyMarginBottom">
+                                                                class="sapUiTinyMarginBottom"
+                                                            >
                                                                 <Label
-                                                                    text="Claim Type:"/>
+                                                                    text="Claim Type:"
+                                                                />
                                                             </HBox>
                                                             <HBox
-                                                                class="sapUiTinyMarginBottom">
+                                                                class="sapUiTinyMarginBottom"
+                                                            >
                                                                 <Label
-                                                                    text="Details:"/>
+                                                                    text="Details:"
+                                                                />
                                                             </HBox>
                                                         </l:BlockLayoutCell>
                                                     </l:BlockLayoutRow>
@@ -271,7 +283,8 @@
                             </HBox>
                             <HBox
                                 class="sapUiResponsiveContentPadding"
-                                id="content">
+                                id="content"
+                            >
                                 <VBox
                                     height="110px"
                                     class="sapUiSmallMargin"
@@ -287,11 +300,13 @@
                                         </f:layout>
                                         <w:Card
                                             manifest="{manifests>/object}"
-                                            action="onAction">
+                                            action="onAction"
+                                        >
                                             <w:layoutData>
                                                 <f:GridContainerItemLayoutData
                                                     minRows="4"
-                                                    columns="3"/>
+                                                    columns="3"
+                                                />
                                             </w:layoutData>
                                         </w:Card>
                                     </f:GridContainer>
@@ -299,13 +314,15 @@
                                 <VBox
                                     height="110px"
                                     class="sapUiSmallMargin"
-                                    justifyContent="SpaceBetween">
+                                    justifyContent="SpaceBetween"
+                                >
                                     <f:GridContainer>
                                         <f:layout>
                                             <f:GridContainerSettings
                                                 rowSize="20rem"
                                                 columnSize="25rem"
-                                                gap="1rem"/>
+                                                gap="1rem"
+                                            />
                                         </f:layout>
                                         <w:Card
                                             manifest="{manifests>/preclaim}"
@@ -323,7 +340,8 @@
                                 <VBox
                                     height="110px"
                                     class="sapUiSmallMargin"
-                                    justifyContent="SpaceBetween">
+                                    justifyContent="SpaceBetween"
+                                >
                                     <f:GridContainer>
                                         <f:layout>
                                             <f:GridContainerSettings
@@ -370,97 +388,78 @@
                     <Page
                         id="createreport"
                         showHeader="false">
-                        <!-- <ScrollContainer
-                        id="createreport1"
-                        horizontal="false"
-                        vertical="true"
-                        height="100%"
-                        class="sapUiContentPadding"> -->
                         <content>
-                            <core:Fragment
-                                fragmentName="claima.fragment.report"
-                                type="XML"/>
-                                <VBox >
+                            <VBox id="main">
                                 <core:Fragment
-                                fragmentName="claima.fragment.expensetype"
-                                type="XML"/>
+                                    fragmentName="claima.fragment.report"
+                                    type="XML"
+                                />
+                                <VBox id="expensetypescr" visible="true">
+                                    <core:Fragment
+                                        fragmentName="claima.fragment.expensetype"
+                                        type="XML"
+                                    />
                                 </VBox>
+                                <VBox id="claimscr" visible="false">
+                                    <core:Fragment
+                                        fragmentName="claima.fragment.claimdetails"
+                                        type="XML"
+                                    />
+                                </VBox>
+                            </VBox>
                         </content>
-                        <!-- </ScrollContainer> -->
-                        <footer>
+                        <footer >
                             <Toolbar>
                                 <ToolbarSpacer />
                                 <Button
                                     id="cancelbtn"
                                     text="Cancel"
-                                    press="onPressBack"
+                                    press="onPressCancel"
                                     enabled="true"
-                                    visible="false"/>
-                                    <Button
+                                    visible="false"
+                                />
+                                <Button
                                     id="savebtn"
                                     text="Save"
                                     press="onPressBack"
                                     enabled="true"
-                                    visible="false"/>
+                                    visible="false"
+                                />
                                 <Button
                                     id="backbtn"
                                     text="Back"
                                     press="onPressBack"
-                                    enabled="true"/>
+                                    enabled="true"
+                                />
                                 <Button
+                                    id="draft"
                                     text="Save Draft"
                                     press="onPress"
-                                    enabled="false"/>
+                                    enabled="false"
+                                />
 
                                 <Button
+                                    id="delete"
                                     text="Delete Report"
                                     press="onPress"
-                                    enabled="false"/>
+                                    enabled="false"
+                                />
 
                                 <Button
+                                    id="submit"
                                     text="Submit Report"
                                     press="onPress"
-                                    enabled="false"/>    
+                                    enabled="false"
+                                />
                             </Toolbar>
                         </footer>
                     </Page>
-                    
-                     <!-- <Page
-                        id="createreportnext">
-                        <content>
-                            <core:Fragment
-                                fragmentName="claima.fragment.report"
-                                type="XML"/>
-                                <VBox >
-                                <core:Fragment
-                                fragmentName="claima.fragment.claimdetails"
-                                type="XML"/>
-                                </VBox>
-                        </content>
-                        <footer>
-                            <Toolbar>
-                                <ToolbarSpacer />
-                                <Button
-                                    id="cancelbtn"
-                                    text="Cancel"
-                                    press="onPressBack"
-                                    enabled="true"/>
-                                <Button
-                                    text="Save"
-                                    press="onPress"
-                                    enabled="false"/>   
-                            </Toolbar>
-                        </footer>
-                    </Page> -->
                     <ScrollContainer
-                        id="approval"
+                        id="claimdetailsview"
                         horizontal="false"
                         vertical="true"
                         height="100%"
                         class="sapUiContentPadding">
-                        <Text
-                            text="This is the root page of the second element"
-                        />
                     </ScrollContainer>
                 </pages>
             </NavContainer>

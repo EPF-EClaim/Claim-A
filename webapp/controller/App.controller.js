@@ -27,6 +27,12 @@ sap.ui.define([
 
 	return Controller.extend("claima.controller.App", {
 		onInit: function () {
+			var oReportModel = new JSONModel({
+				reportpurpose: "",
+				startdate: "",
+				enddate: ""
+			});
+			this.getView().setModel(oReportModel, "report");
 		},
 
 		onCollapseExpandPress: function () {
@@ -40,7 +46,7 @@ sap.ui.define([
 		onItemSelect: function (oEvent) {
 			var oItem = oEvent.getParameter("item");
 			var oKey = oItem.getKey();
-		
+
 			if (oKey == "createreport" || oKey == "myrequest") {
 				this.onClickExpenseReport();
 			} else {
@@ -50,14 +56,18 @@ sap.ui.define([
 		onClickExpenseReport: async function () {
 			if (!this.oDialogFragment) {
 				this.oDialogFragment = await Fragment.load({
-					id: "expense",
+					// id: 
+					// this.getView().getId(), 
+					//  "expense",
+
 					name: "claima.fragment.expense",
 					type: "XML",
 					controller: this,
 				});
-				this.getView().addDependent(this.oDialogFragment);			
+				this.getView().addDependent(this.oDialogFragment);
 			}
 			this.oDialogFragment.open();
+
 		},
 		onItemPress: function (oEvent) {
 			const oItem = oEvent.getParameter("item"),
@@ -92,27 +102,33 @@ sap.ui.define([
 		},
 
 		onClickCreateReport: function () {
+			var oData = this.getView().getModel("report").getData();
+
 			var view = "createreport";
 			this.oDialogFragment.close();
 			this.byId("pageContainer").to(this.getView().createId(view));
-			this.viewClaimFragment();
+			this.getView().byId("expensetypescr").setVisible(true);
+			this.getView().byId("claimscr").setVisible(false);
 		},
 
 		onPressBack: function (oEvent) {
 			this.byId("pageContainer").to(this.getView().createId("dashboard"));
-		}, 
+		},
 
-		viewClaimFragment: async function () {
-			if (!this.oClaimFragment) {
-				this.oClaimFragment = await Fragment.load({
-					id: "expensetype",
-					name: "claima.fragment.type",
-					type: "XML",
-					controller: this,
-				});
-				this.getView().addDependent(this.oClaimFragment);			
+		onPressClaimDetails: function () {
+			var button = ["cancelbtn", "savebtn", "backbtn", "draft", "delete", "submit"];
+			var i = 0;
+			for (i; i < button.length; i++) {
+				var btnid = button[i];
+				if (btnid == "cancelbtn" || btnid == "savebtn") {
+					this.getView().byId(btnid).setVisible(true);
+				} else {
+					this.getView().byId(btnid).setVisible(false);
+				}
 			}
-			this.oClaimFragment.open();
+			this.getView().byId("expensetypescr").setVisible(false);
+			this.getView().byId("claimscr").setVisible(true);
+
 		},
 
 	});
