@@ -67,9 +67,9 @@
 						expanded="false">
 					</tnt:NavigationListItem>
                     <tnt:NavigationListItem
-						key="myrequest"
-						text="{i18n>myrequest}"
-						icon="sap-icon://activity-items"
+						key="createrequest"
+						text="{i18n>request}"
+						icon="sap-icon://add"
 						enabled="true"
 						expanded="false">
 					</tnt:NavigationListItem>
@@ -358,6 +358,18 @@
 						height="100%"
 						class="sapUiContentPadding">
 						<Text text="This is the root page of the second element" />
+					</ScrollContainer>
+					<ScrollContainer
+						id="new_request"
+						horizontal="false"
+						vertical="false"
+						height="100%"
+						class="sapUiContentPadding">
+						
+						<mvc:XMLView
+							id="request_form_page"
+							viewName="claima.view.RequestForm" />
+
 					</ScrollContainer>
 				</pages>
 			</NavContainer>

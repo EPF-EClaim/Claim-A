@@ -1,0 +1,112 @@
+
+<mvc:View xmlns:uxap="sap.uxap" xmlns:m="sap.m"
+    controllerName="claima.controller.RequestForm"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:tnt="sap.tnt"
+    xmlns:cards="sap.f.cards"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+    xmlns:cssgrid="sap.ui.layout.cssgrid"
+    xmlns:w="sap.ui.integration.widgets"
+    xmlns:card="sap.f.cards"
+    xmlns:core="sap.ui.core"
+    xmlns:Icon="sap.ui.core.Icon"
+    xmlns:ShellBar="sap.f.ShellBar"
+    xmlns:layout="sap.ui.layout"
+    displayBlock="true"
+    height="100%">
+
+	<VBox width="100%" height="100%" rowGap="1rem">
+		<f:Card width="100%" class="req_header">
+			<f:content>
+				<m:VBox class="sapUiMediumMargin" rowGap="1rem">
+					<m:HBox columnGap="1rem">
+						<m:Title id="req_page_title" text="{i18n>req_page_title}" titleStyle="H3"/>
+						<m:HBox width="100%" >
+							<m:Button id="req_form_print_btn" icon="sap-icon://print" />
+						</m:HBox>
+					</m:HBox>
+					<m:HBox wrap="Wrap" rowGap="0.5rem">
+						<m:VBox id="head_req_col_1" rowGap="0.5rem">
+							<m:HBox id="head_req_purpose">
+								<Text width="16rem" text="Request Purpose: " />
+								<Text width="24rem" text="Attend Financial Event at Singapore" />
+							</m:HBox>
+							<m:HBox id="head_req_form_id">
+								<Text width="16rem" text="Request Form ID: "/>
+								<Text width="16rem" text="REQ000000000002"/>
+							</m:HBox>
+							<m:HBox id="head_req_startdate">
+								<Text width="16rem" text="Trip/Report Start Date: "/>
+								<Text width="16rem" text="01 January 2026"/>
+							</m:HBox>
+							<m:HBox id="head_req_enddate">
+								<Text width="16rem" text="Trip/Request End Date: "/>
+								<Text width="16rem" text="01 February 2026"/>
+							</m:HBox>
+							<m:HBox id="head_req_location">
+								<Text width="16rem" text="Location: "/>
+								<Text width="16rem" text="Marina Bay Sands, Singapore"/>
+							</m:HBox>
+							<m:HBox id="header_req_remarks">
+								<Text width="16rem" text="Remarks: "/>
+								<Text width="16rem" text="Invited to participate Audit foru as speaker"/>
+							</m:HBox>
+							<m:HBox id="head_req_iog">
+								<Text width="16rem" text="Individual/Group: "/>
+								<Text width="16rem" text="Individual"/>
+							</m:HBox>
+						</m:VBox>
+						<m:VBox id="head_req_col_2" rowGap="0.5rem" >
+							<m:HBox id="head_req_status">
+								<Text width="16rem" text="Request Status: " />
+								<Text width="24rem" text="Not Submitted" />
+							</m:HBox>
+							<m:HBox id="head_req_cost_center">
+								<Text width="16rem" text="Cost Center: "/>
+								<Text width="16rem" text="1234567890"/>
+							</m:HBox>
+							<m:HBox id="head_req_alt_cost_center">
+								<Text width="16rem" text="Alternate Cost Conter: "/>
+								<Text width="16rem" text="9988770000"/>
+							</m:HBox>
+							<m:HBox id="head_req_cash_advance_amt">
+								<Text width="16rem" text="Cash Advance (MYR): "/>
+								<Text width="16rem" text="0.00" textAlign="End"/>
+							</m:HBox>
+							<m:HBox id="head_req_amt">
+								<Text width="16rem" text="Request Amount (MYR): "/>
+								<Text width="16rem" text="0.00" textAlign="End"/>
+							</m:HBox>
+							<m:HBox id="head_req_total_amt">
+								<Text width="16rem" text="Total Amount (MYR): "/>
+								<Text width="16rem" text="0.00" textAlign="End"/>
+							</m:HBox>
+							<m:HBox id="head_req_type">
+								<Text width="16rem" text="Request Type: "/>
+								<Text width="16rem" text="Travel"/>
+							</m:HBox>
+						</m:VBox>
+					</m:HBox>
+				</m:VBox>
+			</f:content>
+		</f:Card>
+		<f:Card width="100%">
+			<f:content>
+				<mvc:XMLView
+					id="request_item_list_view"
+					viewName="claima.view.RequestItemList" />
+			</f:content>
+		</f:Card>
+		<f:Card width="100%">
+			<f:content>
+				<m:HBox alignItems="Center" justifyContent="End" class="sapUiTinyMargin" columnGap="0.5rem" >
+					<m:Button text="Back" />
+					<m:Button text="Delete Request" type="Reject"/>
+					<m:Button text="Submit Request" type="Emphasized" />
+				</m:HBox>
+			</f:content>
+		</f:Card>
+	</VBox>
+</mvc:View>

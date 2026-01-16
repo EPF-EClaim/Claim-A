@@ -1,0 +1,76 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
+	<Dialog title="{i18n>req_po_title}" contentWidth="40%" class="requestDialog">
+		<List showSeparators="None">
+			<InputListItem label="{i18n>req_purpose}">
+				<Input
+					id="request_purpose"
+					placeholder=""
+					value=""
+					textAlign="Begin" />
+			</InputListItem>
+			<InputListItem label="{i18n>req_start_date}">
+                <DatePicker
+                    id="request_startdate"
+                    displayFormat="dd MMMM yyyy"  
+                    valueFormat="yyyy-MM-dd" 
+                    placeholder="dd MMMM yyyy"
+                    value="{
+                        path: 'EntryDate',
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: {
+                            pattern: 'yyyy-MM-dd'
+                        }
+                    }"
+					textAlign="Begin"/>
+			</InputListItem>
+			<InputListItem label="{i18n>req_end_date}">
+                <DatePicker
+                    id="request_enddate"
+                    displayFormat="dd MMMM yyyy"  
+                    valueFormat="yyyy-MM-dd" 
+                    placeholder="dd MMMM yyyy"
+                    value="{
+                        path: 'EntryDate',
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: {
+                            pattern: 'yyyy-MM-dd'
+                        }
+                    }"
+					textAlign="Begin"/>
+			</InputListItem>
+			<InputListItem label="{i18n>req_gtype}">
+				<Select width="100%">
+					<core:Item key="individual" text="Individual" />
+					<core:Item key="group" text="Group" />
+				</Select>
+			</InputListItem>
+            <InputListItem label="{i18n>req_rtype}">
+				<Select width="100%">
+					<core:Item key="travel" text="Travel" />
+					<core:Item key="mobile" text="Mobile Phone Bill" />
+					<core:Item key="event" text="Event" />
+					<core:Item key="reimbursement" text="Reimbursement" />
+					<core:Item key="cash_adv" text="Cash Advance" />
+				</Select>
+			</InputListItem>
+			<InputListItem label="{i18n>req_alt_cc}">
+				<Input
+					id="request_alt_cost_center"
+					placeholder=""
+					value=""
+					textAlign="Begin" />
+			</InputListItem>
+			<InputListItem label="{i18n>req_comment}">
+				<Input
+					id="request_comment"
+					placeholder=""
+					value=""
+					textAlign="Begin" />
+			</InputListItem>
+		</List>
+		<HBox id="request_placeholder" alignItems="Center" justifyContent="End" class="sapUiSmallMarginEnd" columnGap="0.5rem">
+            <Button id="request_create" press="onClickCreateRequest" text="{i18n>req_create}" type="Emphasized"/>
+            <Button id="request_cancel" press="onClickCancel" text="{i18n>req_cancel}" />
+		</HBox>
+	</Dialog>
+</core:FragmentDefinition>

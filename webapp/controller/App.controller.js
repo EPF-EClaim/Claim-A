@@ -43,12 +43,20 @@ sap.ui.define([
 		onItemSelect: function (oEvent) {
 			var oItem = oEvent.getParameter("item");
 			var oKey = oItem.getKey();
-		
-			if (oKey == "createreport" || oKey == "myrequest") {
-				this.onClickExpenseReport();
-			} else {
-				this.byId("pageContainer").to(this.getView().createId(oItem.getKey()));
+
+			// Start added by Jefry 15-01-2026
+			switch (oKey) {
+				case "createreport": this.onClickExpenseReport(); break;
+				case "createrequest": this.onClickMyRequest(); break;
+				default: this.byId("pageContainer").to(this.getView().createId(oItem.getKey()));
 			}
+			// End added by Jefry 15-01-2026
+		
+			// if (oKey == "createreport" || oKey == "myrequest") {
+			// 	this.onClickExpenseReport();
+			// } else {
+			// 	this.byId("pageContainer").to(this.getView().createId(oItem.getKey()));
+			// }
 		},
 		onClickExpenseReport: async function () {
 			if (!this.oDialogFragment) {
@@ -58,7 +66,14 @@ sap.ui.define([
 					type: "XML",
 					controller: this,
 				});
-				this.getView().addDependent(this.oDialogFragment);			
+				this.getView().addDependent(this.oDialogFragment);		
+				
+				// Start added by Jefry Yap
+				this.oDialogFragment.attachAfterClose(() =>{
+					this.oDialogFragment.destroy();
+					this.oDialogFragment = null;
+				});
+				// End added by Jefry Yap
 			}
 			this.oDialogFragment.open();
 		},
@@ -93,6 +108,34 @@ sap.ui.define([
 		onClickCancel: function () {
 			this.oDialogFragment.close();
 		},
+
+		// Start added by Jefry Yap 15-01-2026
+		onClickMyRequest: async function () {
+			if (!this.oDialogFragment) {
+				this.oDialogFragment = await Fragment.load({
+					id: "request",
+					name: "claima.fragment.request",
+					type: "XML",
+					controller: this,
+				});
+				this.getView().addDependent(this.oDialogFragment);	
+				
+				this.oDialogFragment.attachAfterClose(() =>{
+					this.oDialogFragment.destroy();
+					this.oDialogFragment = null;
+				});
+			}
+			this.oDialogFragment.open();
+			this.oDialogFragment.addStyleClass('requestDialog')
+		},
+
+		onClickCreateRequest: function (oEvent) {
+			var oItem = oEvent.getParameter("item");
+
+			this.oDialogFragment.close();
+			this.byId("pageContainer").to(this.getView().byId('new_request'));
+		}
+		// End added by Jefry Yap 15-01-2026
 
 	});
 });
