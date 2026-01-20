@@ -44,7 +44,7 @@
                         expanded="false"
                     />
                     <tnt:NavigationListItem
-                        key="createreport"
+                        key="nav_createreport"
                         text="{i18n>nav_createreport}"
                         icon="sap-icon://add"
                         enabled="true"
@@ -400,7 +400,7 @@
                         </VBox>
                     </ScrollContainer>
                     <Page
-                        id="createreport"
+                        id="expensereport"
                         showHeader="false">
                         <content>
                             <VBox id="main">

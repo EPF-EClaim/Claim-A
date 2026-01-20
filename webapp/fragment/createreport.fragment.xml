@@ -5,9 +5,9 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:u="sap.ui.unified"
-    id="expense-1"
+    id="createreport"
 >
-    <Dialog title="{i18n>createnew}" contentWidth="900px">
+    <Dialog title="{i18n>createreport_header}" contentWidth="900px">
 
             <f:SimpleForm
                 id="SimpleFormToolbar"
@@ -29,42 +29,51 @@
                 ariaLabelledBy="Title1"
             >
                 <f:content>
-                    <Label text="{i18n>reportpurpose}" />
-                    <Input value="{report>/reportpurpose}" required="true" id="idreportpurpose"/>
-                    <Label text="{i18n>startdate}" />
-                    <Input required="true"
-                        value="{report>/startdate}"
-                        type="Date" id="idstartdate" 
-                    />
-                    <Label text="{i18n>enddate}" />
+                    <Label text="{i18n>report_purpose}" />
+                    <Input value="{expensereport>/report/purpose}" required="true" id="createreport_purpose"/>
+
+                    <Label text="{i18n>report_startdate}" />
                     <Input
-                        value="{report>/enddate}"
-                        type="Date" required="true" id="idenddate"
+                        value="{expensereport>/report/startdate}"
+                        type="Date" required="true" id="createreport_startdate" 
                     />
-                    <Label text="{i18n>prerequest}" />
+                    <Label text="{i18n>report_enddate}" />
+                    <Input
+                        value="{expensereport>/report/enddate}"
+                        type="Date" required="true" id="createreport_enddate"
+                    />
+
+                    <Label text="{i18n>report_category}" />
                     <Select
-                        id="prereq"
-                        selectedKey="{report>/prerequest}"
+                        id="createreport_expcat"
+                        selectedKey="{expensereport>/report/category}"
 						required="true"
                     >
                         <items>
                             <core:Item
-                                text="Auto Approve"
-                                key="auto"
+                                text="{i18n>expcat_direct}"
+                                key="expcat_direct"
                             />
                             <core:Item
-                                text="Direct (No Pre-approve is required)"
-                                key="direct"
+                                text="{i18n>expcat_auto}"
+                                key="expcat_auto"
+                            />
+                            <core:Item
+                                text="{i18n>expcat_withoutrequest}"
+                                key="expcat_withoutrequest"
                             />
                         </items>
                     </Select>
-                    <Label text="{i18n>approvedamt}" />
+
+                    <Label text="{i18n>report_amt_approved}" />
                     <Input
-                        value="{report>/approvedamt}"
+                        value="{expensereport>/report/amt_approved}"
                         type="Number"
+                        id="createreport_amt_approved"
                     />
-					<Label text="Comment" />
-                    <Input value="{report>/comment}" required="true" />
+					<Label text="{i18n>report_comment}" />
+                    <Input value="{report>/comment}" required="true" id="createreport_comment" />
+
                     <Label text="Attachment Email Approval" />
                     <u:FileUploader
                         id="fileUploader"
@@ -75,17 +84,21 @@
                 </f:content>
             </f:SimpleForm>
      
-		<beginButton>
-		 <Button
-                id="create"
-                press="onClickCreateReport"
-                text="Create Report"
-            /></beginButton>
-			<endButton>
+		<buttons>
+            <Button
+                    id="createreport_attachment"
+                    press=""
+                    text="{i18n>createreport_attachment}"
+                />
+            <Button
+                    id="createreport_create"
+                    press="onCreateReport"
+                    text="{i18n>createreport_create}"
+                />
 			<Button
-                id="cancel"
-                press="onClickCancel"
-                text="Cancel"
-            /></endButton>     
+                    id="createreport_cancel"
+                    press="onCancelFragment"
+                    text="{i18n>createreport_cancel}"
+                /></buttons>     
     </Dialog>
 </core:FragmentDefinition>

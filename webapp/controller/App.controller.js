@@ -55,7 +55,7 @@ sap.ui.define([
 			var oKey = oItem.getKey();
 
 			switch (oKey) {
-				case "createreport":
+				case "nav_createreport":
 					this.onNavCreateReport();
 					break;
 				default:
@@ -103,14 +103,14 @@ sap.ui.define([
 			}
 		},
 
-		onClickCancel: function () {
+		onCancelFragment: function () {
 			this.oDialogFragment.close();
 		},
 
-		onClickCreateReport: function () {
+		onCreateReport: function () {
 			var oData = this.getView().getModel("report").getData();
 
-			var view = "createreport";
+			var view = "expensereport";
 			this.oDialogFragment.close();
 			this.byId("pageContainer").to(this.getView().createId(view));
 			this.getView().byId("expensetypescr").setVisible(true);

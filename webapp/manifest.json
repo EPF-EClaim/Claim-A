@@ -51,6 +51,10 @@
         "type": "sap.ui.model.json.JSONModel",
         "uri": "model/data.json"
       },
+      "expensereport":{
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "model/expensereport.json"
+      },
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
