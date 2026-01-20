@@ -46,14 +46,21 @@ sap.ui.define([
 			oNavigationList.setExpanded(!bExpanded);
 		},
 
-		onItemSelect: function (oEvent) {
+		onNavItemPress: function (oEvent) {
+			const oItem = oEvent.getParameter("item"),
+				sText = oItem.getText();
+		},
+		onNavItemSelect: function (oEvent) {
 			var oItem = oEvent.getParameter("item");
 			var oKey = oItem.getKey();
 
-			if (oKey == "createreport" || oKey == "myrequest") {
-				this.onClickExpenseReport();
-			} else {
-				this.byId("pageContainer").to(this.getView().createId(oKey));
+			switch (oKey) {
+				case "createreport":
+					this.onClickExpenseReport();
+					break;
+				default:
+					this.byId("pageContainer").to(this.getView().createId(oKey));
+					break;
 			}
 		},
 		onClickExpenseReport: async function () {
@@ -71,10 +78,6 @@ sap.ui.define([
 			}
 			this.oDialogFragment.open();
 
-		},
-		onItemPress: function (oEvent) {
-			const oItem = oEvent.getParameter("item"),
-				sText = oItem.getText();
 		},
 
 		onMenuButtonPress: function () {
