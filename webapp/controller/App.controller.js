@@ -28,12 +28,12 @@ sap.ui.define([
 	return Controller.extend("claima.controller.App", {
 		onInit: function () {
 			var oReportModel = new JSONModel({
-				reportpurpose: "",
-				startdate: "",
-				enddate: "",
-				prerequest: "",
-				approvedamt: 0,
-				comment: ""
+				"purpose": "",
+				"startdate": "",
+				"enddate": "",
+				"category": "",
+				"amt_approved": "",
+				"comment": ""
 			});
 			this.getView().setModel(oReportModel, "report");
 		},
@@ -108,7 +108,8 @@ sap.ui.define([
 		},
 
 		onCreateReport: function () {
-			var oData = this.getView().getModel("report").getData();
+			var oCreateReportModel = this.getView().getModel("expensereport");
+			var oData = oCreateReportModel.getData();
 
 			var view = "expensereport";
 			this.oDialogFragment.close();

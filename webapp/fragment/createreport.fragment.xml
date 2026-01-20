@@ -72,15 +72,15 @@
                         id="createreport_amt_approved"
                     />
 					<Label text="{i18n>report_comment}" />
-                    <Input value="{report>/comment}" required="true" id="createreport_comment" />
+                    <Input value="{expensereport>/report/comment}" required="true" id="createreport_comment" />
 
-                    <Label text="Attachment Email Approval" />
+                    <!-- <Label text="Attachment Email Approval" />
                     <u:FileUploader
                         id="fileUploader"
                         name="myFileUpload"
                         uploadUrl="upload/"
                         uploadComplete="handleUploadComplete"
-                    />
+                    /> -->
                 </f:content>
             </f:SimpleForm>
      
