@@ -133,7 +133,7 @@ sap.ui.define([
 
 			// select visible buttons based on visible fragment
 			var button_set;
-			switch(oId) {
+			switch (oId) {
 				case "expensetypescr":
 					button_set = button_exp;
 					break;
@@ -153,6 +153,29 @@ sap.ui.define([
 			}
 
 		},
+		//To show or hide fields based on Claim Item
+		onClaimItemChange: function (oEvent) {
+			const sKey = oEvent.getSource().getSelectedKey();
+			//set ids 
+			const oFe = this.byId("claimFrag--trDateFE") || this.byId("trDateFE");
+			const oAltCost = this.byId("claimFrag--altcc") || this.byId("altcc");
+			const oStartDate = this.byId("claimFrag--startdate") || this.byId("startdate");
+			const oEndDate = this.byId("claimFrag--enddate") || this.byId("enddate");
+			const oRecptnum = this.byId("claimFrag--receiptnum") || this.byId("receiptnum");
+			const oVehicle = this.byId("claimFrag--vetype") || this.byId("vetype");
 
+
+			const claimShow = (sKey !== "claim2");
+
+			oFe.setVisible(claimShow);
+			oAltCost.setVisible(claimShow);
+			oStartDate.setVisible(claimShow);
+			oEndDate.setVisible(claimShow);
+			oRecptnum.setVisible(claimShow);
+			oVehicle.setVisible(claimShow);
+
+
+
+		}
 	});
 });
