@@ -106,8 +106,7 @@
 					"App.view.xml",
 					"App.controller.js",
 					"manifest.json",
-          "model/data.json", 
-          "view/navigation.fragment.xml"
+          "model/data.json"
 				]
 			}
 		}

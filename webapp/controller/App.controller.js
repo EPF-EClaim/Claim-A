@@ -56,14 +56,14 @@ sap.ui.define([
 
 			switch (oKey) {
 				case "createreport":
-					this.onClickCreateReport();
+					this.onNavCreateReport();
 					break;
 				default:
 					this.byId("pageContainer").to(this.getView().createId(oKey));
 					break;
 			}
 		},
-		onClickCreateReport: async function () {
+		onNavCreateReport: async function () {
 			if (!this.oDialogFragment) {
 				this.oDialogFragment = await Fragment.load({
 					// id: 
