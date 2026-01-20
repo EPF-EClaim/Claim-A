@@ -476,6 +476,17 @@
                         class="sapUiContentPadding">
                         <Text text="test text" />
                     </ScrollContainer>
+					<NavContainer
+						id="new_request"
+						class="sapUiContentPadding"
+						height="100%"
+						width="100%">
+						
+						<mvc:XMLView
+							id="request_form_view"
+							viewName="claima.view.RequestForm" />
+
+					</NavContainer>
                 </pages>
             </NavContainer>
         </tnt:mainContents>

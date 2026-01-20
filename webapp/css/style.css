@@ -1,3 +1,27 @@
 .button{
     height: 900px;
 }
+
+/* Start added by Jefry Yap */
+.requestDialog .sapMILILabel {
+    width: 40%;
+    flex: 0 0 40%;
+    box-sizing: border-box;
+    padding-right: 0.5rem;
+
+}
+
+.requestDialog .sapMILI-Content {
+  flex: 1 1 auto;
+  width: 60%;
+}
+
+.roundedBox {
+  border-radius: var(--sapElement_BorderCornerRadius, 0.5rem);
+  background: var(--sapGroup_ContentBackground, #fff);
+  padding: 0.75rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+
+/* End added by Jefry Yap */
