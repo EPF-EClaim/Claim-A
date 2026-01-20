@@ -1,18 +1,17 @@
 {
 	"draft": [
-    {
-    "ClaimId": 1,
-    "ClaimType": "Medical",
-    "ClaimDate": "01-Dec-2025"
-  },
-  {
-    "ClaimId": 2,
-    "ClaimType": "Travel",
-    "ClaimDate": "01-Jan-2026"
-  }
-  ], 
-"object": 
-	{
+		{
+			"ClaimId": 1,
+			"ClaimType": "Medical",
+			"ClaimDate": "01-Dec-2025"
+		},
+		{
+			"ClaimId": 2,
+			"ClaimType": "Travel",
+			"ClaimDate": "01-Jan-2026"
+		}
+	],
+	"object": {
 		"sap.app": {
 			"id": "sample.CardsLayout.model.object",
 			"type": "card"
@@ -32,8 +31,7 @@
 			}
 		}
 	},
-	"preclaim":
-	{
+	"preclaim": {
 		"sap.app": {
 			"id": "preclaim",
 			"type": "card"
@@ -52,9 +50,8 @@
 				"title": "{i18n>preclaim}"
 			}
 		}
-	}, 
-	"autoclaim":
-	{
+	},
+	"autoclaim": {
 		"sap.app": {
 			"id": "autoclaim",
 			"type": "card"
@@ -73,9 +70,8 @@
 				"title": "{i18n>autoclaim}"
 			}
 		}
-	}, 
-	"returnclaim":
-	{
+	},
+	"returnclaim": {
 		"sap.app": {
 			"id": "returnclaim",
 			"type": "card"
@@ -94,9 +90,8 @@
 				"title": "{i18n>returnclaim}"
 			}
 		}
-	}, 
-	"expensereport":
-	{
+	},
+	"expensereport": {
 		"sap.app": {
 			"id": "expensereport",
 			"type": "card"
@@ -106,18 +101,16 @@
 			"actions": [
 				{
 					"type": "Navigation",
-					"parameters": {
-						
-					}
+					"parameters": {}
 				}
 			],
 			"header": {
-				"title": "{i18n>expensereport}"
+				"title": "{i18n>expensereport}",
+				"subtitle": "{manifests>/testreportCount}"
 			}
 		}
 	},
-	"myrequest":
-	{
+	"myrequest": {
 		"sap.app": {
 			"id": "myrequest",
 			"type": "card"
@@ -127,9 +120,7 @@
 			"actions": [
 				{
 					"type": "Navigation",
-					"parameters": {
-						
-					}
+					"parameters": {}
 				}
 			],
 			"header": {
@@ -137,8 +128,7 @@
 			}
 		}
 	},
-	"approval":
-	{
+	"approval": {
 		"sap.app": {
 			"id": "approval",
 			"type": "card"
@@ -148,9 +138,26 @@
 			"actions": [
 				{
 					"type": "Navigation",
-					"parameters": {
-						
-					}
+					"parameters": {}
+				}
+			],
+			"header": {
+				"title": "{i18n>approval}"
+			}
+		}
+	},
+	"testreportCount": "count 5",
+	"mock_expensereport": {
+		"sap.app": {
+			"id": "approval",
+			"type": "card"
+		},
+		"sap.card": {
+			"type": "Object",
+			"actions": [
+				{
+					"type": "Navigation",
+					"parameters": {}
 				}
 			],
 			"header": {
@@ -158,6 +165,4 @@
 			}
 		}
 	}
-
-
 }

@@ -32,7 +32,7 @@
             <tnt:SideNavigation
                 expanded="true"
                 itemPress=".onNavItemPress"
-                selectedKey="{i18n>dashboard}"
+                selectedKey="dashboard"
                 itemSelect=".onNavItemSelect"
             >
                 <tnt:NavigationList>
@@ -469,11 +469,12 @@
                         </footer>
                     </Page>
                     <ScrollContainer
-                        id="claimdetailsview"
+                        id="analytics"
                         horizontal="false"
                         vertical="true"
                         height="100%"
                         class="sapUiContentPadding">
+                        <Text text="test text" />
                     </ScrollContainer>
                 </pages>
             </NavContainer>

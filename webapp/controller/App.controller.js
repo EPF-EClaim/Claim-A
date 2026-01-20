@@ -56,21 +56,21 @@ sap.ui.define([
 
 			switch (oKey) {
 				case "createreport":
-					this.onClickExpenseReport();
+					this.onClickCreateReport();
 					break;
 				default:
 					this.byId("pageContainer").to(this.getView().createId(oKey));
 					break;
 			}
 		},
-		onClickExpenseReport: async function () {
+		onClickCreateReport: async function () {
 			if (!this.oDialogFragment) {
 				this.oDialogFragment = await Fragment.load({
 					// id: 
 					// this.getView().getId(), 
-					//  "expense",
+					//  "createreport",
 
-					name: "claima.fragment.expense",
+					name: "claima.fragment.createreport",
 					type: "XML",
 					controller: this,
 				});
