@@ -39,7 +39,7 @@
                                 <f:FormElement label="{i18n>reportpurpose}">
                                     <f:fields>
                                         <Text
-                                            text="{report>/reportpurpose}"
+                                            text="{current>/report/purpose}"
                                             id="nameText"
                                         />
                                     </f:fields>
@@ -51,20 +51,20 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>startdate}">
                                     <f:fields>
-                                        <Text text="{report>/startdate}" />
+                                        <Text text="{current>/report/startdate}" />
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>enddate}">
                                     <f:fields>
                                         <Text
-                                            text="{report>/enddate}"
+                                            text="{current>/report/enddate}"
                                             id="countryText"
                                         />
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>prerequest}">
                                     <f:fields>
-                                        <Text text="{report>/prerequest}" />
+                                        <Text text="{current>/report/category}" />
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>location}">
@@ -78,7 +78,7 @@
                             <f:formElements>
                                 <f:FormElement label="{i18n>status}">
                                     <f:fields>
-                                        <Text text="{status}" />
+                                        <Text text="{current>/report/comment}" />
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>costcenter}">
@@ -98,7 +98,7 @@
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>approvedamt}">
                                     <f:fields>
-                                        <Text text="{report>/approvedamt}" />
+                                        <Text text="{current>/report/amt_approved}" />
                                     </f:fields>
                                 </f:FormElement>
                                 <f:FormElement label="{i18n>cashadv}">

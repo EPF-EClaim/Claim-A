@@ -30,23 +30,23 @@
             >
                 <f:content>
                     <Label text="{i18n>report_purpose}" />
-                    <Input value="{expensereport>/report/purpose}" required="true" id="createreport_purpose"/>
+                    <Input value="{input>/report/purpose}" required="true" id="createreport_purpose"/>
 
                     <Label text="{i18n>report_startdate}" />
                     <Input
-                        value="{expensereport>/report/startdate}"
+                        value="{input>/report/startdate}"
                         type="Date" required="true" id="createreport_startdate" 
                     />
                     <Label text="{i18n>report_enddate}" />
                     <Input
-                        value="{expensereport>/report/enddate}"
+                        value="{input>/report/enddate}"
                         type="Date" required="true" id="createreport_enddate"
                     />
 
                     <Label text="{i18n>report_category}" />
                     <Select
                         id="createreport_expcat"
-                        selectedKey="{expensereport>/report/category}"
+                        selectedKey="{input>/report/category}"
 						required="true"
                     >
                         <items>
@@ -67,12 +67,12 @@
 
                     <Label text="{i18n>report_amt_approved}" />
                     <Input
-                        value="{expensereport>/report/amt_approved}"
+                        value="{input>/report/amt_approved}"
                         type="Number"
                         id="createreport_amt_approved"
                     />
 					<Label text="{i18n>report_comment}" />
-                    <Input value="{expensereport>/report/comment}" required="true" id="createreport_comment" />
+                    <Input value="{input>/report/comment}" required="true" id="createreport_comment" />
 
                     <!-- <Label text="Attachment Email Approval" />
                     <u:FileUploader

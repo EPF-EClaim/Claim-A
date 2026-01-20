@@ -51,9 +51,17 @@
         "type": "sap.ui.model.json.JSONModel",
         "uri": "model/data.json"
       },
-      "expensereport":{
+      "current":{
         "type": "sap.ui.model.json.JSONModel",
-        "uri": "model/expensereport.json"
+        "uri": "model/data2.json"
+      },
+      "input":{
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "model/data2.json"
+      },
+      "mockdata":{
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "model/mockdata.json"
       },
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",

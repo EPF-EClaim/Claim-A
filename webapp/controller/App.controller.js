@@ -108,8 +108,13 @@ sap.ui.define([
 		},
 
 		onCreateReport: function () {
-			var oCreateReportModel = this.getView().getModel("expensereport");
-			var oData = oCreateReportModel.getData();
+			// validate input data
+			var oInputModel = this.getView().getModel("input");
+			var oInputData = oInputModel.getData();
+
+			// set as current data
+			var oCurrentModel = this.getView().getModel("current");
+			oCurrentModel.setData(oInputData);
 
 			var view = "expensereport";
 			this.oDialogFragment.close();
