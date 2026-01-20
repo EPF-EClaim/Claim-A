@@ -1,51 +1,23 @@
-<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
+<core:FragmentDefinition xmlns:unified="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
 	<Dialog title="{i18n>req_po_title}" contentWidth="40%" class="requestDialog">
 		<List showSeparators="None">
-			<InputListItem label="{i18n>req_purpose}">
+
+			<!-- Request Purpose -->
+			<InputListItem 
+				label="{i18n>req_purpose}"
+				labelTextDirection="RTL">
 				<Input
 					id="request_purpose"
-					placeholder=""
-					value=""
-					textAlign="Begin" />
+					textAlign="Begin"
+					required="true" />
 			</InputListItem>
-			<InputListItem label="{i18n>req_start_date}">
-                <DatePicker
-                    id="request_startdate"
-                    displayFormat="dd MMMM yyyy"  
-                    valueFormat="yyyy-MM-dd" 
-                    placeholder="dd MMMM yyyy"
-                    value="{
-                        path: 'EntryDate',
-                        type: 'sap.ui.model.type.Date',
-                        formatOptions: {
-                            pattern: 'yyyy-MM-dd'
-                        }
-                    }"
-					textAlign="Begin"/>
-			</InputListItem>
-			<InputListItem label="{i18n>req_end_date}">
-                <DatePicker
-                    id="request_enddate"
-                    displayFormat="dd MMMM yyyy"  
-                    valueFormat="yyyy-MM-dd" 
-                    placeholder="dd MMMM yyyy"
-                    value="{
-                        path: 'EntryDate',
-                        type: 'sap.ui.model.type.Date',
-                        formatOptions: {
-                            pattern: 'yyyy-MM-dd'
-                        }
-                    }"
-					textAlign="Begin"/>
-			</InputListItem>
-			<InputListItem label="{i18n>req_gtype}">
-				<Select width="100%">
-					<core:Item key="individual" text="Individual" />
-					<core:Item key="group" text="Group" />
-				</Select>
-			</InputListItem>
-            <InputListItem label="{i18n>req_rtype}">
-				<Select width="100%">
+
+			<!-- Request Type -->
+			<InputListItem 
+				label="{i18n>req_rtype}"
+				labelTextDirection="RTL">
+				<Select width="100%" selectedKey="{view>/rtype}" required="true">
+					<core:Item text="Please select the Claim Type"></core:Item>
 					<core:Item key="travel" text="Travel" />
 					<core:Item key="mobile" text="Mobile Phone Bill" />
 					<core:Item key="event" text="Event" />
@@ -53,19 +25,166 @@
 					<core:Item key="cash_adv" text="Cash Advance" />
 				</Select>
 			</InputListItem>
-			<InputListItem label="{i18n>req_alt_cc}">
-				<Input
-					id="request_alt_cost_center"
-					placeholder=""
-					value=""
-					textAlign="Begin" />
+
+			<!-- Trip/Report Start Date -->
+			<InputListItem 
+				label="{i18n>req_start_date}"
+				labelTextDirection="RTL"
+				visible="{= ${view>/rtype} === 'travel' || ${view>/rtype} === 'event' }">
+                <DatePicker
+                    id="request_startdate"
+                    displayFormat="dd MMMM yyyy"  
+                    valueFormat="yyyy-MM-dd" 
+                    placeholder="dd MMMM yyyy"
+					required="true"
+                    value="{
+                        path: 'EntryDate',
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: {
+                            pattern: 'yyyy-MM-dd'
+                        }
+                    }"
+					textAlign="Begin"/>
 			</InputListItem>
-			<InputListItem label="{i18n>req_comment}">
+
+			<!-- Trip/Report End Date -->
+			<InputListItem 
+				label="{i18n>req_end_date}"
+				labelTextDirection="RTL"
+				visible="{= ${view>/rtype} === 'travel' || ${view>/rtype} === 'event' }">
+                <DatePicker
+                    id="request_enddate"
+                    displayFormat="dd MMMM yyyy"  
+                    valueFormat="yyyy-MM-dd" 
+                    placeholder="dd MMMM yyyy"
+					required="true"
+                    value="{
+                        path: 'EntryDate',
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: {
+                            pattern: 'yyyy-MM-dd'
+                        }
+                    }"
+					textAlign="Begin"/>
+			</InputListItem>
+
+			<!-- Individual/Group -->
+			<InputListItem 
+				label="{i18n>req_gtype}"
+				labelTextDirection="RTL"
+				visible="{= ${view>/rtype} === 'travel' || ${view>/rtype} === 'event' }">
+				<Select width="100%" required="true">
+					<core:Item key="individual" text="Individual" />
+					<core:Item key="group" text="Group" />
+				</Select>
+			</InputListItem>
+
+			<!-- Location -->
+			<InputListItem 
+				label="Location"
+				labelTextDirection="RTL"
+				visible="{= ${view>/rtype} === 'travel' || ${view>/rtype} === 'event' }">
+				<Input 
+					id="request_location"
+					textAlign="Begin"
+					required="true" />
+			</InputListItem>
+
+			<!-- Type of Transportation -->
+			<InputListItem 
+				label="Type of Transportation" 
+				labelTextDirection="RTL"
+				visible="{= ${view>/rtype} === 'travel' || ${view>/rtype} === 'event' }">
+				<Select width="100%" selectedKey="" required="true">
+					<core:Item key="tot1" text="TOT1" />
+					<core:Item key="tot2" text="TOT2" />
+					<core:Item key="tot3" text="TOT3" />
+					<core:Item key="tot4" text="TOT4" />
+					<core:Item key="tot5" text="TOT5" />
+				</Select>
+			</InputListItem>
+
+			<!-- Event Detail -->
+			<InputListItem 
+				label="Event Detail"
+				labelTextDirection="RTL"
+				visible="{= ${view>/rtype} === 'travel' || ${view>/rtype} === 'event' }">
+				<Input 
+					id="req_event_detail"
+					textAlign="Begin"
+					required="false"/>
+			</InputListItem>
+
+			<!-- Event Policy -->
+			<InputListItem 
+				label="Policy"
+				labelTextDirection="RTL"
+				visible="{= ${view>/rtype} === 'travel' || ${view>/rtype} === 'event' }">
+				<Input 
+					id="req_policy"
+					textAlign="Begin"
+					required="false"/>
+			</InputListItem>
+
+			<!-- Alternate Cost Center -->
+			<InputListItem 
+				label="{i18n>req_alt_cc}" 
+				labelTextDirection="RTL"
+				visible="{= ${view>/rtype} === 'travel' || ${view>/rtype} === 'event' }">
+				<Select width="100%" selectedKey="" required="true">
+					<core:Item key="cc1" text="CC1" />
+					<core:Item key="cc2" text="CC2" />
+					<core:Item key="cc3" text="CC3" />
+					<core:Item key="cc4" text="CC4" />
+					<core:Item key="cc5" text="CC5" />
+				</Select>
+			</InputListItem>
+
+			<!-- Cash Advance Type -->
+			<InputListItem 
+				label="Cash Advance Type" 
+				labelTextDirection="RTL"
+				visible="{= ${view>/rtype} === 'travel' || ${view>/rtype} === 'event' }">
+				<Select width="100%" selectedKey="" required="true">
+					<core:Item key="cat1" text="CAT1" />
+					<core:Item key="cat2" text="CAT2" />
+					<core:Item key="cat3" text="CAT3" />
+					<core:Item key="cat4" text="CAT4" />
+					<core:Item key="cat5" text="CAT5" />
+				</Select>
+			</InputListItem>
+
+			<!-- Attachment 1 -->
+			<InputListItem 
+				label="Attachment 1"
+				labelTextDirection="RTL"
+				visible="{= ${view>/rtype} === 'travel' || ${view>/rtype} === 'event' }">
+				<unified:FileUploader
+					id="req_attachment_1"
+					icon="sap-icon://upload"
+					change=".onImportChange"/>
+			</InputListItem>
+
+			<!-- Attachment 2 -->
+			<InputListItem 
+				label="Attachment 2"
+				labelTextDirection="RTL"
+				visible="{= ${view>/rtype} === 'travel' || ${view>/rtype} === 'event' }">
+				<unified:FileUploader
+					id="req_attachment_2"
+					icon="sap-icon://upload"
+					change=".onImportChange"/>
+			</InputListItem>
+
+			<!-- Comment -->
+			<InputListItem 
+				label="{i18n>req_comment}"
+				labelTextDirection="RTL"
+				visible="{= ${view>/rtype} === 'travel' || ${view>/rtype} === 'event' }">
 				<Input
 					id="request_comment"
-					placeholder=""
-					value=""
-					textAlign="Begin" />
+					textAlign="Begin"
+					required="true" />
 			</InputListItem>
 		</List>
 		<HBox id="request_placeholder" alignItems="Center" justifyContent="End" class="sapUiSmallMarginEnd" columnGap="0.5rem">

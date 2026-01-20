@@ -1,10 +1,15 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller"
-], function(
-	Controller
-) {
-	"use strict";
+    "sap/ui/core/mvc/Controller",
+    "sap/m/MessageToast"
+], (Controller, MessageToast) => {
+    "use strict";
 
-	return Controller.extend("claima.controller.Request", {
-	});
+    return Controller.extend("claima.controller.RequestForm", {
+        onInit() {
+            
+            
+
+        }
+    });
+
 });

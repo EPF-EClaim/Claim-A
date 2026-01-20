@@ -98,7 +98,7 @@
 			</tnt:SideNavigation>
 		</tnt:sideContent>
 		<tnt:mainContents>
-			<NavContainer id="pageContainer" initialPage="dashboard">
+			<NavContainer id="pageContainer" initialPage="new_request">
 				<pages>
 					<ScrollContainer
 						id="dashboard"
@@ -359,18 +359,17 @@
 						class="sapUiContentPadding">
 						<Text text="This is the root page of the second element" />
 					</ScrollContainer>
-					<ScrollContainer
+					<NavContainer
 						id="new_request"
-						horizontal="false"
-						vertical="false"
+						class="sapUiContentPadding"
 						height="100%"
-						class="sapUiContentPadding">
+						width="100%">
 						
 						<mvc:XMLView
-							id="request_form_page"
+							id="request_form_view"
 							viewName="claima.view.RequestForm" />
 
-					</ScrollContainer>
+					</NavContainer>
 				</pages>
 			</NavContainer>
 		</tnt:mainContents>
