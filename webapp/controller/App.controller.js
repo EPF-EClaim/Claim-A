@@ -30,7 +30,7 @@ sap.ui.define([
 
 			// oViewModel
 			const oViewModel = new sap.ui.model.json.JSONModel({
-					rtype: "" // current selected request type
+				rtype: "" // current selected request type
 			});
 			this.getView().setModel(oViewModel, "view");
 
@@ -75,7 +75,7 @@ sap.ui.define([
 					this.byId("pageContainer").to(this.getView().createId(oKey));
 					break;
 			}
-		
+
 			// if (oKey == "createreport" || oKey == "myrequest") {
 			// 	this.onClickExpenseReport();
 			// } else {
@@ -93,10 +93,10 @@ sap.ui.define([
 					type: "XML",
 					controller: this,
 				});
-				this.getView().addDependent(this.oDialogFragment);		
-				
+				this.getView().addDependent(this.oDialogFragment);
+
 				// Start added by Jefry Yap
-				this.oDialogFragment.attachAfterClose(() =>{
+				this.oDialogFragment.attachAfterClose(() => {
 					this.oDialogFragment.destroy();
 					this.oDialogFragment = null;
 				});
@@ -188,7 +188,7 @@ sap.ui.define([
 			}
 
 		},
-		//To show or hide fields based on Claim Item
+		//Start added by Aiman Salim - To show or hide fields based on Claim Item
 		onClaimItemChange: function (oEvent) {
 			const sKey = oEvent.getSource().getSelectedKey();
 			//set ids 
@@ -209,54 +209,59 @@ sap.ui.define([
 			oRecptnum.setVisible(claimShow);
 			oVehicle.setVisible(claimShow);
 
-
-
 		},
+
+		onPressNavToDetail: function (oEvent) {
+			var oItem = oEvent.getParameter("item");
+			this.byId("pageContainer").to(this.getView().byId('new_request'));
+		},
+
+		//End added by Aiman Salim
 		// Start added by Jefry Yap 15-01-2026
 		onClickMyRequest: async function () {
 			// const oConfig = new JSONModel({
-            //     types: [
-            //     { key: "T1", text: "Type A" },
-            //     { key: "T2", text: "Type B" },
-            //     { key: "T3", text: "Type C" },
-            //     { key: "T4", text: "Type D" },
-            //     { key: "T5", text: "Type E" }
-            //     ],
-            //     fieldSets: {
-            //         type: {
-            //             T1: [
-            //                 { id: "priority", label: "Priority", control: "Select", path: "/form/priority",
-            //                     items: [
-            //                     { key: "H", text: "High" },
-            //                     { key: "M", text: "Medium" },
-            //                     { key: "L", text: "Low" }
-            //                     ],
-            //                     required: true
-            //                 }
-            //             ],
-            //             T2: [
-            //                 { id: "amount", label: "Amount", control: "Input", type: "Number", path: "/form/amount" }
-            //             ],
-            //             T3: [
-            //                 { id: "costCenter", label: "Cost Center", control: "Input", path: "/form/costCenter" }
-            //             ],
-            //             T4: [
-            //                 { id: "attachment", label: "Attachment", control: "FileUploader", path: "/form/attachment" }
-            //             ],
-            //             T5: [
-            //                 { id: "category", label: "Category", control: "Select", path: "/form/category",
-            //                     items: [
-            //                     { key: "A", text: "Cat A" },
-            //                     { key: "B", text: "Cat B" }
-            //                     ]
-            //                 }
-            //             ]
-            //         }
-            //     },
-            //     selection: { purpose: "", type: "" },
-            //     form: {}
-            // });
-            // this.getView().setModel(oConfig, "config");
+			//     types: [
+			//     { key: "T1", text: "Type A" },
+			//     { key: "T2", text: "Type B" },
+			//     { key: "T3", text: "Type C" },
+			//     { key: "T4", text: "Type D" },
+			//     { key: "T5", text: "Type E" }
+			//     ],
+			//     fieldSets: {
+			//         type: {
+			//             T1: [
+			//                 { id: "priority", label: "Priority", control: "Select", path: "/form/priority",
+			//                     items: [
+			//                     { key: "H", text: "High" },
+			//                     { key: "M", text: "Medium" },
+			//                     { key: "L", text: "Low" }
+			//                     ],
+			//                     required: true
+			//                 }
+			//             ],
+			//             T2: [
+			//                 { id: "amount", label: "Amount", control: "Input", type: "Number", path: "/form/amount" }
+			//             ],
+			//             T3: [
+			//                 { id: "costCenter", label: "Cost Center", control: "Input", path: "/form/costCenter" }
+			//             ],
+			//             T4: [
+			//                 { id: "attachment", label: "Attachment", control: "FileUploader", path: "/form/attachment" }
+			//             ],
+			//             T5: [
+			//                 { id: "category", label: "Category", control: "Select", path: "/form/category",
+			//                     items: [
+			//                     { key: "A", text: "Cat A" },
+			//                     { key: "B", text: "Cat B" }
+			//                     ]
+			//                 }
+			//             ]
+			//         }
+			//     },
+			//     selection: { purpose: "", type: "" },
+			//     form: {}
+			// });
+			// this.getView().setModel(oConfig, "config");
 
 			if (!this.oDialogFragment) {
 				this.oDialogFragment = await Fragment.load({
@@ -265,9 +270,9 @@ sap.ui.define([
 					type: "XML",
 					controller: this,
 				});
-				this.getView().addDependent(this.oDialogFragment);	
-				
-				this.oDialogFragment.attachAfterClose(() =>{
+				this.getView().addDependent(this.oDialogFragment);
+
+				this.oDialogFragment.attachAfterClose(() => {
 					this.oDialogFragment.destroy();
 					this.oDialogFragment = null;
 				});
@@ -283,7 +288,7 @@ sap.ui.define([
 			this.byId("pageContainer").to(this.getView().byId('new_request'));
 		},
 
-		
+
 		onDialogCancel: function (oEvent) {
 			oEvent.getSource().getParent().close();
 		},
@@ -313,7 +318,7 @@ sap.ui.define([
 			const sType = oConfig.getProperty("/selection/type");
 
 			const aPurposeFields = (sPurpose && oConfig.getProperty("/fieldSets/purpose/" + sPurpose)) || [];
-			const aTypeFields    = (sType && oConfig.getProperty("/fieldSets/type/" + sType)) || [];
+			const aTypeFields = (sType && oConfig.getProperty("/fieldSets/type/" + sType)) || [];
 
 			// Merge fields; you can also dedupe by id if overlaps possible
 			const aFields = aPurposeFields.concat(aTypeFields);
@@ -327,79 +332,79 @@ sap.ui.define([
 			aFields.forEach(function (fdef) {
 				// Label
 				oSF.addContent(new sap.m.Label({
-				text: fdef.label,
-				required: !!fdef.required,
-				labelFor: fdef.id
+					text: fdef.label,
+					required: !!fdef.required,
+					labelFor: fdef.id
 				}));
 
 				// Control factory
 				let oCtrl = null;
 				switch (fdef.control) {
-				case "Input":
-					oCtrl = new Input(fdef.id, {
-					type: fdef.type === "Number" ? "Number" : "Text",
-					value: "{config>" + fdef.path + "}"
-					});
-					break;
+					case "Input":
+						oCtrl = new Input(fdef.id, {
+							type: fdef.type === "Number" ? "Number" : "Text",
+							value: "{config>" + fdef.path + "}"
+						});
+						break;
 
-				case "TextArea":
-					oCtrl = new TextArea(fdef.id, {
-					value: "{config>" + fdef.path + "}",
-					rows: 3,
-					growing: true
-					});
-					break;
+					case "TextArea":
+						oCtrl = new TextArea(fdef.id, {
+							value: "{config>" + fdef.path + "}",
+							rows: 3,
+							growing: true
+						});
+						break;
 
-				case "DatePicker":
-					oCtrl = new DatePicker(fdef.id, {
-					value: "{config>" + fdef.path + "}",
-					valueFormat: "yyyy-MM-dd",
-					displayFormat: "medium"
-					});
-					break;
+					case "DatePicker":
+						oCtrl = new DatePicker(fdef.id, {
+							value: "{config>" + fdef.path + "}",
+							valueFormat: "yyyy-MM-dd",
+							displayFormat: "medium"
+						});
+						break;
 
-				case "Select":
-					oCtrl = new Select(fdef.id, {
-					selectedKey: "{config>" + fdef.path + "}"
-					});
-					// local items
-					if (Array.isArray(fdef.items)) {
-					fdef.items.forEach(function (it) {
-						oCtrl.addItem(new Item({ key: it.key, text: it.text }));
-					});
-					} else if (fdef.itemsPath) {
-					// dynamic items binding example
-					oCtrl.bindItems({
-						path: "config>" + fdef.itemsPath,
-						template: new Item({ key: "{config>key}", text: "{config>text}" })
-					});
-					}
-					break;
+					case "Select":
+						oCtrl = new Select(fdef.id, {
+							selectedKey: "{config>" + fdef.path + "}"
+						});
+						// local items
+						if (Array.isArray(fdef.items)) {
+							fdef.items.forEach(function (it) {
+								oCtrl.addItem(new Item({ key: it.key, text: it.text }));
+							});
+						} else if (fdef.itemsPath) {
+							// dynamic items binding example
+							oCtrl.bindItems({
+								path: "config>" + fdef.itemsPath,
+								template: new Item({ key: "{config>key}", text: "{config>text}" })
+							});
+						}
+						break;
 
-				case "FileUploader":
-					oCtrl = new FileUploader(fdef.id, {
-					fileType: ["pdf", "png", "jpg"],
-					maximumFileSize: 10, // MB
-					change: this._onFileSelected.bind(this, fdef.path)
-					});
-					break;
+					case "FileUploader":
+						oCtrl = new FileUploader(fdef.id, {
+							fileType: ["pdf", "png", "jpg"],
+							maximumFileSize: 10, // MB
+							change: this._onFileSelected.bind(this, fdef.path)
+						});
+						break;
 
-				default:
-					oCtrl = new Input(fdef.id, {
-					value: "{config>" + fdef.path + "}"
-					});
+					default:
+						oCtrl = new Input(fdef.id, {
+							value: "{config>" + fdef.path + "}"
+						});
 				}
 
 				// Simple required check on change (optional)
 				if (fdef.required && oCtrl.setValueState) {
-				const fnValidate = () => {
-					const v = oConfig.getProperty(fdef.path);
-					const empty = v === undefined || v === null || v === "";
-					oCtrl.setValueState(empty ? ValueState.Error : ValueState.None);
-				};
-				oCtrl.attachChange(fnValidate);
-				// run once
-				setTimeout(fnValidate, 0);
+					const fnValidate = () => {
+						const v = oConfig.getProperty(fdef.path);
+						const empty = v === undefined || v === null || v === "";
+						oCtrl.setValueState(empty ? ValueState.Error : ValueState.None);
+					};
+					oCtrl.attachChange(fnValidate);
+					// run once
+					setTimeout(fnValidate, 0);
 				}
 
 				oSF.addContent(oCtrl);
@@ -422,7 +427,7 @@ sap.ui.define([
 
 			// Basic validation
 			const aPurposeFields = (sPurpose && oModel.getProperty("/fieldSets/purpose/" + sPurpose)) || [];
-			const aTypeFields    = (sType && oModel.getProperty("/fieldSets/type/" + sType)) || [];
+			const aTypeFields = (sType && oModel.getProperty("/fieldSets/type/" + sType)) || [];
 			const aFields = aPurposeFields.concat(aTypeFields);
 
 			const missing = aFields.filter(f => f.required).filter(f => {
