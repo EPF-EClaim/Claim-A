@@ -44,7 +44,43 @@ sap.ui.define([
 				"comment": ""
 			});
 			this.getView().setModel(oReportModel, "report");
+
+			//Start insert Aiman Salim - 21/1/2026
+			const oMyRequestModel = new JSONModel({
+				requests: [
+					{
+						reportpurpose: "Travel Claim",
+						reportid: "REQ001",
+						startdate: "2026-01-01",
+						status: "Approved",
+						amount: "1200"
+					},
+					{
+						reportpurpose: "Training Expense",
+						reportid: "REQ002",
+						startdate: "2026-01-10",
+						status: "Pending",
+						amount: "850"
+					}
+				]
+			});
+
+			this.getView().setModel(oMyRequestModel, "myRequest");
 		},
+		onRowPress: function (oEvent) {
+			const oItem = oEvent.getParameter("listItem");
+			const oData = oItem.getBindingContext("myRequest").getObject();
+
+			//Optional: pass data to the next page via a model
+			const oNextPageModel = new JSONModel(oData);
+			const oNextPage = this.byId("new_request");
+			oNextPage.setModel(oNextPageModel, "selectedRequest");
+
+			//Navigate to next page
+			this.byId("pageContainer").to(oNextPage);
+		},
+
+		//End insert Aiman Salim - 21/1/2026
 
 		onCollapseExpandPress: function () {
 			var oModel = this.getView().getModel();
