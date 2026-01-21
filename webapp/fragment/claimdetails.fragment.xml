@@ -1,4 +1,5 @@
 <core:FragmentDefinition
+    xmlns:form="sap.fe.macros.form"
     xmlns:l="sap.ui.layout"
     xmlns:core="sap.ui.core"
     xmlns:mvc="sap.ui.core.mvc"
@@ -35,12 +36,13 @@
                             emptySpanM="0"
                             emptySpanS="0"
                             columnsXL="2"
-                            columnsL="1"
+                            columnsL="2"
                             columnsM="1"
                             singleContainerFullSize="false"
                         />
                     </f:layout>
                     <f:formContainers>
+                        <!-- ===== Left Column side ==== -->
                         <f:FormContainer>
                             <f:formElements>
                                 <f:FormElement label="Claim Type">
@@ -78,8 +80,146 @@
                                         </items>
                                     </Select>
                                 </f:FormElement>
+                                <f:FormElement
+                                    id="trDateFE"
+                                    label="Transaction/Receipt Date"
+                                    visible="{= ${form>/claimItem} !== 'claim2' }"
+                                >
+                                    <f:fields>
+                                        <DatePicker
+                                            value="{form>/transaction_receipt}"
+                                            displayFormat="dd-MM-yyyy"
+                                            placeholder="Select Date"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement
+                                    id="altcc"
+                                    label="Alternate Cost Center"
+                                    visible="{= ${form>/claimItem} !== 'claim2' }"
+                                >
+                                    <Select
+                                        id="altcostcenter"
+                                        selectedKey="{altcc}"
+                                    >
+                                        <items>
+                                            <core:Item
+                                                text="Cost Center"
+                                                key="cc1"
+                                            />
+                                        </items>
+                                    </Select>
+                                </f:FormElement>
+
+                                <f:FormElement
+                                    id="enddate"
+                                    label="End Date"
+                                    visible="{= ${form>/claimItem} !== 'claim2' }"
+                                >
+                                    <f:fields>
+                                        <DatePicker
+                                            value="{enddate}"
+                                            displayFormat="dd-MM-yyyy"
+                                            placeholder="Select Date"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+
+                                <f:FormElement
+                                    id="km"
+                                    label="Kilometer"
+                                    visible="{= ${form>/claimItem} !== 'claim2' }"
+                                >
+                                    <f:fields>
+                                        <Input
+                                            value="{km}"
+                                            type="Number"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+
+                                <f:FormElement
+                                    id="billno"
+                                    label="Bill No"
+                                    visible="{= ${form>/claimItem} !== 'claim2' }"
+                                >
+                                    <f:fields>
+                                        <Input
+                                            value="{billno}"
+                                            type="Text"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+
+                                <f:FormElement
+                                    id="toll"
+                                    label="Toll"
+                                    visible="{= ${form>/claimItem} !== 'claim2' }"
+                                >
+                                    <f:fields>
+                                        <Input
+                                            value="{toll}"
+                                            type="Number"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+
+                                <f:FormElement
+                                    id="fromloc"
+                                    label="From Location"
+                                    visible="{= ${form>/claimItem} !== 'claim2' }"
+                                >
+                                    <f:fields>
+                                        <Input
+                                            value="{fromloc}"
+                                            type="Text"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement
+                                    id="compensation"
+                                    label="% Compensation"
+                                    visible="{= ${form>/claimItem} !== 'claim2' }"
+                                >
+                                    <f:fields>
+                                        <Input
+                                            value="{compensation}"
+                                            type="Text"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+
+                                <f:FormElement
+                                    id="numfm"
+                                    label="Num of Family Members"
+                                    visible="{= ${form>/claimItem} !== 'claim2' }"
+                                >
+                                    <f:fields>
+                                        <Input
+                                            value="{numfm}"
+                                            type="Number"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement
+                                    id="attachment"
+                                    label="Attachment"
+                                    visible="true"
+                                >
+                                    <f:fields>
+                                        <u:FileUploader
+                                            id="claimAttachment"
+                                            uploadUrl=""
+                                            width="100%"
+                                            placeholder="Choose file"
+                                            fileType="pdf,jpg,png"
+                                            maximumFileSize="10"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
                             </f:formElements>
                         </f:FormContainer>
+                        <!-- ===== Right Column side ==== -->
                         <f:FormContainer>
                             <f:formElements>
                                 <f:FormElement label="Claim Item">
@@ -109,38 +249,6 @@
                                     </f:fields>
                                 </f:FormElement>
                             </f:formElements>
-                        </f:FormContainer>
-                        <f:FormContainer>
-                            <f:FormElement
-                                id="trDateFE"
-                                label="Transaction/Receipt Date"
-                                visible="{= ${form>/claimItem} !== 'claim2' }"
-                            >
-                                <f:fields>
-                                    <DatePicker
-                                        value="{form>/transaction_receipt}"
-                                        displayFormat="dd-MM-yyyy"
-                                        placeholder="Select Date"
-                                    />
-                                </f:fields>
-                            </f:FormElement>
-                            <f:FormElement
-                                id="altcc"
-                                label="Alternate Cost Center"
-                                visible="{= ${form>/claimItem} !== 'claim2' }"
-                            >
-                                <Select
-                                    id="altcostcenter"
-                                    selectedKey="{altcc}"
-                                >
-                                    <items>
-                                        <core:Item
-                                            text="Cost Center"
-                                            key="cc1"
-                                        />
-                                    </items>
-                                </Select>
-                            </f:FormElement>
                             <f:FormElement
                                 id="receiptnum"
                                 label="Receipt Number"
@@ -167,19 +275,6 @@
                                 </f:fields>
                             </f:FormElement>
                             <f:FormElement
-                                id="enddate"
-                                label="End Date"
-                                visible="{= ${form>/claimItem} !== 'claim2' }"
-                            >
-                                <f:fields>
-                                    <DatePicker
-                                        value="{enddate}"
-                                        displayFormat="dd-MM-yyyy"
-                                        placeholder="Select Date"
-                                    />
-                                </f:fields>
-                            </f:FormElement>
-                            <f:FormElement
                                 id="vetype"
                                 label="Type of Vehicle"
                                 visible="{= ${form>/claimItem} !== 'claim2' }"
@@ -197,18 +292,6 @@
                                 </Select>
                             </f:FormElement>
                             <f:FormElement
-                                id="km"
-                                label="Kilometer"
-                                visible="{= ${form>/claimItem} !== 'claim2' }"
-                            >
-                                <f:fields>
-                                    <Input
-                                        value="{km}"
-                                        type="Number"
-                                    />
-                                </f:fields>
-                            </f:FormElement>
-                            <f:FormElement
                                 id="rpkm"
                                 label="Rate Per Kilometer"
                                 visible="{= ${form>/claimItem} !== 'claim2' }"
@@ -220,18 +303,7 @@
                                     />
                                 </f:fields>
                             </f:FormElement>
-                            <f:FormElement
-                                id="billno"
-                                label="Bill No"
-                                visible="{= ${form>/claimItem} !== 'claim2' }"
-                            >
-                                <f:fields>
-                                    <Input
-                                        value="{billno}"
-                                        type="Text"
-                                    />
-                                </f:fields>
-                            </f:FormElement>
+
                             <f:FormElement
                                 id="accountno"
                                 label="Account No"
@@ -244,18 +316,7 @@
                                     />
                                 </f:fields>
                             </f:FormElement>
-                            <f:FormElement
-                                id="toll"
-                                label="Toll"
-                                visible="{= ${form>/claimItem} !== 'claim2' }"
-                            >
-                                <f:fields>
-                                    <Input
-                                        value="{toll}"
-                                        type="Number"
-                                    />
-                                </f:fields>
-                            </f:FormElement>
+
                             <f:FormElement
                                 id="parking"
                                 label="Parking"
@@ -265,18 +326,6 @@
                                     <Input
                                         value="{parking}"
                                         type="Number"
-                                    />
-                                </f:fields>
-                            </f:FormElement>
-                            <f:FormElement
-                                id="fromloc"
-                                label="From Location"
-                                visible="{= ${form>/claimItem} !== 'claim2' }"
-                            >
-                                <f:fields>
-                                    <Input
-                                        value="{fromloc}"
-                                        type="Text"
                                     />
                                 </f:fields>
                             </f:FormElement>
@@ -292,18 +341,7 @@
                                     />
                                 </f:fields>
                             </f:FormElement>
-                            <f:FormElement
-                                id="compensation"
-                                label="% Compensation"
-                                visible="{= ${form>/claimItem} !== 'claim2' }"
-                            >
-                                <f:fields>
-                                    <Input
-                                        value="{compensation}"
-                                        type="Text"
-                                    />
-                                </f:fields>
-                            </f:FormElement>
+
                             <f:FormElement
                                 id="sjss"
                                 label="Semananjung Or Sabah Sarawak"
@@ -332,18 +370,6 @@
                                         />
                                     </items>
                                 </Select>
-                            </f:FormElement>
-                            <f:FormElement
-                                id="numfm"
-                                label="Num of Family Members"
-                                visible="{= ${form>/claimItem} !== 'claim2' }"
-                            >
-                                <f:fields>
-                                    <Input
-                                        value="{numfm}"
-                                        type="Number"
-                                    />
-                                </f:fields>
                             </f:FormElement>
                             <f:FormElement
                                 id="staffca"
@@ -375,6 +401,29 @@
                                 </Select>
                             </f:FormElement>
                             <f:FormElement
+                                id="claimpurpose"
+                                label="Fields for employee to categorize the amount purpose - Mobile Data Plan, Calls"
+                                visible="{= ${form>/claimItem} !== 'claim2' }"
+                            >
+                                <Select
+                                    id="claimpurposedd"
+                                    selectedKey="{claimpurpose}"
+                                >
+                                    <items>
+                                        <core:Item
+                                            text="Mobile Data Plan"
+                                            key="mdp"
+                                        />
+                                    </items>
+                                    <items>
+                                        <core:Item
+                                            text="Calls"
+                                            key="call"
+                                        />
+                                    </items>
+                                </Select>
+                            </f:FormElement>
+                             <f:FormElement
                                 id="remarks"
                                 label="Remarks/Justification"
                                 visible="{= ${form>/claimItem} !== 'claim2' }"
@@ -386,6 +435,22 @@
                                     />
                                 </f:fields>
                             </f:FormElement>
+                            <f:FormElement
+                                    id="attachment2"
+                                    label="Attachment 2"
+                                    visible="true"
+                                >
+                                    <f:fields>
+                                        <u:FileUploader
+                                            id="claimAttachment2"
+                                            uploadUrl=""
+                                            width="100%"
+                                            placeholder="Choose file"
+                                            fileType="pdf,jpg,png"
+                                            maximumFileSize="10"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
                         </f:FormContainer>
                     </f:formContainers>
                 </f:Form>

@@ -361,15 +361,18 @@
                                             <f:GridContainerSettings
                                                 rowSize="5rem"
                                                 columnSize="25rem"
-                                                gap="1rem"/>
+                                                gap="1rem"
+                                            />
                                         </f:layout>
                                         <w:Card
                                             manifest="{manifests>/autoclaim}"
-                                            action="onAction">
+                                            action="onAction"
+                                        >
                                             <w:layoutData>
                                                 <f:GridContainerItemLayoutData
                                                     minRows="4"
-                                                    columns="3"/>
+                                                    columns="3"
+                                                />
                                             </w:layoutData>
                                         </w:Card>
                                     </f:GridContainer>
@@ -377,21 +380,25 @@
                                 <VBox
                                     height="110px"
                                     class="sapUiSmallMargin"
-                                    justifyContent="SpaceBetween">
+                                    justifyContent="SpaceBetween"
+                                >
                                     <f:GridContainer>
                                         <f:layout>
                                             <f:GridContainerSettings
                                                 rowSize="5rem"
                                                 columnSize="25rem"
-                                                gap="1rem"/>
+                                                gap="1rem"
+                                            />
                                         </f:layout>
                                         <w:Card
                                             manifest="{manifests>/returnclaim}"
-                                            action="onAction">
+                                            action="onAction"
+                                        >
                                             <w:layoutData>
                                                 <f:GridContainerItemLayoutData
                                                     minRows="4"
-                                                    columns="3"/>
+                                                    columns="3"
+                                                />
                                             </w:layoutData>
                                         </w:Card>
                                     </f:GridContainer>
@@ -401,20 +408,27 @@
                     </ScrollContainer>
                     <Page
                         id="expensereport"
-                        showHeader="false">
+                        showHeader="false"
+                    >
                         <content>
                             <VBox id="main">
                                 <core:Fragment
                                     fragmentName="claima.fragment.report"
                                     type="XML"
                                 />
-                                <VBox id="expensetypescr" visible="true">
+                                <VBox
+                                    id="expensetypescr"
+                                    visible="true"
+                                >
                                     <core:Fragment
                                         fragmentName="claima.fragment.expensetype"
                                         type="XML"
                                     />
                                 </VBox>
-                                <VBox id="claimscr" visible="false">
+                                <VBox
+                                    id="claimscr"
+                                    visible="false"
+                                >
                                     <core:Fragment
                                         fragmentName="claima.fragment.claimdetails"
                                         type="XML"
@@ -422,7 +436,7 @@
                                 </VBox>
                             </VBox>
                         </content>
-                        <footer >
+                        <footer>
                             <Toolbar>
                                 <ToolbarSpacer />
                                 <Button
@@ -468,12 +482,14 @@
                             </Toolbar>
                         </footer>
                     </Page>
+
                     <ScrollContainer
                         id="analytics"
                         horizontal="false"
                         vertical="true"
                         height="100%"
-                        class="sapUiContentPadding">
+                        class="sapUiContentPadding"
+                    >
                         <Text text="test text" />
                     </ScrollContainer>
 					<NavContainer
@@ -488,6 +504,24 @@
 
 					</NavContainer>
                 </pages>
+                <!-- === My Request Page (added) === -->
+                <Page id="myrequest" showHeader="false" class="sapUiNoContentPadding">
+                    <content>
+                        <core:Fragment
+                            fragmentName="claima.fragment.myrequestform"
+                            type="XML"
+                        />
+                    </content>
+                </Page>
+                <!-- === My Request Report (added) === -->
+                <Page id="myreport" showHeader="false" class="sapUiNoContentPadding">
+                    <content>
+                        <core:Fragment
+                            fragmentName="claima.fragment.myrequestreport"
+                            type="XML"
+                        />
+                    </content>
+                </Page>
             </NavContainer>
         </tnt:mainContents>
     </tnt:ToolPage>

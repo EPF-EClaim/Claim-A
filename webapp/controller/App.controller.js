@@ -33,6 +33,7 @@ sap.ui.define([
 			});
 			this.getView().setModel(oViewModel, "view");
 
+			this.getView().setModel(oReportModel, "report");
 		},
 
 		onCollapseExpandPress: function () {

@@ -1,0 +1,51 @@
+
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core"
+    xmlns:mdc="sap.ui.mdc"
+    xmlns:mdct="sap.ui.mdc.table">
+    <f:DynamicPage id="myrequestrepo" headerExpanded="false" fitContent="true">
+        <f:content>
+            <mdc:Table
+                id="tb_myrequestrepo"
+                header="My Request Report"
+                p13nMode="Column,Sort,Group,Filter"
+                threshold="25"
+                showRowCount="false"
+                useColumnLabelsAsTooltips="true"
+                selectionMode="Multi">
+                <mdct:Column
+                    propertyKey="reportpurpose"
+                    header="Report Purpose">
+                    <Text text="{reportpurpose}" />
+                </mdct:Column>
+                <mdct:Column
+                    propertyKey="reportid"
+                    header="Report ID">
+                    <Text text="{reportid}" />
+                </mdct:Column>
+                <mdct:Column
+                    propertyKey="startdate"
+                    header="Start Date"
+                >
+                    <Text text="{startdate}" />
+                </mdct:Column>
+                <mdct:Column
+                    propertyKey="status"
+                    header="Status"
+                >
+                    <Text text="{status}" />
+                </mdct:Column>
+                <mdct:Column
+                    propertyKey="amount"
+                    header="Amount"
+                >
+                    <Text text="{amount}" />
+                </mdct:Column>
+            </mdc:Table>
+        </f:content>
+    </f:DynamicPage>
+    
+</core:FragmentDefinition>
