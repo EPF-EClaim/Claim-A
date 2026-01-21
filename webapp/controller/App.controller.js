@@ -36,7 +36,8 @@ sap.ui.define([
 				"comment": ""
 			});
 			this.getView().setModel(oReportModel, "report");
-		},
+
+	},
 
 		onCollapseExpandPress: function () {
 			var oModel = this.getView().getModel();
@@ -183,8 +184,6 @@ sap.ui.define([
 			oRecptnum.setVisible(claimShow);
 			oVehicle.setVisible(claimShow);
 
-
-
-		}
+		},
 	});
 });
