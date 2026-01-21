@@ -28,11 +28,21 @@ sap.ui.define([
 	return Controller.extend("claima.controller.App", {
 		onInit: function () {
 
+			// oViewModel
 			const oViewModel = new sap.ui.model.json.JSONModel({
 					rtype: "" // current selected request type
 			});
 			this.getView().setModel(oViewModel, "view");
 
+			// oReportModel
+			var oReportModel = new JSONModel({
+				"purpose": "",
+				"startdate": "",
+				"enddate": "",
+				"category": "",
+				"amt_approved": "",
+				"comment": ""
+			});
 			this.getView().setModel(oReportModel, "report");
 		},
 
