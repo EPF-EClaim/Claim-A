@@ -74,22 +74,22 @@
 					<Label text="{i18n>report_comment}" />
                     <Input value="{input>/report/comment}" required="true" id="createreport_comment" />
 
-                    <!-- <Label text="Attachment Email Approval" />
+                    <Label text="{i18n>createreport_attachment}" />
                     <u:FileUploader
-                        id="fileUploader"
+                        id="createreport_attachment"
                         name="myFileUpload"
                         uploadUrl="upload/"
                         uploadComplete="handleUploadComplete"
-                    /> -->
+                    />
                 </f:content>
             </f:SimpleForm>
      
 		<buttons>
-            <Button
+            <!-- <Button
                     id="createreport_attachment"
                     press=""
                     text="{i18n>createreport_attachment}"
-                />
+                /> -->
             <Button
                     id="createreport_create"
                     press="onCreateReport"
