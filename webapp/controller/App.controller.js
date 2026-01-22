@@ -36,8 +36,133 @@ sap.ui.define([
 				comment: ""
 			});
 			this.getView().setModel(oReportModel, "report");
+
+			// CONFIG MODEL for all 4 table
+			var oConfigModel = new JSONModel({
+				ZCLAIM_PURPOSE: [],
+				ConfigurationTable2: [],
+				ConfigurationTable3: [],
+				ConfigurationTable4: [],
+				active: {
+					data: []
+				}
+			});
+			this.getView().setModel(oConfigModel, "configModel");
 		},
 
+		// CLICK CONFIGURATION TABLE CARD
+		onOpenConfigTable: async function (oEvent) {
+
+			let tableId = oEvent.getSource().getCustomData()[0].getValue();
+			let m = this.getView().getModel("configModel");
+
+			m.setProperty("/active/title", tableId);
+			m.setProperty("/active/data",
+				JSON.parse(JSON.stringify(m.getProperty("/" + tableId)))
+			);
+
+			this.loadConfigPage();
+		},
+		// LOAD CONFIG DETAIL PAGE
+		loadConfigPage: async function () {
+
+			if (!this.oConfigDetailPage) {
+
+				const oFragment = await Fragment.load({
+					id: this.createId("ConfigFrag"),
+					name: "claima.fragment.configuration",
+					controller: this
+				});
+				this.getView().addDependent(oFragment);
+
+				this.oConfigDetailPage = new sap.m.Page(
+					this.createId("configDetailPage"),
+					{
+						title: "eClaim Configuration",
+						content: [oFragment],
+						showNavButton: true,
+						navButtonPress: this.onBackFromConfigTable.bind(this)
+					}
+				);
+				this.byId("pageContainer").addPage(this.oConfigDetailPage);
+			}
+			this.byId("pageContainer").to(this.byId("configDetailPage"));
+		},
+
+		// BACK BUTTON CONFIGURATION
+		onBackFromConfigTable: function () {
+			this.byId("pageContainer").to(this.byId("configuration"));
+		},
+
+		// SAVE CONFIGURATION
+		onSaveConfigTable: function () {
+			let m = this.getView().getModel("configModel");
+			let tableId = m.getProperty("/active/title");
+			let activeData = m.getProperty("/active/data");
+
+			activeData.forEach(r => r.edit = false);
+			m.setProperty("/" + tableId, activeData);
+
+			MessageToast.show("Saved");
+		},
+
+		// ADD NEW ROW CONFIGURATION
+		onAddEntry: function () {
+			let data = this.getView().getModel("configModel").getProperty("/active/data");
+
+			data.push({
+				Claim_Purpose_ID: "",
+				Claim_Purpose_Desc: "",
+
+				edit: true,
+				selected: false
+			});
+			let m = this.getView().getModel("configModel");
+			m.refresh(true);
+
+		},
+
+		// EDIT ROW CONFIGURATION
+		onEditEntry: function () {
+			let oTable = this.byId("ConfigFrag--configTable");
+			let sel = oTable.getSelectedItems();
+			if (!sel.length) return MessageToast.show("Select a row.");
+
+			let ctx = sel[0].getBindingContext("configModel");
+			ctx.setProperty("edit", true);
+		},
+
+		// COPY ROW CONFIGURATION
+		onCopyEntry: function () {
+			let oTable = this.byId("ConfigFrag--configTable");
+			let sel = oTable.getSelectedItem();
+			if (!sel) return MessageToast.show("Select a row.");
+
+			let m = this.getView().getModel("configModel");
+			let data = m.getProperty("/active/data");
+			let obj = sel.getBindingContext("configModel").getObject();
+
+			data.push({ ...obj, edit: true });
+			m.refresh(true);
+		},
+
+		// DELETE ROW CONFIGURATION
+		onDeleteEntry: function () {
+			let oTable = this.byId("ConfigFrag--configTable");
+			let sel = oTable.getSelectedItems();
+			if (!sel.length) return MessageToast.show("Nothing selected.");
+
+			let m = this.getView().getModel("configModel");
+			let data = m.getProperty("/active/data");
+
+			sel.reverse().forEach(item => {
+				let index = item.getBindingContext("configModel").getPath().split("/").pop();
+				data.splice(index, 1);
+			});
+
+			m.refresh(true);
+
+		},
 		onCollapseExpandPress: function () {
 			var oModel = this.getView().getModel();
 			var oNavigationList = this.byId("navigationList");
@@ -46,15 +171,47 @@ sap.ui.define([
 			oNavigationList.setExpanded(!bExpanded);
 		},
 
-		onItemSelect: function (oEvent) {
+		onItemSelect: async function (oEvent) {
 			var oItem = oEvent.getParameter("item");
-			var oKey = oItem.getKey();
+			var sKey = oItem.getKey();
 
-			if (oKey == "createreport" || oKey == "myrequest") {
-				this.onClickExpenseReport();
-			} else {
-				this.byId("pageContainer").to(this.getView().createId(oKey));
+			switch (sKey) {
+				case "createreport":
+				case "myrequest":
+					this.onClickExpenseReport();
+					break;
+				case "report": // your configuration menu
+					this.onClickConfiguration();
+					break;
+				default:
+					// navigate to page with ID same as the key
+					var oPage = this.byId(sKey); // make sure your NavContainer has a page with this ID
+					if (oPage) {
+						this.byId("pageContainer").to(oPage);
+					}
+					break;
 			}
+
+		},
+		// Configuration
+		onClickConfiguration: async function () {
+			if (!this.oConfigPage) {
+				this.oConfigPage = Fragment.load({
+					name: "claima.fragment.configuration",
+					type: "XML",
+					controller: this
+				});
+				this.getView().addDependent(this.oConfigPage);
+			}
+
+			// Navigate to configuration page
+			var oPageContainer = this.byId("pageContainer");
+			if (!this.byId("configurationPage")) {
+				var oPage = new sap.m.Page(this.createId("configurationPage"), {
+				});
+			}
+			oPageContainer.to(this.byId("configurationPage"));
+
 		},
 		onClickExpenseReport: async function () {
 			if (!this.oDialogFragment) {
@@ -72,6 +229,7 @@ sap.ui.define([
 			this.oDialogFragment.open();
 
 		},
+
 		onItemPress: function (oEvent) {
 			const oItem = oEvent.getParameter("item"),
 				sText = oItem.getText();
@@ -133,7 +291,7 @@ sap.ui.define([
 
 			// select visible buttons based on visible fragment
 			var button_set;
-			switch(oId) {
+			switch (oId) {
 				case "expensetypescr":
 					button_set = button_exp;
 					break;

@@ -72,7 +72,7 @@
                         expanded="false"
                     />
                     <tnt:NavigationListItem
-                        key="report"
+                        key="configuration"
                         text="{i18n>configuration}"
                         icon="sap-icon://action-settings"
                         enabled="true"
@@ -171,6 +171,7 @@
                                     </f:content>
                                 </f:Card>
                             </f:GridContainer>
+
                             <f:GridContainer>
                                 <f:Card
                                     class="sapUiSmallMargin"
@@ -190,6 +191,7 @@
                                     </f:content>
                                 </f:Card>
                             </f:GridContainer>
+
                             <f:GridContainer>
                                 <f:Card
                                     class="sapUiSmallMargin"
@@ -212,7 +214,6 @@
                             </f:GridContainer>
                         </VBox>
                     </ScrollContainer>
-
                     <ScrollContainer
                         id="claim"
                         horizontal="false"
@@ -347,15 +348,18 @@
                                             <f:GridContainerSettings
                                                 rowSize="5rem"
                                                 columnSize="25rem"
-                                                gap="1rem"/>
+                                                gap="1rem"
+                                            />
                                         </f:layout>
                                         <w:Card
                                             manifest="{manifests>/autoclaim}"
-                                            action="onAction">
+                                            action="onAction"
+                                        >
                                             <w:layoutData>
                                                 <f:GridContainerItemLayoutData
                                                     minRows="4"
-                                                    columns="3"/>
+                                                    columns="3"
+                                                />
                                             </w:layoutData>
                                         </w:Card>
                                     </f:GridContainer>
@@ -363,21 +367,25 @@
                                 <VBox
                                     height="110px"
                                     class="sapUiSmallMargin"
-                                    justifyContent="SpaceBetween">
+                                    justifyContent="SpaceBetween"
+                                >
                                     <f:GridContainer>
                                         <f:layout>
                                             <f:GridContainerSettings
                                                 rowSize="5rem"
                                                 columnSize="25rem"
-                                                gap="1rem"/>
+                                                gap="1rem"
+                                            />
                                         </f:layout>
                                         <w:Card
                                             manifest="{manifests>/returnclaim}"
-                                            action="onAction">
+                                            action="onAction"
+                                        >
                                             <w:layoutData>
                                                 <f:GridContainerItemLayoutData
                                                     minRows="4"
-                                                    columns="3"/>
+                                                    columns="3"
+                                                />
                                             </w:layoutData>
                                         </w:Card>
                                     </f:GridContainer>
@@ -385,22 +393,30 @@
                             </HBox>
                         </VBox>
                     </ScrollContainer>
+
                     <Page
                         id="createreport"
-                        showHeader="false">
+                        showHeader="false"
+                    >
                         <content>
                             <VBox id="main">
                                 <core:Fragment
                                     fragmentName="claima.fragment.report"
                                     type="XML"
                                 />
-                                <VBox id="expensetypescr" visible="true">
+                                <VBox
+                                    id="expensetypescr"
+                                    visible="true"
+                                >
                                     <core:Fragment
                                         fragmentName="claima.fragment.expensetype"
                                         type="XML"
                                     />
                                 </VBox>
-                                <VBox id="claimscr" visible="false">
+                                <VBox
+                                    id="claimscr"
+                                    visible="false"
+                                >
                                     <core:Fragment
                                         fragmentName="claima.fragment.claimdetails"
                                         type="XML"
@@ -408,7 +424,7 @@
                                 </VBox>
                             </VBox>
                         </content>
-                        <footer >
+                        <footer>
                             <Toolbar>
                                 <ToolbarSpacer />
                                 <Button
@@ -459,8 +475,109 @@
                         horizontal="false"
                         vertical="true"
                         height="100%"
-                        class="sapUiContentPadding">
-                    </ScrollContainer>
+                        class="sapUiContentPadding"
+                    />
+                    <!-- ================= Configuration Page ================= -->
+                    <Page
+                        id="configuration"
+                        title="{i18n>configtitle}"
+                        navButtonPress="onPressBack"
+                    >
+                        <content>
+                            <ScrollContainer
+                                vertical="true"
+                                horizontal="false"
+                                height="100%"
+                                class="sapUiContentPadding"
+                            >    
+                                <f:GridContainer>
+                                    <f:layout>
+                                        <f:GridContainerSettings
+                                            columnSize="16rem"
+                                            rowSize="auto"
+                                            gap="1rem"
+                                        />
+                                    </f:layout>
+
+                                    <!-- ZCLAIM_PURPOSE -->
+                                    <f:Card
+                                        class="sapUiSmallMargin"
+                                        width="15rem"
+                                        press="onOpenConfigTable"
+                                    >
+                                       <f:customData>
+                                            <core:CustomData
+                                                key="id"
+                                                value="ZCLAIM_PURPOSE"
+                                            />
+                                        </f:customData>
+                                        <f:header>
+                                            <cards:Header
+                                                title="{i18n>conf1}"
+                                            />
+                                        </f:header>
+                                    </f:Card>
+
+                                    <!-- Configuration Table 2 -->
+                                    <f:Card
+                                        class="sapUiSmallMargin"
+                                        width="15rem"
+                                        press="onOpenConfigTable"
+                                    >
+                                       <f:customData>
+                                            <core:CustomData
+                                                key="id"
+                                                value="ConfigurationTable2"
+                                            />
+                                        </f:customData>
+                                        <f:header>
+                                            <cards:Header
+                                                title="{i18n>conf2}"
+                                            />
+                                        </f:header>
+                                    </f:Card>
+
+                                    <!-- Configuration Table 3 -->
+                                    <f:Card
+                                        class="sapUiSmallMargin"
+                                        width="15rem"
+                                        press="onOpenConfigTable"
+                                    >
+                                       <f:customData>
+                                            <core:CustomData
+                                                key="id"
+                                                value="ConfigurationTable3"
+                                            />
+                                        </f:customData>
+                                        <f:header>
+                                            <cards:Header
+                                                title="{i18n>conf3}"
+                                            />
+                                        </f:header>
+                                    </f:Card>
+
+                                    <!-- Configuration Table 4 -->
+                                    <f:Card
+                                        class="sapUiSmallMargin"
+                                        width="15rem"
+                                        press="onOpenConfigTable"
+                                    >
+                                        <f:customData>
+                                            <core:CustomData
+                                                key="id"
+                                                value="ConfigurationTable4"
+                                            />
+                                        </f:customData>
+                                        <f:header>
+                                            <cards:Header
+                                                title="{i18n>conf4}"
+                                            />
+                                        </f:header>
+                                    </f:Card>
+                                </f:GridContainer>
+                            </ScrollContainer>
+                        </content>
+                    </Page> <!-- ================= Configuration Page ================= -->
                 </pages>
             </NavContainer>
         </tnt:mainContents>
