@@ -14,6 +14,16 @@
       "id": "@sap/generator-fiori:basic",
       "version": "1.20.0",
       "toolsId": "5e53ce21-6b98-4c53-9e82-de44fa4c3b3b"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "sap/odata/v4/EmployeeSrv/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
     }
   },
   "sap.ui": {
@@ -30,7 +40,7 @@
       "desktop": true,
       "tablet": true,
       "phone": true
-    }, 
+    },
     "fullWidth": true
   },
   "sap.ui5": {
@@ -48,20 +58,29 @@
       "compact": true,
       "cozy": true
     },
-    "models": {
-      "manifests":{
+    "models": {   
+      "employee": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "manifests": {
         "type": "sap.ui.model.json.JSONModel",
         "uri": "model/data.json"
       },
-      "current":{
+      "current": {
         "type": "sap.ui.model.json.JSONModel",
         "uri": "model/data2.json"
       },
-      "input":{
+      "input": {
         "type": "sap.ui.model.json.JSONModel",
         "uri": "model/data2.json"
       },
-      "mockdata":{
+      "mockdata": {
         "type": "sap.ui.model.json.JSONModel",
         "uri": "model/mockdata.json"
       },
@@ -114,15 +133,15 @@
       "async": true
     },
     "config": {
-			"sample": {
-				"stretch": true,
-				"files": [
-					"App.view.xml",
-					"App.controller.js",
-					"manifest.json",
+      "sample": {
+        "stretch": true,
+        "files": [
+          "App.view.xml",
+          "App.controller.js",
+          "manifest.json",
           "model/data.json"
-				]
-			}
-		}
+        ]
+      }
+    }
   }
 }

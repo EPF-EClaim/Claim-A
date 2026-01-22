@@ -321,16 +321,23 @@ sap.ui.define([
 			var oInputModel = this.getView().getModel("input");
 			var oInputData = oInputModel.getData();
 
-			// set as current data
-			var oCurrentModel = this.getView().getModel("current");
-			oCurrentModel.setData(oInputData);
+			if (oInputData.report.purpose == '' || oInputData.report.startdate == ''
+				|| oInputData.report.enddate == '' || oInputData.report.category == '') {
+				var message = 'Please enter all mandatory details';
+				MessageToast.show(message);
+			} else {
 
-			var view = "expensereport";
-			this.oDialogFragment.close();
-			this.byId("pageContainer").to(this.getView().createId(view));
-			this.getView().byId("expensetypescr").setVisible(true);
-			this.getView().byId("claimscr").setVisible(false);
-			this.createreportButtons("expensetypescr");
+				// set as current data
+				var oCurrentModel = this.getView().getModel("current");
+				oCurrentModel.setData(oInputData);
+
+				var view = "expensereport";
+				this.oDialogFragment.close();
+				this.byId("pageContainer").to(this.getView().createId(view));
+				this.getView().byId("expensetypescr").setVisible(true);
+				this.getView().byId("claimscr").setVisible(false);
+				this.createreportButtons("expensetypescr");
+			}
 		},
 
 		onPressBack: function (oEvent) {
@@ -634,9 +641,37 @@ sap.ui.define([
 			console.log("Submitting:", oPayload);
 			// Close dialog
 			oEvent.getSource().getParent().close();
-		}
+		},
 
 		// End added by Jefry Yap 15-01-2026
+
+		onPressSave: function () {
+			// var oModel = this.getView().getModel();
+			var oModel = this.getView().getModel("employee");
+			// var oModel = new sap.ui.model.odata.v4.ODataModel("sap/odata/v4/EmployeeSrv/");
+			// sap.ui.getCore().setModel(oModel);
+			const oListBinding = oModel.bindList("/EmployeeData");
+
+			//dummy testing
+			oListBinding.requestContexts().then(function (aContexts) {
+                    aContexts.forEach(oContext => {
+                        console.log(oContext.getObject());
+                    });
+                });
+			// const oContext = oListBinding.create({
+			// 	EEID: "E0001",
+			// 	NAME: "AIN"
+			// });
+			// oContext.created()
+			// 	.then(() => {
+			// 		sap.m.MessageToast.show("Dummy record created successfully");
+			// 	})
+			// 	.catch((oError) => {
+			// 		console.error(oError);
+			// 		sap.m.MessageBox.error("Create failed");
+			// 	});
+
+		},
 
 	});
 });

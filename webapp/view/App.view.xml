@@ -451,7 +451,7 @@
                                 <Button
                                     id="savebtn"
                                     text="Save"
-                                    press="onPressBack"
+                                    press="onPressSave"
                                     enabled="true"
                                     visible="false"
                                 />
