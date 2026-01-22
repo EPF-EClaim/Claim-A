@@ -224,7 +224,7 @@ sap.ui.define([
 			}
 
 		},
-		//Start added by Aiman Salim - To show or hide fields based on Claim Item
+		// Start added by Aiman Salim - To show or hide fields based on Claim Item
 		onClaimItemChange: function (oEvent) {
 			const sKey = oEvent.getSource().getSelectedKey();
 			//set ids 
