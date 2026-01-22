@@ -26,16 +26,16 @@
             <m:OverflowToolbar
                 height="3rem"
                 style="Clear">
-                <m:Title text="{i18n>req_form_detail_title}" titleStyle="H3" />
+                <m:Title text="{i18n>req_form_detail_title} ({view>/totalCount})" titleStyle="H3" />
                 <m:ToolbarSpacer />
                 <m:Button text="Create Item" type="Emphasized" icon="sap-icon://add" press=".onPressAddItem"></m:Button>
-                <m:Button text="Edit" press=".onSelectEdit" />
-                <m:Button text="Delete" type="Reject" press=".onDeleteSelected"/>
+                <!-- <m:Button text="Edit" press=".onSelectEdit" /> -->
+                <m:Button text="Delete" type="Default" press=".onDeleteSelected"/>
             </m:OverflowToolbar>
             <m:VBox rowGap="1rem">
                 <table:Table 
                     id="req_item_table"
-                    rows="{/rows}"
+                    rows="{/req_item_rows}"
                     columnHeaderHeight="3rem"
                     selectionMode="MultiToggle"
                     ariaLabelledBy="title"

@@ -9,7 +9,7 @@ sap.ui.define([
         onInit: function () {
 
             const oModel = new JSONModel({
-                rows : [
+                participant : [
                     {
                         participant_name: "",
                         emp_cost_center: "",
@@ -30,7 +30,7 @@ sap.ui.define([
             const iIndex = parseInt(sPath.split("/").pop(), 10);
 
             const oModel = oCtx.getModel(); 
-            const aRows  = oModel.getProperty("/rows") || [];
+            const aRows  = oModel.getProperty("/participant") || [];
 
             if (aRows[iIndex]) {
                 aRows[iIndex].participant_name = sVal;
@@ -47,7 +47,7 @@ sap.ui.define([
                 });
             }
 
-            oModel.setProperty("/rows", aRows);
+            oModel.setProperty("/participant", aRows);
             // If table uses growing, you might need a .refresh(true) in some setups
             // oModel.refresh(true);
 
@@ -75,9 +75,9 @@ sap.ui.define([
 
         onRowDelete: function (oEvent) {
             const oTable   = this.byId("req_participant_table");
-            const oBinding = oTable.getBinding("rows");  // ListBinding/RowBinding
+            const oBinding = oTable.getBinding("participant");  // ListBinding/RowBinding
             const oModel   = this.getView().getModel();  // JSONModel expected
-            const aRows    = oModel.getProperty("/rows") || [];
+            const aRows    = oModel.getProperty("/participant") || [];
 
             // collect visible selected indices (e.g., [0, 2, 5])
             let aSelectedVisIdx = oTable.getSelectedIndices() || [];
@@ -144,7 +144,7 @@ sap.ui.define([
                 });
             }
 
-            oModel.setProperty("/rows", aRows);
+            oModel.setProperty("/participant", aRows);
             oTable.clearSelection();
         },
 
@@ -153,7 +153,6 @@ sap.ui.define([
             // Reuse the same logic by faking a call without a pressed row
             this.onRowDelete({ getSource: function () { return null; } });
         },
-
         
         onCancel: function () {
             var oComp   = sap.ui.core.Component.getOwnerComponentFor(this.getView());
@@ -188,170 +187,19 @@ sap.ui.define([
             this.onCancel();
         },
 
-        // WIP
-        onImportChange: function (oEvent) {
-            const oFile = oEvent.getParameter("files")?.[0];
-            if (!oFile) { return; }
+        onSaveAddAnother: function () {
+            // Logic to create new item in request item list
+			const oModel   = this.getView().getModel();  // JSONModel expected
+            const aRows    = oModel.getProperty("/req_item_list") || [];
 
-            const sName = oFile.name.toLowerCase();
-            const isCSV  = sName.endsWith(".csv");
-            const isXLSX = sName.endsWith(".xlsx") || sName.endsWith(".xls");
-
-            if (!isCSV && !isXLSX) {
-                sap.m.MessageBox.error("Supported file types: .xlsx, .csv");
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                try {
-                    let aRows = [];
-                    if (isCSV) {
-                        const text = e.target.result;
-                        aRows = this._parseCSVToRows(text);
-                    } else {
-                        if (!window.XLSX) {
-                        sap.m.MessageBox.error("XLSX library not loaded. Include xlsx.full.min.js.");
-                        return;
-                        }
-                        const data = new Uint8Array(e.target.result);
-                        const wb = window.XLSX.read(data, { type: "array" });
-                        const wsName = wb.SheetNames[0];
-                        const ws = wb.Sheets[wsName];
-                        // Convert to array of objects using header row
-                        const json = window.XLSX.utils.sheet_to_json(ws, { defval: "" }); // [{Header1:..., Header2:...}, ...]
-                        aRows = this._xlsxJsonToRows(json);
-                    }
-
-                    this._applyImportedRows(aRows);
-                    sap.m.MessageToast.show(`Imported ${aRows.length} row(s) from ${oFile.name}`);
-                    this.byId("fuImport").clear();
-                } catch (err) {
-                    sap.m.MessageBox.error("Failed to import file: " + err.message);
-                }
-            };
-
-            if (isCSV) {
-                reader.readAsText(oFile, "utf-8");
-            } else {
-                reader.readAsArrayBuffer(oFile);
-            }
+			aRows.push({
+                claim_type: "Testing Claim Type",
+                est_amount: 100,
+				currency_code: "MYR",
+                est_no_of_participant: 100
+			});
+			
+            oModel.setProperty("/req_item_list", aRows);
         },
-
-        _xlsxJsonToRows: function (aJson) {
-            const norm = (s) => String(s || "").toLowerCase().trim().replace(/\s+/g, " ");
-            const mapField = (obj, keys) => {
-                for (const k of Object.keys(obj)) {
-                const nk = norm(k);
-                if (keys.includes(nk)) { return String(obj[k] ?? "").trim(); }
-                }
-                return "";
-            };
-
-            return (aJson || []).map(o => ({
-                participant_name: mapField(o, ["participant_name","participant","participant name"]),
-                emp_cost_center:  mapField(o, ["emp_cost_center","cost center","employee cost center","costcenter"]),
-                alloc_amount:     this._normalizeAmount(mapField(o, ["alloc_amount","amount","allocated amount","allocation"]))
-            })).filter(o => this._hasAnyValue(o));
-        },
-
-
-        /** Very small CSV parser supporting quoted fields, commas and newlines in quotes */
-        _parseCSVToRows: function (csvText) {
-            // Normalize line endings
-            const text = csvText.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
-
-            // Split to rows considering quotes
-            const rows = [];
-            let row = [], field = "", inQuotes = false;
-
-            const pushField = () => { row.push(field); field = ""; };
-            const pushRow = () => { rows.push(row); row = []; };
-
-            for (let i = 0; i < text.length; i++) {
-                const c = text[i];
-                if (inQuotes) {
-                if (c === '"') {
-                    if (text[i + 1] === '"') { field += '"'; i++; } // escaped quote
-                    else { inQuotes = false; }
-                } else {
-                    field += c;
-                }
-                } else {
-                if (c === '"') { inQuotes = true; }
-                else if (c === ",") { pushField(); }
-                else if (c === "\n") { pushField(); pushRow(); }
-                else { field += c; }
-                }
-            }
-            // last field/row
-            pushField();
-            if (row.length > 1 || (row.length === 1 && row[0] !== "")) { pushRow(); }
-
-            if (rows.length === 0) { return []; }
-
-            // Header mapping
-            const header = rows[0].map(h => this._normHeader(h));
-            const idx = {
-                participant_name: header.findIndex(h => ["participant_name","participant","participant name"].includes(h)),
-                emp_cost_center:  header.findIndex(h => ["emp_cost_center","cost center","employee cost center","costcenter"].includes(h)),
-                alloc_amount:     header.findIndex(h => ["alloc_amount","amount","allocated amount","allocation"].includes(h))
-            };
-
-            const dataRows = rows.slice(1).map(r => ({
-                participant_name: this._getCell(r, idx.participant_name),
-                emp_cost_center:  this._getCell(r, idx.emp_cost_center),
-                alloc_amount:     this._normalizeAmount(this._getCell(r, idx.alloc_amount))
-            })).filter(o => this._hasAnyValue(o));
-
-            return dataRows;
-        },
-
-        _normHeader: function (s) {
-            return String(s || "").toLowerCase().trim().replace(/\s+/g, " ");
-        },
-        _getCell: function (arr, i) {
-            return i >= 0 && i < arr.length ? String(arr[i]).trim() : "";
-        },
-        _normalizeAmount: function (s) {
-            if (!s) return "";
-            // Remove currency symbols and thousand separators, keep dot as decimal.
-            s = String(s).replace(/[^\d.,-]/g, "").replace(/,/g, "");
-            return s;
-        },
-        _hasAnyValue: function (o) {
-            return (o.participant_name && o.participant_name.trim() !== "") ||
-                    (o.emp_cost_center && o.emp_cost_center.trim() !== "") ||
-                    (o.alloc_amount && o.alloc_amount.trim() !== "");
-        },
-
-        _applyImportedRows: function (aRows) {
-            const oModel = this.getView().getModel(); // default JSONModel
-            if (!Array.isArray(aRows)) { aRows = []; }
-
-            // Optional: merge with existing rows (excluding trailing blank row if any)
-            const aExisting = oModel.getProperty("/rows") || [];
-            const aCleanExisting = aExisting.filter(r => r.participant_name || r.emp_cost_center || r.alloc_amount);
-
-            // Combine and ensure at least one trailing blank row
-            const aCombined = aCleanExisting.concat(aRows);
-            if (aCombined.length === 0 || this._rowHasValues(aCombined[aCombined.length - 1])) {
-                aCombined.push({ participant_name: "", emp_cost_center: "", alloc_amount: "" });
-            }
-
-            oModel.setProperty("/rows", aCombined);
-
-            // Clear selection if using sap.ui.table.Table
-            const oTable = this.byId("req_participant_table");
-            oTable?.clearSelection?.();
-        },
-
-        _rowHasValues: function (r) {
-            if (!r) return false;
-            return (r.participant_name && r.participant_name.trim() !== "") ||
-                    (r.emp_cost_center && r.emp_cost_center.trim() !== "") ||
-                    (r.alloc_amount && r.alloc_amount.trim() !== "");
-        },
-    
     });
 });

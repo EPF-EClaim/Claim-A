@@ -14,7 +14,7 @@
                 <MenuButton text="Save Request" buttonMode="Split" defaultAction="onSave" beforeMenuOpen="onBeforeMenuOpen" useDefaultActionOnly="true">
                     <menu>
                         <Menu itemSelected="onMenuAction">
-                            <MenuItem text="Save and add another" />
+                            <MenuItem text="Save and add another" press=".onSaveAddAnother" />
                         </Menu>
                     </menu>
                 </MenuButton>
@@ -56,7 +56,7 @@
                     </OverflowToolbar>
                     <table:Table 
                         id="req_participant_table"
-                        rows="{/rows}"
+                        rows="{/participant}"
                         columnHeaderHeight="3rem"
                         selectionMode="MultiToggle"
                         rowActionCount="1">
@@ -69,7 +69,8 @@
                         <table:Column width="25rem">
                             <Label text="Employee Cost Center"></Label>
                             <table:template>
-                                <Input id="emp_cost_center" textAlign="Begin" value="{emp_cost_center}"></Input>
+                                <!-- <Input id="emp_cost_center" textAlign="Begin" value="{emp_cost_center}"></Input> -->
+                                <Text text="cost_center" />
                             </table:template>
                         </table:Column>
                         <table:Column width="25rem">

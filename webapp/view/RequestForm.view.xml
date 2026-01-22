@@ -27,45 +27,45 @@
                         <VBox rowGap="0.5rem">
                             <HBox id="head_req_purpose">
                                 <Text width="16rem" text="Request Purpose: " />
-                                <Text width="24rem" text="Attend Financial Event at Singapore" />
+                                <Text width="24rem" text="{request>/purpose}" />
                             </HBox>
                             <HBox id="head_req_form_id">
                                 <Text width="16rem" text="Request Form ID: "/>
-                                <Text width="24rem" text="REQ000000000002"/>
+                                <Text width="24rem" text="{request>/reqid}"/>
                             </HBox>
                             <HBox id="head_req_startdate">
                                 <Text width="16rem" text="Trip/Report Start Date: "/>
-                                <Text width="24rem" text="01 January 2026"/>
+                                <Text width="24rem" text="{request>/startdate}"/>
                             </HBox>
                             <HBox id="head_req_enddate">
                                 <Text width="16rem" text="Trip/Request End Date: "/>
-                                <Text width="24rem" text="01 February 2026"/>
+                                <Text width="24rem" text="{request>/enddate}"/>
                             </HBox>
                             <HBox id="head_req_location">
                                 <Text width="16rem" text="Location: "/>
-                                <Text width="24rem" text="Marina Bay Sands, Singapore"/>
+                                <Text width="24rem" text="{request>/location}"/>
                             </HBox>
-                            <HBox id="header_req_remarks">
-                                <Text width="16rem" text="Remarks: "/>
-                                <Text width="24rem" text="Invited to participate Audit foru as speaker"/>
+                            <HBox id="header_req_details">
+                                <Text width="16rem" text="Event Details: "/>
+                                <Text width="24rem" text="{request>/detail}"/>
                             </HBox>
                             <HBox id="head_req_iog">
                                 <Text width="16rem" text="Individual/Group: "/>
-                                <Text width="24rem" text="Individual"/>
+                                <Text width="24rem" text="{request>/indigrp}"/>
                             </HBox>
                         </VBox>
                         <VBox id="head_req_col_2" rowGap="0.5rem" >
                             <HBox id="head_req_status">
                                 <Text width="16rem" text="Request Status: " />
-                                <Text width="24rem" text="Not Submitted" />
+                                <Text width="24rem" text="{request>/reqstatus}" />
                             </HBox>
                             <HBox id="head_req_cost_center">
                                 <Text width="16rem" text="Cost Center: "/>
-                                <Text width="24rem" text="1234567890"/>
+                                <Text width="24rem" text="{request>/costcenter}"/>
                             </HBox>
                             <HBox id="head_req_alt_cost_center">
                                 <Text width="16rem" text="Alternate Cost Conter: "/>
-                                <Text width="24rem" text="9988770000"/>
+                                <Text width="24rem" text="{request>/altcostcenter}"/>
                             </HBox>
                             <HBox id="head_req_cash_advance_amt">
                                 <Text width="16rem" text="Cash Advance (MYR): "/>
@@ -81,7 +81,7 @@
                             </HBox>
                             <HBox id="head_req_type">
                                 <Text width="16rem" text="Request Type: "/>
-                                <Text width="24rem" text="Travel"/>
+                                <Text width="24rem" text="{request>/type}"/>
                             </HBox>
                         </VBox>
                     </HBox>
@@ -113,10 +113,12 @@
         <footer>
             <OverflowToolbar >
                 <ToolbarSpacer />
-                <Button type="Back" text="Back"/>
-                <Button type="Default" text="Save Draft" press=".onSave"/>
-                <Button type="Reject" text="Delete Request" press=".onDelete"/>
-                <Button type="Emphasized" text="Submit Request" press=".onSubmit"/>
+                <Button id="req_back"           type="Back"         text="Back"             press=".onBack"                 visible="{= ${view>/currentPageId} === 'req_item_table_view' }"/>
+                <Button id="req_save_draft"     type="Default"      text="Save Draft"       press=".onSaveRequestDraft"     visible="{= ${view>/currentPageId} === 'req_item_table_view' }"/>
+                <Button id="req_delete"         type="Reject"       text="Delete Request"   press=".onDeleteRequest"        visible="{= ${view>/currentPageId} === 'req_item_table_view' }"/>
+                <Button id="req_submit"         type="Emphasized"   text="Submit Request"   press=".onSubmitRequest"        visible="{= ${view>/currentPageId} === 'req_item_table_view' }"/>
+                <Button id="req_item_cancel"    type="Default"      text="Cancel"           press=".onCancelItem"           visible="{= ${view>/currentPageId} === 'req_create_item_view' }"/>
+                <Button id="req_item_save"      type="Emphasized"   text="Save"             press=".onSaveItem"             visible="{= ${view>/currentPageId} === 'req_create_item_view' }"/>
             </OverflowToolbar>
         </footer>
     </Page>
