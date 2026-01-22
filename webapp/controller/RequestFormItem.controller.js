@@ -189,17 +189,27 @@ sap.ui.define([
 
         onSaveAddAnother: function () {
             // Logic to create new item in request item list
-			const oModel   = this.getView().getModel();  // JSONModel expected
-            const aRows    = oModel.getProperty("/req_item_list") || [];
+            var oScroll = this.getView().getParent();          // ScrollContainer
+            var oMaybeNav = oScroll && oScroll.getParent && oScroll.getParent(); // NavContainer
 
-			aRows.push({
-                claim_type: "Testing Claim Type",
-                est_amount: 100,
-				currency_code: "MYR",
-                est_no_of_participant: 100
-			});
-			
-            oModel.setProperty("/req_item_list", aRows);
+            var aPages = oMaybeNav.getPages ? oMaybeNav.getPages() : oMaybeNav.getAggregation("pages");
+            var oListPage = aPages && aPages.find(function (p) {
+                return p.getId && p.getId().endsWith("req_item_table_view");
+            });
+
+            if (oListPage) {
+                const oModel   = oListPage.getModel();  // JSONModel expected
+                const aRows    = oModel.getProperty("/req_item_list") || [];
+                
+                aRows.push({
+                    claim_type: "Testing Claim Type",
+                    est_amount: 100,
+                    currency_code: "MYR",
+                    est_no_of_participant: 100
+                });
+                
+                oModel.setProperty("/req_item_list", aRows);
+            }
         },
     });
 });

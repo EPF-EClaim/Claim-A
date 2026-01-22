@@ -32,6 +32,16 @@
                                 </items>
                             </Select>
                         </InputListItem>
+                        <InputListItem label="Claim Item">
+                            <Select width="25rem" >
+                                <items>
+                                    <core:Item key="CI1" text="Claim Item 1" />
+                                    <core:Item key="CI2" text="Claim Item 2" />
+                                    <core:Item key="CI3" text="Claim Item 3" />
+                                    <core:Item key="CI4" text="Claim Item 4" />
+                                </items>
+                            </Select>
+                        </InputListItem>
                         <InputListItem label="Estimated No. of Participants">
                             <Input id="estNoOfParticipant" textAlign="Begin" width="25rem" type="Number"/>
                         </InputListItem>
