@@ -58,16 +58,16 @@
                         expanded="false"
                     />
                     <tnt:NavigationListItem
-                        key="myrequest"
-                        text="{i18n>nav_myrequest}"
-                        icon="sap-icon://document-text"
+                        key="myreport"
+                        text="{i18n>nav_myreport}"
+                        icon="sap-icon://activity-items"
                         enabled="true"
                         expanded="false"
                     />
                     <tnt:NavigationListItem
-                        key="myreport"
-                        text="{i18n>nav_myreport}"
-                        icon="sap-icon://activity-items"
+                        key="myrequest"
+                        text="{i18n>nav_myrequest}"
+                        icon="sap-icon://document-text"
                         enabled="true"
                         expanded="false"
                     />
@@ -508,7 +508,7 @@
                 <Page id="myrequest" showHeader="false" class="sapUiNoContentPadding">
                     <content>
                         <core:Fragment
-                            fragmentName="claima.fragment.myrequestform"
+                            fragmentName="claima.fragment.myrequestreport"
                             type="XML"
                         />
                     </content>
@@ -517,7 +517,7 @@
                 <Page id="myreport" showHeader="false" class="sapUiNoContentPadding">
                     <content>
                         <core:Fragment
-                            fragmentName="claima.fragment.myrequestreport"
+                            fragmentName="claima.fragment.myrequestform"
                             type="XML"
                         />
                     </content>
