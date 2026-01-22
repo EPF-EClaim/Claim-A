@@ -45,6 +45,18 @@ sap.ui.define([
 			});
 			this.getView().setModel(oReportModel, "report");
 
+			// CONFIG MODEL for all 4 table
+			var oConfigModel = new JSONModel({
+				ZCLAIM_PURPOSE: [],
+				ConfigurationTable2: [],
+				ConfigurationTable3: [],
+				ConfigurationTable4: [],
+				active: {
+					data: []
+				}
+			});
+			this.getView().setModel(oConfigModel, "configModel");
+      
 			//Start insert Aiman Salim - 21/1/2026
 			const oMyRequestModel = new JSONModel({
 				requests: [
@@ -67,6 +79,45 @@ sap.ui.define([
 
 			this.getView().setModel(oMyRequestModel, "myRequest");
 		},
+
+		// CLICK CONFIGURATION TABLE CARD
+		onOpenConfigTable: async function (oEvent) {
+
+			let tableId = oEvent.getSource().getCustomData()[0].getValue();
+			let m = this.getView().getModel("configModel");
+
+			m.setProperty("/active/title", tableId);
+			m.setProperty("/active/data",
+				JSON.parse(JSON.stringify(m.getProperty("/" + tableId)))
+			);
+
+			this.loadConfigPage();
+		},
+		// LOAD CONFIG DETAIL PAGE
+		loadConfigPage: async function () {
+
+			if (!this.oConfigDetailPage) {
+
+				const oFragment = await Fragment.load({
+					id: this.createId("ConfigFrag"),
+					name: "claima.fragment.configuration",
+					controller: this
+				});
+				this.getView().addDependent(oFragment);
+
+				this.oConfigDetailPage = new sap.m.Page(
+					this.createId("configDetailPage"),
+					{
+						title: "eClaim Configuration",
+						content: [oFragment],
+						showNavButton: true,
+						navButtonPress: this.onBackFromConfigTable.bind(this)
+					}
+				);
+				this.byId("pageContainer").addPage(this.oConfigDetailPage);
+			}
+			this.byId("pageContainer").to(this.byId("configDetailPage"));
+		},
 		onRowPress: function (oEvent) {
 			const oItem = oEvent.getParameter("listItem");
 			const oData = oItem.getBindingContext("myRequest").getObject();
@@ -82,6 +133,80 @@ sap.ui.define([
 
 		//End insert Aiman Salim - 21/1/2026
 
+		// BACK BUTTON CONFIGURATION
+		onBackFromConfigTable: function () {
+			this.byId("pageContainer").to(this.byId("configuration"));
+		},
+
+		// SAVE CONFIGURATION
+		onSaveConfigTable: function () {
+			let m = this.getView().getModel("configModel");
+			let tableId = m.getProperty("/active/title");
+			let activeData = m.getProperty("/active/data");
+
+			activeData.forEach(r => r.edit = false);
+			m.setProperty("/" + tableId, activeData);
+
+			MessageToast.show("Saved");
+		},
+
+		// ADD NEW ROW CONFIGURATION
+		onAddEntry: function () {
+			let data = this.getView().getModel("configModel").getProperty("/active/data");
+
+			data.push({
+				Claim_Purpose_ID: "",
+				Claim_Purpose_Desc: "",
+
+				edit: true,
+				selected: false
+			});
+			let m = this.getView().getModel("configModel");
+			m.refresh(true);
+
+		},
+
+		// EDIT ROW CONFIGURATION
+		onEditEntry: function () {
+			let oTable = this.byId("ConfigFrag--configTable");
+			let sel = oTable.getSelectedItems();
+			if (!sel.length) return MessageToast.show("Select a row.");
+
+			let ctx = sel[0].getBindingContext("configModel");
+			ctx.setProperty("edit", true);
+		},
+
+		// COPY ROW CONFIGURATION
+		onCopyEntry: function () {
+			let oTable = this.byId("ConfigFrag--configTable");
+			let sel = oTable.getSelectedItem();
+			if (!sel) return MessageToast.show("Select a row.");
+
+			let m = this.getView().getModel("configModel");
+			let data = m.getProperty("/active/data");
+			let obj = sel.getBindingContext("configModel").getObject();
+
+			data.push({ ...obj, edit: true });
+			m.refresh(true);
+		},
+
+		// DELETE ROW CONFIGURATION
+		onDeleteEntry: function () {
+			let oTable = this.byId("ConfigFrag--configTable");
+			let sel = oTable.getSelectedItems();
+			if (!sel.length) return MessageToast.show("Nothing selected.");
+
+			let m = this.getView().getModel("configModel");
+			let data = m.getProperty("/active/data");
+
+			sel.reverse().forEach(item => {
+				let index = item.getBindingContext("configModel").getPath().split("/").pop();
+				data.splice(index, 1);
+			});
+
+			m.refresh(true);
+
+		},
 		onCollapseExpandPress: function () {
 			var oModel = this.getView().getModel();
 			var oNavigationList = this.byId("navigationList");
@@ -96,7 +221,7 @@ sap.ui.define([
 		},
 		onNavItemSelect: function (oEvent) {
 			var oItem = oEvent.getParameter("item");
-			var oKey = oItem.getKey();
+			var sKey = oItem.getKey();
 
 			switch (oKey) {
 				case "nav_createreport":
@@ -107,18 +232,40 @@ sap.ui.define([
 					this.onClickMyRequest();
 					break;
 				// End added by Jefry 15-01-2026
+				case "config": // your configuration menu
+					this.onClickConfiguration();
+					break;
 				default:
-					this.byId("pageContainer").to(this.getView().createId(oKey));
+					// navigate to page with ID same as the key
+					var oPage = this.byId(sKey); // make sure your NavContainer has a page with this ID
+					if (oPage) {
+						this.byId("pageContainer").to(oPage);
+					}
 					break;
 			}
 
-			// if (oKey == "createreport" || oKey == "myrequest") {
-			// 	this.onClickExpenseReport();
-			// } else {
-			// 	this.byId("pageContainer").to(this.getView().createId(oItem.getKey()));
-			// }
 		},
-		onNavCreateReport: async function () {
+		// Configuration
+		onClickConfiguration: async function () {
+			if (!this.oConfigPage) {
+				this.oConfigPage = Fragment.load({
+					name: "claima.fragment.configuration",
+					type: "XML",
+					controller: this
+				});
+				this.getView().addDependent(this.oConfigPage);
+			}
+
+			// Navigate to configuration page
+			var oPageContainer = this.byId("pageContainer");
+			if (!this.byId("configurationPage")) {
+				var oPage = new sap.m.Page(this.createId("configurationPage"), {
+				});
+			}
+			oPageContainer.to(this.byId("configurationPage"));
+
+		},
+    onNavCreateReport: async function () {
 			if (!this.oDialogFragment) {
 				this.oDialogFragment = await Fragment.load({
 					// id: 
