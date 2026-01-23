@@ -221,7 +221,7 @@ sap.ui.define([
 		},
 		onNavItemSelect: function (oEvent) {
 			var oItem = oEvent.getParameter("item");
-			var sKey = oItem.getKey();
+			var oKey = oItem.getKey();
 
 			switch (oKey) {
 				case "nav_createreport":
@@ -237,7 +237,7 @@ sap.ui.define([
 					break;
 				default:
 					// navigate to page with ID same as the key
-					var oPage = this.byId(sKey); // make sure your NavContainer has a page with this ID
+					var oPage = this.byId(oKey); // make sure your NavContainer has a page with this ID
 					if (oPage) {
 						this.byId("pageContainer").to(oPage);
 					}
