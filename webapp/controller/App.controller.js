@@ -36,7 +36,7 @@ sap.ui.define([
 				reqstatus: "",
 				startdate: "",
 				enddate: "",
-				indigrp: "",
+				grptype: "",
 				location: "",
 				transport: "",
 				detail: "",

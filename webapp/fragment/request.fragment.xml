@@ -69,7 +69,7 @@
 				<Label text="Individual/Group" />
 				<Select width="100%" 
 						required="true" 
-						selectedKey="{request>/indigrp}"
+						selectedKey="{request>/grptype}"
 						visible="{= ${request>/type} === 'travel' || ${request>/type} === 'event' }">
 					<core:Item key="none" text="" />
 					<core:Item key="individual" text="Individual" />
