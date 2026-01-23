@@ -1,5 +1,5 @@
 {
-  "_version": "1.60.0",
+  "_version": "1.81.0",
   "sap.app": {
     "id": "claima",
     "type": "application",
@@ -17,7 +17,7 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "sap/odata/v4/EmployeeSrv/",
+        "uri": "/odata/v4/EmployeeSrv/",
         "type": "OData",
         "settings": {
           "annotations": [],

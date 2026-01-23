@@ -467,26 +467,22 @@ sap.ui.define([
 			var oModel = this.getView().getModel("employee");
 			// var oModel = new sap.ui.model.odata.v4.ODataModel("sap/odata/v4/EmployeeSrv/");
 			// sap.ui.getCore().setModel(oModel);
-			const oListBinding = oModel.bindList("/EmployeeData");
+			const oListBinding = oModel.bindList("/ZREQUEST_TYPE1");
 
 			//dummy testing
-			oListBinding.requestContexts().then(function (aContexts) {
-                    aContexts.forEach(oContext => {
-                        console.log(oContext.getObject());
-                    });
-                });
-			// const oContext = oListBinding.create({
-			// 	EEID: "E0001",
-			// 	NAME: "AIN"
-			// });
-			// oContext.created()
-			// 	.then(() => {
-			// 		sap.m.MessageToast.show("Dummy record created successfully");
-			// 	})
-			// 	.catch((oError) => {
-			// 		console.error(oError);
-			// 		sap.m.MessageBox.error("Create failed");
-			// 	});
+			const oContext = oListBinding.create({
+				REQUEST_TYPE_ID: "E0001",
+				REQUEST_TYPE_DESC: "AIN"
+				//REQUEST_ID: crypto.randomUUID()
+			});
+			oContext.created()
+				.then(() => {
+					sap.m.MessageToast.show("Record created");
+				})
+				.catch((oError) => {
+					console.error(oError);
+					sap.m.MessageBox.error("Create failed");
+				});
 
 		},
 
