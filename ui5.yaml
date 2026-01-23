@@ -16,17 +16,6 @@ server:
             - /test-resources
           url: https://sapui5.hana.ondemand.com
           #
-    - name: ui5-middleware-simpleproxy
-      mountPath: /odata/v4/EmployeeSrv/
-      afterMiddleware: compression
-      configuration:
-      baseUri: https://port4004-workspaces-ws-6o9ot.ap11.applicationstudio.cloud.sap/odata/v4/EmployeeSrv/
-    - name: ui5-middleware-simpleproxy
-      mountPath: /odata/v4/EmployeeSrv/
-      afterMiddleware: compression
-      configuration:
-      baseUri: https://port4004-workspaces-ws-6o9ot.ap11.applicationstudio.cloud.sap/odata/v4/EmployeeSrv/
-          
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
@@ -38,11 +27,5 @@ server:
       configuration:
         flp:
           theme: sap_horizon
-  # customMiddleware:
-  # - name: ui5-middleware-simpleproxy
-  #   mountPath: /resources/
-  #   afterMiddleware: compression
-  #   configuration:
-  #     baseUri: https://port4004-workspaces-ws-6o9ot.ap11.applicationstudio.cloud.sap
-
+          
 

@@ -484,7 +484,6 @@
                             </Toolbar>
                         </footer>
                     </Page>
-
                     <ScrollContainer
                         id="config"
                         horizontal="false"

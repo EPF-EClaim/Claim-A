@@ -60,7 +60,7 @@
                         </table:template>
                     </table:Column>
                     <table:rowActionTemplate>
-                        <table:RowAction>
+                        <table:RowAction> 
                             <table:items>
                                 <table:RowActionItem icon="sap-icon://edit" text="Edit" press=".onSelectEdit"/>
                                 <table:RowActionItem type="Delete" press=".onRowDelete"/>
