@@ -66,6 +66,26 @@ sap.ui.define([
 			});
 
 			this.getView().setModel(oMyRequestModel, "myRequest");
+
+			const oMyRequestModel2 = new JSONModel({
+				requestsform: [
+					{
+						reportpurpose: "Test for my report form 1",
+						reportid: "TTQ001",
+						startdate: "2026-01-01",
+						status: "Approved",
+						amount: "1200"
+					},
+					{
+						reportpurpose: "Test for my report form",
+						reportid: "TTQ002",
+						startdate: "2026-01-10",
+						status: "Pending",
+						amount: "850"
+					}
+				]
+			});
+			this.getView().setModel(oMyRequestModel2, "myRequestform");
 		},
 		onRowPress: function (oEvent) {
 			const oItem = oEvent.getParameter("listItem");
@@ -79,6 +99,38 @@ sap.ui.define([
 			//Navigate to next page
 			this.byId("pageContainer").to(oNextPage);
 		},
+
+
+		onRowPressForm: function (oEvent) {
+			// 1) Read the selected row data from the "myRequest" named model
+			const oListItem = oEvent.getParameter("listItem");
+			const oSelectedData = oListItem.getBindingContext("myRequestform").getObject();
+
+			// 2) Put the selected data into a model that the target page can read
+			//    Option A (recommended): set it on the target page under a named model
+			const oTargetPage = this.byId("expensereport");   // assumes expensereport is a Page/View in the same view
+			if (oTargetPage) {
+				oTargetPage.setModel(new sap.ui.model.json.JSONModel(oSelectedData), "selectedRequest");
+			} else {
+				// Fallback: set on the *view*, which the target page can also inherit if bound
+				this.getView().setModel(new sap.ui.model.json.JSONModel(oSelectedData), "selectedRequest");
+			}
+
+			// 3) Navigate NavContainer to the expensereport page
+			const oNav = this.byId("pageContainer");
+			const sTargetId = this.getView().createId("expensereport");
+			oNav.to(sTargetId);
+
+			// 4) (Optional) If your expensereport page has step sections, toggle as needed
+			const oExpenseTypeScr = this.byId("expensetypescr");
+			const oClaimScr = this.byId("claimscr");
+			if (oExpenseTypeScr) { oExpenseTypeScr.setVisible(true); }
+			if (oClaimScr) { oClaimScr.setVisible(false); }
+			if (this.createreportButtons) {
+				this.createreportButtons("expensetypescr");
+			}
+		},
+
 
 		//End insert Aiman Salim - 21/1/2026
 
@@ -194,7 +246,6 @@ sap.ui.define([
 			this.getView().byId("expensetypescr").setVisible(false);
 			this.getView().byId("claimscr").setVisible(true);
 			this.createreportButtons("claimscr");
-
 		},
 
 		createreportButtons: function (oId) {
@@ -251,6 +302,57 @@ sap.ui.define([
 			var oItem = oEvent.getParameter("item");
 			this.byId("pageContainer").to(this.getView().byId('new_request'));
 		},
+
+		onPressNavToDetail2: function (oEvent) {
+			var oItem = oEvent.getParameter("item");
+			this.byId("pageContainer").to(this.getView().byId('expensereport'));
+		},
+
+
+
+		onAfterRendering: function () {
+			const oInput = this.byId("fromloc_id");
+
+			if (oInput) {
+				// Prevent duplicate event attachment
+				oInput.$().off("click.openDialog");
+
+				// Add click event
+				oInput.$().on("click.openDialog", () => {
+					this.onOpenFromLocationDialog();
+				});
+			}
+		},
+
+
+
+		onOpenFromLocationDialog: async function () {
+			if (!this._oFromLocationDialog) {
+				this._oFromLocationDialog = await sap.ui.core.Fragment.load({
+					name: "claima.fragment.mileagecalculator",
+					controller: this
+				});
+				this.getView().addDependent(this._oFromLocationDialog);
+			}
+
+			this._oFromLocationDialog.open();
+		},
+
+
+		//onConfirmLocation: function () {
+		//const sValue = sap.ui.getCore().byId(this.createId("dialogLocationInput")).getValue();
+
+		//this.byId("fromloc_id").setValue(sValue);
+		//this.getView().getModel().setProperty("/fromloc", sValue); // If using model binding
+
+		//this._oFromLocationDialog.close();
+		//},
+
+		//onCancelLocation: function () {
+		//this._oFromLocationDialog.close();
+		//}
+
+
 
 		//End added by Aiman Salim Test
 		// Start added by Jefry Yap 15-01-2026

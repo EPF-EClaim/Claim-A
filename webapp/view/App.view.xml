@@ -508,7 +508,7 @@
                 <Page id="myrequest" showHeader="false" class="sapUiNoContentPadding">
                     <content>
                         <core:Fragment
-                            fragmentName="claima.fragment.myrequestreport"
+                            fragmentName="claima.fragment.myrequestform"
                             type="XML"
                         />
                     </content>
@@ -517,11 +517,12 @@
                 <Page id="myreport" showHeader="false" class="sapUiNoContentPadding">
                     <content>
                         <core:Fragment
-                            fragmentName="claima.fragment.myrequestform"
+                            fragmentName="claima.fragment.myrequestreport"
                             type="XML"
                         />
                     </content>
                 </Page>
+
             </NavContainer>
         </tnt:mainContents>
     </tnt:ToolPage>

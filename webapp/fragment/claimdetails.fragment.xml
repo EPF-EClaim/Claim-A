@@ -171,8 +171,11 @@
                                 >
                                     <f:fields>
                                         <Input
+                                            id="fromloc_id"
                                             value="{fromloc}"
-                                            type="Text"
+                                            editable="false"
+                                            class="clickableInput"
+                                            
                                         />
                                     </f:fields>
                                 </f:FormElement>

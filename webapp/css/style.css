@@ -24,4 +24,9 @@
   overflow: hidden;
 }
 
+clickableInput {
+    cursor: pointer;
+}
+
+
 /* End added by Jefry Yap */

@@ -40,7 +40,7 @@
                                     <f:fields>
                                         <Text
                                             text="{current>/report/purpose}"
-                                            id="nameText"
+                                            id="nameText" 
                                         />
                                     </f:fields>
                                 </f:FormElement>

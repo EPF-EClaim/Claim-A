@@ -13,7 +13,7 @@
                 <f:actions>
                     <Button
                         text="Go to Detail page 2"
-                        press="onPressNavToDetail"
+                        press="onPressNavToDetail2"
                     />
                 </f:actions>
             </f:DynamicPageTitle>
