@@ -486,7 +486,7 @@
                     </Page>
 
                     <ScrollContainer
-                        id="analytics"
+                        id="config"
                         horizontal="false"
                         vertical="true"
                         height="100%"
