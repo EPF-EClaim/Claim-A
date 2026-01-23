@@ -482,7 +482,6 @@
                             </Toolbar>
                         </footer>
                     </Page>
-
                     <ScrollContainer
                         id="analytics"
                         horizontal="false"

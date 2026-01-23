@@ -11,7 +11,7 @@ modules:
   - name: claima-backend-db
   - name: claima-backend-connectivity
   provides:
-  - name: srv-api
+  - name: srv-api 
     properties:
       srv-url: ${default-url}
   parameters:
