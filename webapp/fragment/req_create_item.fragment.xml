@@ -1,12 +1,16 @@
-<mvc:View xmlns:unified="sap.ui.unified" 
-    id="request_new_item"
+<core:FragmentDefinition
     xmlns="sap.m"
-    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:form="sap.ui.layout.form"
     xmlns:core="sap.ui.core"
-    xmlns:table="sap.ui.table"
-    controllerName="claima.controller.RequestFormItem">
-    
-    <mvc:content>
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+    xmlns:unified="sap.ui.unified"
+    xmlns:table="sap.ui.table" >
+    <VBox
+        id="request_create_item_fragment" 
+        backgroundDesign="Solid"
+        class="roundedBox sapUiSmallMargin"
+        rowGap="1rem">
         <VBox width="100%" height="100%" rowGap="1rem">
             <OverflowToolbar height="3rem">
                 <Title text="Request Details" titleStyle="H4" />
@@ -14,32 +18,37 @@
                 <MenuButton text="Save Request" buttonMode="Split" defaultAction="onSave" beforeMenuOpen="onBeforeMenuOpen" useDefaultActionOnly="true">
                     <menu>
                         <Menu itemSelected="onMenuAction">
-                            <MenuItem text="Save and add another" />
+                            <MenuItem text="Save and add another" press=".onSaveAddAnother" />
                         </Menu>
                     </menu>
                 </MenuButton>
             </OverflowToolbar>
             <VBox rowGap="1rem">
-                <VBox rowGap="0.5rem" width="40rem">
-                    <List showSeparators="None">
-                        <InputListItem label="Claim Type">
-                            <Select width="25rem" >
-                                <items>
-                                    <core:Item key="CT1" text="Claim Type 1" />
-                                    <core:Item key="CT2" text="Claim Type 2" />
-                                    <core:Item key="CT3" text="Claim Type 3" />
-                                    <core:Item key="CT4" text="Claim Type 4" />
-                                </items>
-                            </Select>
-                        </InputListItem>
-                        <InputListItem label="Estimated No. of Participants">
-                            <Input id="estNoOfParticipant" textAlign="Begin" width="25rem" type="Number"/>
-                        </InputListItem>
-                        <InputListItem label="Estimated Amount">
-                            <Input id="estAmount" textAlign="Begin" width="25rem" type="Number"/>
-                        </InputListItem>
-                    </List>
-                </VBox>
+                <form:SimpleForm 
+                    layout="ColumnLayout">
+                    <Label text="Claim Type" />
+                    <Select width="25rem" >
+                        <items>
+                            <core:Item key="CT1" text="Claim Type 1" />
+                            <core:Item key="CT2" text="Claim Type 2" />
+                            <core:Item key="CT3" text="Claim Type 3" />
+                            <core:Item key="CT4" text="Claim Type 4" />
+                        </items>
+                    </Select>
+                    <Label text="Claim Type Item" />
+                    <Select width="25rem" >
+                        <items>
+                            <core:Item key="CI1" text="Claim Type Item 1" />
+                            <core:Item key="CI2" text="Claim Type Item 2" />
+                            <core:Item key="CI3" text="Claim Type Item 3" />
+                            <core:Item key="CI4" text="Claim Type Item 4" />
+                        </items>
+                    </Select>
+                    <Label text="Estimated No. of Participants" />
+                    <Input id="estNoOfParticipant" textAlign="Begin" width="25rem" type="Number"/>
+                    <Label text="Estimated Amount" />
+                    <Input id="estAmount" textAlign="Begin" width="25rem" type="Number"/>
+                </form:SimpleForm>
                 <VBox rowGap="0.5rem">
                     <OverflowToolbar height="3rem">
                         <Title text="Participant Details" titleStyle="H4" />
@@ -52,11 +61,11 @@
                             fileType="csv,xlsx"
                             change=".onImportChange"
                             style="Emphasized"/>
-                        <Button icon="sap-icon://delete" text="Delete" press=".onDeleteSelected"/>
+                        <Button icon="sap-icon://delete" text="Delete" press=".onRowDeleteParticipant"/>
                     </OverflowToolbar>
                     <table:Table 
                         id="req_participant_table"
-                        rows="{/rows}"
+                        rows="{/participant}"
                         columnHeaderHeight="3rem"
                         selectionMode="MultiToggle"
                         rowActionCount="1">
@@ -69,7 +78,7 @@
                         <table:Column width="25rem">
                             <Label text="Employee Cost Center"></Label>
                             <table:template>
-                                <Input id="emp_cost_center" textAlign="Begin" value="{emp_cost_center}"></Input>
+                                <Text text="cost_center" />
                             </table:template>
                         </table:Column>
                         <table:Column width="25rem">
@@ -81,7 +90,7 @@
                         <table:rowActionTemplate>
                             <table:RowAction>
                                 <table:items>
-                                    <table:RowActionItem type="Delete" press="onRowDelete"></table:RowActionItem>
+                                    <table:RowActionItem type="Delete" press="onRowDeleteParticipant"></table:RowActionItem>
                                 </table:items>
                             </table:RowAction>
                         </table:rowActionTemplate>
@@ -89,5 +98,5 @@
                 </VBox>
             </VBox>
         </VBox>
-    </mvc:content>
-</mvc:View>
+    </VBox>
+</core:FragmentDefinition>

@@ -117,12 +117,21 @@
           "target": [
             "TargetMain"
           ]
+        }, 
+        {
+          "pattern": "Dashboard",
+          "name": "Dashboard",
+          "target": "TargetDashboard"
         }
       ],
       "targets": {
         "TargetMain": {
           "id": "Main",
           "name": "Main"
+        }, 
+        "TargetDashboard": {
+          "viewId": "Dashboard",
+          "viewName": "App"
         }
       }
     },
