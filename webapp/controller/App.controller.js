@@ -28,6 +28,12 @@ sap.ui.define([
 	return Controller.extend("claima.controller.App", {
 		onInit: function () {
 
+			// oViewModel
+			const oViewModel = new sap.ui.model.json.JSONModel({
+				rtype: "" // current selected request type
+			});
+			this.getView().setModel(oViewModel, "view");
+
 			// oRequestModel
 			const oRequestModel = new JSONModel({
 				purpose: "",
@@ -60,8 +66,169 @@ sap.ui.define([
 				"comment": ""
 			});
 			this.getView().setModel(oReportModel, "report");
+
+			// CONFIG MODEL for all 4 table
+			var oConfigModel = new JSONModel({
+				ZCLAIM_PURPOSE: [],
+				ConfigurationTable2: [],
+				ConfigurationTable3: [],
+				ConfigurationTable4: [],
+				active: {
+					data: []
+				}
+			});
+			this.getView().setModel(oConfigModel, "configModel");
+      
+			//Start insert Aiman Salim - 21/1/2026
+			const oMyRequestModel = new JSONModel({
+				requests: [
+					{
+						reportpurpose: "Travel Claim",
+						reportid: "REQ001",
+						startdate: "2026-01-01",
+						status: "Approved",
+						amount: "1200"
+					},
+					{
+						reportpurpose: "Training Expense",
+						reportid: "REQ002",
+						startdate: "2026-01-10",
+						status: "Pending",
+						amount: "850"
+					}
+				]
+			});
+
+			this.getView().setModel(oMyRequestModel, "myRequest");
 		},
 
+		// CLICK CONFIGURATION TABLE CARD
+		onOpenConfigTable: async function (oEvent) {
+
+			let tableId = oEvent.getSource().getCustomData()[0].getValue();
+			let m = this.getView().getModel("configModel");
+
+			m.setProperty("/active/title", tableId);
+			m.setProperty("/active/data",
+				JSON.parse(JSON.stringify(m.getProperty("/" + tableId)))
+			);
+
+			this.loadConfigPage();
+		},
+		// LOAD CONFIG DETAIL PAGE
+		loadConfigPage: async function () {
+
+			if (!this.oConfigDetailPage) {
+
+				const oFragment = await Fragment.load({
+					id: this.createId("ConfigFrag"),
+					name: "claima.fragment.configuration",
+					controller: this
+				});
+				this.getView().addDependent(oFragment);
+
+				this.oConfigDetailPage = new sap.m.Page(
+					this.createId("configDetailPage"),
+					{
+						title: "eClaim Configuration",
+						content: [oFragment],
+						showNavButton: true,
+						navButtonPress: this.onBackFromConfigTable.bind(this)
+					}
+				);
+				this.byId("pageContainer").addPage(this.oConfigDetailPage);
+			}
+			this.byId("pageContainer").to(this.byId("configDetailPage"));
+		},
+		onRowPress: function (oEvent) {
+			const oItem = oEvent.getParameter("listItem");
+			const oData = oItem.getBindingContext("myRequest").getObject();
+
+			//Optional: pass data to the next page via a model
+			const oNextPageModel = new JSONModel(oData);
+			const oNextPage = this.byId("new_request");
+			oNextPage.setModel(oNextPageModel, "selectedRequest");
+
+			//Navigate to next page
+			this.byId("pageContainer").to(oNextPage);
+		},
+
+		//End insert Aiman Salim - 21/1/2026
+
+		// BACK BUTTON CONFIGURATION
+		onBackFromConfigTable: function () {
+			this.byId("pageContainer").to(this.byId("configuration"));
+		},
+
+		// SAVE CONFIGURATION
+		onSaveConfigTable: function () {
+			let m = this.getView().getModel("configModel");
+			let tableId = m.getProperty("/active/title");
+			let activeData = m.getProperty("/active/data");
+
+			activeData.forEach(r => r.edit = false);
+			m.setProperty("/" + tableId, activeData);
+
+			MessageToast.show("Saved");
+		},
+
+		// ADD NEW ROW CONFIGURATION
+		onAddEntry: function () {
+			let data = this.getView().getModel("configModel").getProperty("/active/data");
+
+			data.push({
+				Claim_Purpose_ID: "",
+				Claim_Purpose_Desc: "",
+
+				edit: true,
+				selected: false
+			});
+			let m = this.getView().getModel("configModel");
+			m.refresh(true);
+
+		},
+
+		// EDIT ROW CONFIGURATION
+		onEditEntry: function () {
+			let oTable = this.byId("ConfigFrag--configTable");
+			let sel = oTable.getSelectedItems();
+			if (!sel.length) return MessageToast.show("Select a row.");
+
+			let ctx = sel[0].getBindingContext("configModel");
+			ctx.setProperty("edit", true);
+		},
+
+		// COPY ROW CONFIGURATION
+		onCopyEntry: function () {
+			let oTable = this.byId("ConfigFrag--configTable");
+			let sel = oTable.getSelectedItem();
+			if (!sel) return MessageToast.show("Select a row.");
+
+			let m = this.getView().getModel("configModel");
+			let data = m.getProperty("/active/data");
+			let obj = sel.getBindingContext("configModel").getObject();
+
+			data.push({ ...obj, edit: true });
+			m.refresh(true);
+		},
+
+		// DELETE ROW CONFIGURATION
+		onDeleteEntry: function () {
+			let oTable = this.byId("ConfigFrag--configTable");
+			let sel = oTable.getSelectedItems();
+			if (!sel.length) return MessageToast.show("Nothing selected.");
+
+			let m = this.getView().getModel("configModel");
+			let data = m.getProperty("/active/data");
+
+			sel.reverse().forEach(item => {
+				let index = item.getBindingContext("configModel").getPath().split("/").pop();
+				data.splice(index, 1);
+			});
+
+			m.refresh(true);
+
+		},
 		onCollapseExpandPress: function () {
 			var oModel = this.getView().getModel();
 			var oNavigationList = this.byId("navigationList");
@@ -87,18 +254,40 @@ sap.ui.define([
 					this.onNavMyRequest();
 					break;
 				// End added by Jefry 15-01-2026
+				case "config": // your configuration menu
+					this.onClickConfiguration();
+					break;
 				default:
-					this.byId("pageContainer").to(this.getView().createId(oKey));
+					// navigate to page with ID same as the key
+					var oPage = this.byId(oKey); // make sure your NavContainer has a page with this ID
+					if (oPage) {
+						this.byId("pageContainer").to(oPage);
+					}
 					break;
 			}
-		
-			// if (oKey == "createreport" || oKey == "myrequest") {
-			// 	this.onClickExpenseReport();
-			// } else {
-			// 	this.byId("pageContainer").to(this.getView().createId(oItem.getKey()));
-			// }
+
 		},
-		onNavCreateReport: async function () {
+		// Configuration
+		onClickConfiguration: async function () {
+			// if (!this.oConfigPage) {
+			// 	this.oConfigPage = Fragment.load({
+			// 		name: "claima.fragment.configuration",
+			// 		type: "XML",
+			// 		controller: this
+			// 	});
+			// 	this.getView().addDependent(this.oConfigPage);
+			// }
+
+			// Navigate to configuration page
+			var oPageContainer = this.byId("pageContainer");
+			if (!this.byId("configurationPage")) {
+				var oPage = new sap.m.Page(this.createId("configurationPage"), {
+				});
+			}
+			oPageContainer.to(this.byId("configurationPage"));
+
+		},
+    onNavCreateReport: async function () {
 			if (!this.oDialogFragment) {
 				this.oDialogFragment = await Fragment.load({
 					// id: 
@@ -109,10 +298,10 @@ sap.ui.define([
 					type: "XML",
 					controller: this,
 				});
-				this.getView().addDependent(this.oDialogFragment);		
-				
+				this.getView().addDependent(this.oDialogFragment);
+
 				// Start added by Jefry Yap
-				this.oDialogFragment.attachAfterClose(() =>{
+				this.oDialogFragment.attachAfterClose(() => {
 					this.oDialogFragment.destroy();
 					this.oDialogFragment = null;
 				});
@@ -154,16 +343,23 @@ sap.ui.define([
 			var oInputModel = this.getView().getModel("input");
 			var oInputData = oInputModel.getData();
 
-			// set as current data
-			var oCurrentModel = this.getView().getModel("current");
-			oCurrentModel.setData(oInputData);
+			if (oInputData.report.purpose == '' || oInputData.report.startdate == ''
+				|| oInputData.report.enddate == '' || oInputData.report.category == '') {
+				var message = 'Please enter all mandatory details';
+				MessageToast.show(message);
+			} else {
 
-			var view = "expensereport";
-			this.oDialogFragment.close();
-			this.byId("pageContainer").to(this.getView().createId(view));
-			this.getView().byId("expensetypescr").setVisible(true);
-			this.getView().byId("claimscr").setVisible(false);
-			this.createreportButtons("expensetypescr");
+				// set as current data
+				var oCurrentModel = this.getView().getModel("current");
+				oCurrentModel.setData(oInputData);
+
+				var view = "expensereport";
+				this.oDialogFragment.close();
+				this.byId("pageContainer").to(this.getView().createId(view));
+				this.getView().byId("expensetypescr").setVisible(true);
+				this.getView().byId("claimscr").setVisible(false);
+				this.createreportButtons("expensetypescr");
+			}
 		},
 
 		onPressBack: function (oEvent) {
@@ -204,7 +400,7 @@ sap.ui.define([
 			}
 
 		},
-		//To show or hide fields based on Claim Item
+		// Start added by Aiman Salim - To show or hide fields based on Claim Item
 		onClaimItemChange: function (oEvent) {
 			const sKey = oEvent.getSource().getSelectedKey();
 			//set ids 
@@ -225,14 +421,58 @@ sap.ui.define([
 			oRecptnum.setVisible(claimShow);
 			oVehicle.setVisible(claimShow);
 
-
-
 		},
-		
-		// Jefry_Changes++
-		// Create Request Form
+
+		onPressNavToDetail: function (oEvent) {
+			var oItem = oEvent.getParameter("item");
+			this.byId("pageContainer").to(this.getView().byId('new_request'));
+		},
+		// Start added by Jefry Yap 15-01-2026
 		onNavMyRequest: async function () {
-			
+			// const oConfig = new JSONModel({
+            //     types: [
+            //     { key: "T1", text: "Type A" },
+            //     { key: "T2", text: "Type B" },
+            //     { key: "T3", text: "Type C" },
+            //     { key: "T4", text: "Type D" },
+            //     { key: "T5", text: "Type E" }
+            //     ],
+            //     fieldSets: {
+            //         type: {
+            //             T1: [
+            //                 { id: "priority", label: "Priority", control: "Select", path: "/form/priority",
+            //                     items: [
+            //                     { key: "H", text: "High" },
+            //                     { key: "M", text: "Medium" },
+            //                     { key: "L", text: "Low" }
+            //                     ],
+            //                     required: true
+            //                 }
+            //             ],
+            //             T2: [
+            //                 { id: "amount", label: "Amount", control: "Input", type: "Number", path: "/form/amount" }
+            //             ],
+            //             T3: [
+            //                 { id: "costCenter", label: "Cost Center", control: "Input", path: "/form/costCenter" }
+            //             ],
+            //             T4: [
+            //                 { id: "attachment", label: "Attachment", control: "FileUploader", path: "/form/attachment" }
+            //             ],
+            //             T5: [
+            //                 { id: "category", label: "Category", control: "Select", path: "/form/category",
+            //                     items: [
+            //                     { key: "A", text: "Cat A" },
+            //                     { key: "B", text: "Cat B" }
+            //                     ]
+            //                 }
+            //             ]
+            //         }
+            //     },
+            //     selection: { purpose: "", type: "" },
+            //     form: {}
+            // });
+            // this.getView().setModel(oConfig, "config");
+
 			if (!this.oDialogFragment) {
 				this.oDialogFragment = await Fragment.load({
 					id: "request",
@@ -240,9 +480,9 @@ sap.ui.define([
 					type: "XML",
 					controller: this,
 				});
-				this.getView().addDependent(this.oDialogFragment);	
-				
-				this.oDialogFragment.attachAfterClose(() =>{
+				this.getView().addDependent(this.oDialogFragment);
+
+				this.oDialogFragment.attachAfterClose(() => {
 					this.oDialogFragment.destroy();
 					this.oDialogFragment = null;
 				});
@@ -269,6 +509,197 @@ sap.ui.define([
 			// Close Fragment and navigate to Request Form
 			this.oDialogFragment.close();
 			this.byId("pageContainer").to(this.getView().byId('new_request'));
+		},
+
+		
+		onDialogCancel: function (oEvent) {
+			oEvent.getSource().getParent().close();
+		},
+
+		onDialogAfterClose: function () {
+			// cleanup if needed
+		},
+
+		onPurposeChange: function () {
+			this._rebuildDynamicForm();
+		},
+
+		onTypeChange: function () {
+			this._rebuildDynamicForm();
+		},
+
+		// Build/refresh fields every time purpose/type changes
+		_rebuildDynamicForm: function () {
+			const oView = this.getView();
+			const oConfig = oView.getModel("config");
+			const oSF = oView.byId("dynForm");
+
+			// Clear previous content
+			oSF.destroyContent();
+
+			const sPurpose = oConfig.getProperty("/selection/purpose");
+			const sType = oConfig.getProperty("/selection/type");
+
+			const aPurposeFields = (sPurpose && oConfig.getProperty("/fieldSets/purpose/" + sPurpose)) || [];
+			const aTypeFields    = (sType && oConfig.getProperty("/fieldSets/type/" + sType)) || [];
+
+			// Merge fields; you can also dedupe by id if overlaps possible
+			const aFields = aPurposeFields.concat(aTypeFields);
+
+			// Early return if nothing selected
+			if (!aFields.length) {
+				return;
+			}
+
+			// Generate form elements
+			aFields.forEach(function (fdef) {
+				// Label
+				oSF.addContent(new sap.m.Label({
+				text: fdef.label,
+				required: !!fdef.required,
+				labelFor: fdef.id
+				}));
+
+				// Control factory
+				let oCtrl = null;
+				switch (fdef.control) {
+				case "Input":
+					oCtrl = new Input(fdef.id, {
+					type: fdef.type === "Number" ? "Number" : "Text",
+					value: "{config>" + fdef.path + "}"
+					});
+					break;
+
+				case "TextArea":
+					oCtrl = new TextArea(fdef.id, {
+					value: "{config>" + fdef.path + "}",
+					rows: 3,
+					growing: true
+					});
+					break;
+
+				case "DatePicker":
+					oCtrl = new DatePicker(fdef.id, {
+					value: "{config>" + fdef.path + "}",
+					valueFormat: "yyyy-MM-dd",
+					displayFormat: "medium"
+					});
+					break;
+
+				case "Select":
+					oCtrl = new Select(fdef.id, {
+					selectedKey: "{config>" + fdef.path + "}"
+					});
+					// local items
+					if (Array.isArray(fdef.items)) {
+					fdef.items.forEach(function (it) {
+						oCtrl.addItem(new Item({ key: it.key, text: it.text }));
+					});
+					} else if (fdef.itemsPath) {
+					// dynamic items binding example
+					oCtrl.bindItems({
+						path: "config>" + fdef.itemsPath,
+						template: new Item({ key: "{config>key}", text: "{config>text}" })
+					});
+					}
+					break;
+
+				case "FileUploader":
+					oCtrl = new FileUploader(fdef.id, {
+					fileType: ["pdf", "png", "jpg"],
+					maximumFileSize: 10, // MB
+					change: this._onFileSelected.bind(this, fdef.path)
+					});
+					break;
+
+				default:
+					oCtrl = new Input(fdef.id, {
+					value: "{config>" + fdef.path + "}"
+					});
+				}
+
+				// Simple required check on change (optional)
+				if (fdef.required && oCtrl.setValueState) {
+				const fnValidate = () => {
+					const v = oConfig.getProperty(fdef.path);
+					const empty = v === undefined || v === null || v === "";
+					oCtrl.setValueState(empty ? ValueState.Error : ValueState.None);
+				};
+				oCtrl.attachChange(fnValidate);
+				// run once
+				setTimeout(fnValidate, 0);
+				}
+
+				oSF.addContent(oCtrl);
+			}, this);
+		},
+
+		_onFileSelected: function (sPath, oEvent) {
+			// You can store the File name only, or upload immediately
+			const oFile = oEvent.getParameter("files")?.[0];
+			if (oFile) {
+				const oModel = this.getView().getModel("config");
+				oModel.setProperty(sPath, oFile.name);
+			}
+		},
+
+		onSubmit: function (oEvent) {
+			const oModel = this.getView().getModel("config");
+			const sPurpose = oModel.getProperty("/selection/purpose");
+			const sType = oModel.getProperty("/selection/type");
+
+			// Basic validation
+			const aPurposeFields = (sPurpose && oModel.getProperty("/fieldSets/purpose/" + sPurpose)) || [];
+			const aTypeFields    = (sType && oModel.getProperty("/fieldSets/type/" + sType)) || [];
+			const aFields = aPurposeFields.concat(aTypeFields);
+
+			const missing = aFields.filter(f => f.required).filter(f => {
+				const v = oModel.getProperty(f.path);
+				return v === undefined || v === null || v === "";
+			});
+
+			if (missing.length) {
+				sap.m.MessageToast.show("Please fill all required fields.");
+				return;
+			}
+
+			// Collect payload
+			const oPayload = {
+				purpose: sPurpose,
+				type: sType,
+				data: oModel.getProperty("/form")
+			};
+
+			// TODO: call backend or proceed
+			console.log("Submitting:", oPayload);
+			// Close dialog
+			oEvent.getSource().getParent().close();
+		},
+
+		// End added by Jefry Yap 15-01-2026
+
+		onPressSave: function () {
+			// var oModel = this.getView().getModel();
+			var oModel = this.getView().getModel("employee");
+			// var oModel = new sap.ui.model.odata.v4.ODataModel("sap/odata/v4/EmployeeSrv/");
+			// sap.ui.getCore().setModel(oModel);
+			const oListBinding = oModel.bindList("/ZREQUEST_TYPE1");
+
+			//dummy testing
+			const oContext = oListBinding.create({
+				REQUEST_TYPE_ID: "E0001",
+				REQUEST_TYPE_DESC: "AIN"
+				//REQUEST_ID: crypto.randomUUID()
+			});
+			oContext.created()
+				.then(() => {
+					sap.m.MessageToast.show("Record created");
+				})
+				.catch((oError) => {
+					console.error(oError);
+					sap.m.MessageBox.error("Create failed");
+				});
+
 		},
 
 		onClickCancel: function () {

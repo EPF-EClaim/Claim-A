@@ -14,7 +14,8 @@ server:
           path:
             - /resources
             - /test-resources
-          url: https://ui5.sap.com
+          url: https://sapui5.hana.ondemand.com
+          #
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
@@ -26,3 +27,5 @@ server:
       configuration:
         flp:
           theme: sap_horizon
+          
+
