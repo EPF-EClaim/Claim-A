@@ -247,14 +247,14 @@ sap.ui.define([
 		},
 		// Configuration
 		onClickConfiguration: async function () {
-			if (!this.oConfigPage) {
-				this.oConfigPage = Fragment.load({
-					name: "claima.fragment.configuration",
-					type: "XML",
-					controller: this
-				});
-				this.getView().addDependent(this.oConfigPage);
-			}
+			// if (!this.oConfigPage) {
+			// 	this.oConfigPage = Fragment.load({
+			// 		name: "claima.fragment.configuration",
+			// 		type: "XML",
+			// 		controller: this
+			// 	});
+			// 	this.getView().addDependent(this.oConfigPage);
+			// }
 
 			// Navigate to configuration page
 			var oPageContainer = this.byId("pageContainer");
