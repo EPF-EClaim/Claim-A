@@ -1,3 +1,4 @@
+
 sap.ui.define([
 	"sap/ui/Device",
 	"sap/ui/core/mvc/Controller",
@@ -21,9 +22,9 @@ sap.ui.define([
 	MessageToast,
 	Text,
 	library,
-	tntLibrary) {
+	tntLibrary
+) {
 	"use strict";
-
 
 	return Controller.extend("claima.controller.App", {
 		onInit: function () {
@@ -87,50 +88,6 @@ sap.ui.define([
 			});
 			this.getView().setModel(oMyRequestModel2, "myRequestform");
 		},
-		onRowPress: function (oEvent) {
-			const oItem = oEvent.getParameter("listItem");
-			const oData = oItem.getBindingContext("myRequest").getObject();
-
-			//Optional: pass data to the next page via a model
-			const oNextPageModel = new JSONModel(oData);
-			const oNextPage = this.byId("new_request");
-			oNextPage.setModel(oNextPageModel, "selectedRequest");
-
-			//Navigate to next page
-			this.byId("pageContainer").to(oNextPage);
-		},
-
-
-		onRowPressForm: function (oEvent) {
-			// 1) Read the selected row data from the "myRequest" named model
-			const oListItem = oEvent.getParameter("listItem");
-			const oSelectedData = oListItem.getBindingContext("myRequestform").getObject();
-
-			// 2) Put the selected data into a model that the target page can read
-			//    Option A (recommended): set it on the target page under a named model
-			const oTargetPage = this.byId("expensereport");   // assumes expensereport is a Page/View in the same view
-			if (oTargetPage) {
-				oTargetPage.setModel(new sap.ui.model.json.JSONModel(oSelectedData), "selectedRequest");
-			} else {
-				// Fallback: set on the *view*, which the target page can also inherit if bound
-				this.getView().setModel(new sap.ui.model.json.JSONModel(oSelectedData), "selectedRequest");
-			}
-
-			// 3) Navigate NavContainer to the expensereport page
-			const oNav = this.byId("pageContainer");
-			const sTargetId = this.getView().createId("expensereport");
-			oNav.to(sTargetId);
-
-			// 4) (Optional) If your expensereport page has step sections, toggle as needed
-			const oExpenseTypeScr = this.byId("expensetypescr");
-			const oClaimScr = this.byId("claimscr");
-			if (oExpenseTypeScr) { oExpenseTypeScr.setVisible(true); }
-			if (oClaimScr) { oClaimScr.setVisible(false); }
-			if (this.createreportButtons) {
-				this.createreportButtons("expensetypescr");
-			}
-		},
-
 
 		//End insert Aiman Salim - 21/1/2026
 
@@ -163,20 +120,11 @@ sap.ui.define([
 					this.byId("pageContainer").to(this.getView().createId(oKey));
 					break;
 			}
-
-			// if (oKey == "createreport" || oKey == "myrequest") {
-			// 	this.onClickExpenseReport();
-			// } else {
-			// 	this.byId("pageContainer").to(this.getView().createId(oItem.getKey()));
-			// }
 		},
+
 		onNavCreateReport: async function () {
 			if (!this.oDialogFragment) {
 				this.oDialogFragment = await Fragment.load({
-					// id: 
-					// this.getView().getId(), 
-					//  "createreport",
-
 					name: "claima.fragment.createreport",
 					type: "XML",
 					controller: this,
@@ -205,7 +153,7 @@ sap.ui.define([
 
 			this._setToggleButtonTooltip(bSideExpanded);
 
-			oToolPage.setSideExpanded(!oToolPage.getSideExpanded());
+			oToolPage.setSideExpanded(!bSideExpanded);
 		},
 
 		_setToggleButtonTooltip: function (bLarge) {
@@ -286,7 +234,6 @@ sap.ui.define([
 			const oRecptnum = this.byId("claimFrag--receiptnum") || this.byId("receiptnum");
 			const oVehicle = this.byId("claimFrag--vetype") || this.byId("vetype");
 
-
 			const claimShow = (sKey !== "claim2");
 
 			oFe.setVisible(claimShow);
@@ -308,99 +255,154 @@ sap.ui.define([
 			this.byId("pageContainer").to(this.getView().byId('expensereport'));
 		},
 
+		onRowPress: function (oEvent) {
+			const oItem = oEvent.getParameter("listItem");
+			const oData = oItem.getBindingContext("myRequest").getObject();
 
+			//Optional: pass data to the next page via a model
+			const oNextPageModel = new JSONModel(oData);
+			const oNextPage = this.byId("new_request");
+			oNextPage.setModel(oNextPageModel, "selectedRequest");
 
-		onAfterRendering: function () {
-			const oInput = this.byId("fromloc_id");
+			//Navigate to next page
+			this.byId("pageContainer").to(oNextPage);
+		},
 
-			if (oInput) {
-				// Prevent duplicate event attachment
-				oInput.$().off("click.openDialog");
+		onRowPressForm: function (oEvent) {
+			// 1) Read the selected row data from the "myRequest" named model
+			const oListItem = oEvent.getParameter("listItem");
+			const oSelectedData = oListItem.getBindingContext("myRequestform").getObject();
 
-				// Add click event
-				oInput.$().on("click.openDialog", () => {
-					this.onOpenFromLocationDialog();
-				});
+			// 2) Put the selected data into a model that the target page can read
+			//    Option A (recommended): set it on the target page under a named model
+			const oTargetPage = this.byId("expensereport");   // assumes expensereport is a Page/View in the same view
+			if (oTargetPage) {
+				oTargetPage.setModel(new sap.ui.model.json.JSONModel(oSelectedData), "selectedRequest");
+			} else {
+				// Fallback: set on the *view*, which the target page can also inherit if bound
+				this.getView().setModel(new sap.ui.model.json.JSONModel(oSelectedData), "selectedRequest");
+			}
+
+			// 3) Navigate NavContainer to the expensereport page
+			const oNav = this.byId("pageContainer");
+			const sTargetId = this.getView().createId("expensereport");
+			oNav.to(sTargetId);
+
+			// 4) (Optional) If your expensereport page has step sections, toggle as needed
+			const oExpenseTypeScr = this.byId("expensetypescr");
+			const oClaimScr = this.byId("claimscr");
+			if (oExpenseTypeScr) { oExpenseTypeScr.setVisible(true); }
+			if (oClaimScr) { oClaimScr.setVisible(false); }
+			if (this.createreportButtons) {
+				this.createreportButtons("expensetypescr");
 			}
 		},
 
+		/* =========================================================
+		 * Mileage dialog (Fragment) — use a dedicated controller
+		 * ========================================================= */
 
-
-		onOpenFromLocationDialog: async function () {
-			if (!this._oFromLocationDialog) {
-				this._oFromLocationDialog = await sap.ui.core.Fragment.load({
-					name: "claima.fragment.mileagecalculator",
-					controller: this
-				});
-				this.getView().addDependent(this._oFromLocationDialog);
-			}
-
-			this._oFromLocationDialog.open();
+		// <<< CHANGED: use the new lazy loader instead of openHelloDialog()
+		onValueHelpRequest: function () {
+			this._openMileageFrag(); // <<< CHANGED
 		},
 
+		// <<< ADDED: lazy-load the fragment + its own controller
+		_openMileageFrag: function () {
+			var oView = this.getView();
 
-		//onConfirmLocation: function () {
-		//const sValue = sap.ui.getCore().byId(this.createId("dialogLocationInput")).getValue();
+			if (!this._pMileageFrag) {
+				this._pMileageFrag = new Promise((resolve, reject) => {
 
-		//this.byId("fromloc_id").setValue(sValue);
-		//this.getView().getModel().setProperty("/fromloc", sValue); // If using model binding
+					// Load the fragment controller class dynamically
+					sap.ui.require(["claima/controller/mileagecalculator.controller"], (MileageFragController) => {
+						try {
+							var oFragController = new MileageFragController();
 
-		//this._oFromLocationDialog.close();
-		//},
+							// Pass host + fragment id prefix so Fragment.byId works inside the controller
+							oFragController.setHost(this, oView.getId());
 
-		//onCancelLocation: function () {
-		//this._oFromLocationDialog.close();
-		//}
+							// Load the fragment with id prefix
+							Fragment.load({
+								id: oView.getId(), // critical for byId() to resolve fragment controls
+								name: "claima.fragment.mileagecalculator",
+								controller: oFragController
+							}).then((oDialog) => {
+								// models + lifecycle
+								oView.addDependent(oDialog);
 
+								// Submit handler: push values back to your form inputs
+								oFragController.setSubmitHandler(function (res) {
+									// res = { from, to, km }
 
+									// Put into From input
+									var oFrom = this.byId("fromloc_id");
+									if (oFrom) {
+										oFrom.setValue(res.from);
+										var b = oFrom.getBinding("value");
+										if (b) {
+											var m = b.getModel(), p = b.getPath();
+											m.setProperty(p.charAt(0) === "/" ? p : "/" + p, res.from);
+										}
+									}
 
-		//End added by Aiman Salim Test
+									// Put into To input
+									var oTo = this.byId("toloc_id");
+									if (oTo) {
+										oTo.setValue(res.to);
+										var b2 = oTo.getBinding("value");
+										if (b2) {
+											var m2 = b2.getModel(), p2 = b2.getPath();
+											m2.setProperty(p2.charAt(0) === "/" ? p2 : "/" + p2, res.to);
+										}
+									}
+
+									// Optional: push km to your model/input if you want
+									 var oKm = this.byId("km_input_id");
+									 if (oKm) { oKm.setValue(res.km); }
+
+								}.bind(this));
+
+								// Cache references
+								this._mileageFrag = { controller: oFragController, dialog: oDialog };
+								resolve(this._mileageFrag);
+							}).catch(reject);
+
+						} catch (e) {
+							reject(e);
+						}
+					}, reject);
+				});
+			}
+
+			// Open the dialog and prefill
+			this._pMileageFrag.then(function (ctx) {
+				var sFrom = (this.byId("fromloc_id") && this.byId("fromloc_id").getValue()) || "";
+				var sTo = (this.byId("toloc_id") && this.byId("toloc_id").getValue()) || "";
+				ctx.controller.prefill({ from: sFrom, to: sTo });
+				ctx.controller.open();
+			}.bind(this));
+		},
+
+		// --- (Deprecated in this flow) ---
+		// Keeping these for backward-compatibility. Not used anymore.
+		openHelloDialog: function () {
+			// NO-OP: legacy method kept to avoid breaking any existing reference.
+			// Use this._openMileageFrag() instead.
+		},
+		onAddMileage: function () {
+			// NO-OP — handled by MileageFrag.controller via submit handler
+		},
+		onCancelMileage: function () {
+			var oDialog = this.byId("helloDialog");
+			if (oDialog) {
+				oDialog.close();
+			}
+		},
+		// --- end of mileage integration ---
+
 		// Start added by Jefry Yap 15-01-2026
 		onClickMyRequest: async function () {
-			// const oConfig = new JSONModel({
-			//     types: [
-			//     { key: "T1", text: "Type A" },
-			//     { key: "T2", text: "Type B" },
-			//     { key: "T3", text: "Type C" },
-			//     { key: "T4", text: "Type D" },
-			//     { key: "T5", text: "Type E" }
-			//     ],
-			//     fieldSets: {
-			//         type: {
-			//             T1: [
-			//                 { id: "priority", label: "Priority", control: "Select", path: "/form/priority",
-			//                     items: [
-			//                     { key: "H", text: "High" },
-			//                     { key: "M", text: "Medium" },
-			//                     { key: "L", text: "Low" }
-			//                     ],
-			//                     required: true
-			//                 }
-			//             ],
-			//             T2: [
-			//                 { id: "amount", label: "Amount", control: "Input", type: "Number", path: "/form/amount" }
-			//             ],
-			//             T3: [
-			//                 { id: "costCenter", label: "Cost Center", control: "Input", path: "/form/costCenter" }
-			//             ],
-			//             T4: [
-			//                 { id: "attachment", label: "Attachment", control: "FileUploader", path: "/form/attachment" }
-			//             ],
-			//             T5: [
-			//                 { id: "category", label: "Category", control: "Select", path: "/form/category",
-			//                     items: [
-			//                     { key: "A", text: "Cat A" },
-			//                     { key: "B", text: "Cat B" }
-			//                     ]
-			//                 }
-			//             ]
-			//         }
-			//     },
-			//     selection: { purpose: "", type: "" },
-			//     form: {}
-			// });
-			// this.getView().setModel(oConfig, "config");
-
 			if (!this.oDialogFragment) {
 				this.oDialogFragment = await Fragment.load({
 					id: "request",
@@ -425,7 +427,6 @@ sap.ui.define([
 			this.oDialogFragment.close();
 			this.byId("pageContainer").to(this.getView().byId('new_request'));
 		},
-
 
 		onDialogCancel: function (oEvent) {
 			oEvent.getSource().getParent().close();
