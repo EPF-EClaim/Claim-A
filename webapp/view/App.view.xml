@@ -493,17 +493,15 @@
                     />
                     <!-- ================= Configuration Page ================= -->
                     <Page
-                        id="configuration"
+                        id="configurationPage"
                         title="{i18n>configtitle}"
-                        navButtonPress="onPressBack"
-                    >
+                        navButtonPress="onPressBack">
                         <content>
                             <ScrollContainer
                                 vertical="true"
                                 horizontal="false"
                                 height="100%"
-                                class="sapUiContentPadding"
-                            >    
+                                class="sapUiContentPadding">    
                                 <f:GridContainer>
                                     <f:layout>
                                         <f:GridContainerSettings
