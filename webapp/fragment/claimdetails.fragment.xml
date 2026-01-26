@@ -132,6 +132,7 @@
                                 >
                                     <f:fields>
                                         <Input
+                                            id="km_input_id"
                                             value="{km}"
                                             type="Number"
                                         />
@@ -171,8 +172,12 @@
                                 >
                                     <f:fields>
                                         <Input
+                                            id="fromloc_id"
                                             value="{fromloc}"
-                                            type="Text"
+                                            editable="true"
+                                            class="clickableInput"
+                                            showValueHelp="true"
+                                            valueHelpRequest=".onValueHelpRequest"
                                         />
                                     </f:fields>
                                 </f:FormElement>
@@ -336,8 +341,13 @@
                             >
                                 <f:fields>
                                     <Input
+                                        id="toloc_id"
                                         value="{toloc}"
                                         type="Text"
+                                        editable="true"
+                                        class="clickableInput"
+                                        showValueHelp="true"
+                                        valueHelpRequest=".onValueHelpRequest"
                                     />
                                 </f:fields>
                             </f:FormElement>
@@ -423,7 +433,7 @@
                                     </items>
                                 </Select>
                             </f:FormElement>
-                             <f:FormElement
+                            <f:FormElement
                                 id="remarks"
                                 label="Remarks/Justification"
                                 visible="{= ${form>/claimItem} !== 'claim2' }"
@@ -436,21 +446,21 @@
                                 </f:fields>
                             </f:FormElement>
                             <f:FormElement
-                                    id="attachment2"
-                                    label="Attachment 2"
-                                    visible="true"
-                                >
-                                    <f:fields>
-                                        <u:FileUploader
-                                            id="claimAttachment2"
-                                            uploadUrl=""
-                                            width="100%"
-                                            placeholder="Choose file"
-                                            fileType="pdf,jpg,png"
-                                            maximumFileSize="10"
-                                        />
-                                    </f:fields>
-                                </f:FormElement>
+                                id="attachment2"
+                                label="Attachment 2"
+                                visible="true"
+                            >
+                                <f:fields>
+                                    <u:FileUploader
+                                        id="claimAttachment2"
+                                        uploadUrl=""
+                                        width="100%"
+                                        placeholder="Choose file"
+                                        fileType="pdf,jpg,png"
+                                        maximumFileSize="10"
+                                    />
+                                </f:fields>
+                            </f:FormElement>
                         </f:FormContainer>
                     </f:formContainers>
                 </f:Form>

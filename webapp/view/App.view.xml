@@ -58,16 +58,16 @@
                         expanded="false"
                     />
                     <tnt:NavigationListItem
-                        key="myrequest"
-                        text="{i18n>nav_myrequest}"
-                        icon="sap-icon://document-text"
+                        key="myreport"
+                        text="{i18n>nav_myreport}"
+                        icon="sap-icon://activity-items"
                         enabled="true"
                         expanded="false"
                     />
                     <tnt:NavigationListItem
-                        key="myreport"
-                        text="{i18n>nav_myreport}"
-                        icon="sap-icon://activity-items"
+                        key="myrequest"
+                        text="{i18n>nav_myrequest}"
+                        icon="sap-icon://document-text"
                         enabled="true"
                         expanded="false"
                     />
@@ -630,6 +630,7 @@
                         />
                     </content>
                 </Page>
+
             </NavContainer>
         </tnt:mainContents>
     </tnt:ToolPage>
