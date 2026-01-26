@@ -1,4 +1,4 @@
-<mvc:View xmlns:f="sap.f"
+<mvc:View xmlns:form="sap.ui.layout.form" xmlns:f="sap.f"
 	height="100%"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.m"
@@ -9,116 +9,16 @@
         id="request_form"
         floatingFooter="true"
         showHeader="false">
-        <content>
-            <VBox 
-                rowGap="1rem"
-                class="sapUiSmallMargin">
-                <VBox
-                    id="request_form_header_box" 
-                    backgroundDesign="Solid"
-                    class="roundedBox"
-                    rowGap="1rem">
-                    <OverflowToolbar height="3rem">
-                        <Title text="{i18n>req_form_header_title}" titleStyle="H3"/>
-                        <ToolbarSpacer />
-                        <Button type="Default" icon="sap-icon://print" />
-                    </OverflowToolbar>
-                    <HBox wrap="Wrap" rowGap="0.5rem" class="sapUiTinyMargin">
-                        <VBox rowGap="0.5rem">
-                            <HBox id="head_req_purpose">
-                                <Text width="16rem" text="Request Purpose: " />
-                                <Text width="24rem" text="Attend Financial Event at Singapore" />
-                            </HBox>
-                            <HBox id="head_req_form_id">
-                                <Text width="16rem" text="Request Form ID: "/>
-                                <Text width="24rem" text="REQ000000000002"/>
-                            </HBox>
-                            <HBox id="head_req_startdate">
-                                <Text width="16rem" text="Trip/Report Start Date: "/>
-                                <Text width="24rem" text="01 January 2026"/>
-                            </HBox>
-                            <HBox id="head_req_enddate">
-                                <Text width="16rem" text="Trip/Request End Date: "/>
-                                <Text width="24rem" text="01 February 2026"/>
-                            </HBox>
-                            <HBox id="head_req_location">
-                                <Text width="16rem" text="Location: "/>
-                                <Text width="24rem" text="Marina Bay Sands, Singapore"/>
-                            </HBox>
-                            <HBox id="header_req_remarks">
-                                <Text width="16rem" text="Remarks: "/>
-                                <Text width="24rem" text="Invited to participate Audit foru as speaker"/>
-                            </HBox>
-                            <HBox id="head_req_iog">
-                                <Text width="16rem" text="Individual/Group: "/>
-                                <Text width="24rem" text="Individual"/>
-                            </HBox>
-                        </VBox>
-                        <VBox id="head_req_col_2" rowGap="0.5rem" >
-                            <HBox id="head_req_status">
-                                <Text width="16rem" text="Request Status: " />
-                                <Text width="24rem" text="Not Submitted" />
-                            </HBox>
-                            <HBox id="head_req_cost_center">
-                                <Text width="16rem" text="Cost Center: "/>
-                                <Text width="24rem" text="1234567890"/>
-                            </HBox>
-                            <HBox id="head_req_alt_cost_center">
-                                <Text width="16rem" text="Alternate Cost Conter: "/>
-                                <Text width="24rem" text="9988770000"/>
-                            </HBox>
-                            <HBox id="head_req_cash_advance_amt">
-                                <Text width="16rem" text="Cash Advance (MYR): "/>
-                                <Text width="24rem" text="0.00" textAlign="End"/>
-                            </HBox>
-                            <HBox id="head_req_amt">
-                                <Text width="16rem" text="Request Amount (MYR): "/>
-                                <Text width="24rem" text="0.00" textAlign="End"/>
-                            </HBox>
-                            <HBox id="head_req_total_amt">
-                                <Text width="16rem" text="Total Amount (MYR): "/>
-                                <Text width="24rem" text="0.00" textAlign="End"/>
-                            </HBox>
-                            <HBox id="head_req_type">
-                                <Text width="16rem" text="Request Type: "/>
-                                <Text width="24rem" text="Travel"/>
-                            </HBox>
-                        </VBox>
-                    </HBox>
-                </VBox>
-                <VBox
-                    id="request_form_detail_box" 
-                    backgroundDesign="Solid"
-                    class="roundedBox"
-                    rowGap="1rem">
-                    <NavContainer id="req_form_item_container" initialPage="req_item_table_view">
-                        <pages>
-                            <ScrollContainer 
-                                id="req_item_table_view"
-                                vertical="true"
-                                horizontal="false" >
-                                <mvc:XMLView viewName="claima.view.RequestItemList"/>
-                            </ScrollContainer>
-                            <ScrollContainer 
-                                id="req_create_item_view"
-                                vertical="true"
-                                horizontal="false">
-                                <mvc:XMLView viewName="claima.view.RequestFormItem"/>
-                            </ScrollContainer>
-                        </pages>
-                    </NavContainer>
-                </VBox>    
-            </VBox>
-        </content>
         <footer>
             <OverflowToolbar >
                 <ToolbarSpacer />
-                <Button type="Back" text="Back"/>
-                <Button type="Default" text="Save Draft" press=".onSave"/>
-                <Button type="Reject" text="Delete Request" press=".onDelete"/>
-                <Button type="Emphasized" text="Submit Request" press=".onSubmit"/>
+                <Button id="req_back"           type="Back"         text="Back"             press=".onBack"                 visible="{= ${/control/0/view} === 'list' }"/>
+                <Button id="req_save_draft"     type="Default"      text="Save Draft"       press=".onSaveRequestDraft"     visible="{= ${/control/0/view} === 'list' }"/>
+                <Button id="req_delete"         type="Reject"       text="Delete Request"   press=".onDeleteRequest"        visible="{= ${/control/0/view} === 'list' }"/>
+                <Button id="req_submit"         type="Emphasized"   text="Submit Request"   press=".onSubmitRequest"        visible="{= ${/control/0/view} === 'list' }"/>
+                <Button id="req_item_cancel"    type="Default"      text="Cancel"           press=".onCancelItem"           visible="{= ${/control/0/view} === 'create' }"/>
+                <Button id="req_item_save"      type="Emphasized"   text="Save"             press=".onSaveItem"             visible="{= ${/control/0/view} === 'create' }"/>
             </OverflowToolbar>
         </footer>
     </Page>
-
 </mvc:View>
